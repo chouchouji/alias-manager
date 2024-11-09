@@ -1,7 +1,8 @@
 {
   "name": "alias-manager",
-  "displayName": "alias-manager",
+  "displayName": "Alias Manager",
   "description": "A tool used to manage your system aliases",
+  "icon": "resources/logo.png",
   "version": "0.0.0",
   "engines": {
     "vscode": "^1.95.0"
@@ -9,6 +10,11 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chouchouji/alias-manager.git"
+  },
+  "homepage": "https://github.com/chouchouji/alias-manager",
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
