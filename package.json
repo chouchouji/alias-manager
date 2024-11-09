@@ -26,11 +26,28 @@
       {
         "command": "aliasView.delete",
         "title": "Delete Alias"
+      },
+      {
+        "command": "aliasView.run",
+        "title": "Run",
+        "icon": "$(run)"
       }
     ],
     "commandPalette": [
       {
+        "command": "aliasView.refresh",
+        "when": "true"
+      },
+      {
+        "command": "aliasView.add",
+        "when": "true"
+      },
+      {
         "command": "aliasView.delete",
+        "when": "false"
+      },
+      {
+        "command": "aliasView.run",
         "when": "false"
       }
     ],
@@ -50,7 +67,12 @@
       "view/item/context": [
         {
           "command": "aliasView.delete",
-          "when": "view == aliasView && viewItem == alias"
+          "when": "view == aliasView"
+        },
+        {
+          "command": "aliasView.run",
+          "when": "view == aliasView && viewItem == alias_child",
+          "group": "inline"
         }
       ]
     },

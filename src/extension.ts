@@ -23,6 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.delete', (item: AliasItem) => aliasView.deleteAlias(item)),
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.run', (item: AliasItem) => aliasView.runAlias(item)),
+  );
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
@@ -80,6 +84,17 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.refresh();
   }
 
+  runAlias(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const activeTerminal = vscode.window.activeTerminal;
+    if (vscode.window.activeTerminal) {
+      activeTerminal!.sendText(alias.data.key);
+    }
+  }
+
   getTreeItem(element: AliasItem): vscode.TreeItem {
     return element;
   }
@@ -98,17 +113,18 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return new AliasItem(`${key} = '${value}'`, [], alias);
     });
 
-    return [new AliasItem(SYSTEM_ALIAS, children, undefined)];
+    return [new AliasItem(SYSTEM_ALIAS, children, undefined, false)];
   }
 }
 class AliasItem extends vscode.TreeItem {
-  contextValue = 'alias';
+  contextValue = 'alias_child';
   data: Alias | undefined = undefined;
 
   constructor(
     public readonly label: string,
     public readonly children: AliasItem[] = [],
     public readonly alias: Alias | undefined,
+    public readonly isLeafNode: boolean = true,
   ) {
     super(
       label,
@@ -116,6 +132,10 @@ class AliasItem extends vscode.TreeItem {
     );
 
     this.data = alias;
+
+    if (!isLeafNode) {
+      this.contextValue = 'alias_parent';
+    }
   }
 }
 
