@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./resources/logo.png" width="150" />
+  ![Alias_logo](https://github.com/user-attachments/assets/723ef410-5dc0-46e6-966f-fa740107e856)
   <h1>Alias Manager</h1>
   <p>A tool used to manage your system aliases</p>
 </div>
