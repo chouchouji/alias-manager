@@ -1,25 +1,62 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { getAliases } from './aliases';
+import { SYSTEM_ALIAS } from './constants';
+import { isNonEmptyArray } from 'rattail';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "alias-manager" is now active!');
+  const aliasView = new AliasView();
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand('alias-manager.helloWorld', () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage('Hello World from alias-manager!');
-  });
+  context.subscriptions.push(vscode.window.registerTreeDataProvider('aliasView', aliasView));
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.refresh', () => aliasView.refresh())
+  );
 }
 
-// This method is called when your extension is deactivated
+class AliasView implements vscode.TreeDataProvider<AliasItem> {
+  private _onDidChangeTreeData: vscode.EventEmitter<AliasItem | undefined | null | void> = new vscode.EventEmitter<
+    AliasItem | undefined | null | void
+  >();
+
+  readonly onDidChangeTreeData: vscode.Event<AliasItem | undefined | null | void> = this._onDidChangeTreeData.event;
+
+  refresh() {
+    this._onDidChangeTreeData.fire();
+  }
+
+  getTreeItem(element: AliasItem): vscode.TreeItem {
+    return element;
+  }
+
+  getChildren(element?: AliasItem): Thenable<AliasItem[]> {
+    if (element) {
+      return Promise.resolve(element.children);
+    } else {
+      return Promise.resolve(this.getAliasTree());
+    }
+  }
+
+  private getAliasTree(): AliasItem[] {
+    const aliases = getAliases();
+
+    const children = aliases.map((alias) => {
+      const { key, value } = alias;
+      return new AliasItem(`${key} = '${value}'`);
+    });
+
+    return [new AliasItem(SYSTEM_ALIAS, children)];
+  }
+}
+class AliasItem extends vscode.TreeItem {
+  constructor(
+    public readonly label: string,
+    public readonly children: AliasItem[] = [],
+  ) {
+    super(
+      label,
+      isNonEmptyArray(children) ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.None,
+    );
+  }
+}
+
 export function deactivate() {}

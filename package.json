@@ -14,10 +14,37 @@
   "contributes": {
     "commands": [
       {
-        "command": "alias-manager.helloWorld",
-        "title": "Hello World"
+        "command": "aliasView.refresh",
+        "title": "Refresh Aliases",
+        "icon": "$(refresh)"
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "aliasView.refresh",
+          "when": "view == aliasView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aliasManager",
+          "title": "Alias Manager",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "aliasManager": [
+        {
+          "id": "aliasView",
+          "name": "Alias View"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
@@ -45,5 +72,8 @@
     "typescript": "^5.6.3",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "rattail": "^1.0.0"
   }
 }
