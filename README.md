@@ -8,7 +8,7 @@
 
 ## Features
 
-- 🎨 &nbsp; Support create, delete and rename system alias
+- 🎨 &nbsp; Support create, delete, rename and run system alias
 - 📦 &nbsp; Support custom path that used to store aliases
 
 ## Feedback

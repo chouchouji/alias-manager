@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import os from 'node:os';
 import path from 'node:path';
-import { appendAliasToStoreFile, deleteAliases, getAliases } from './aliases';
+import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
   CREATE_ALIAS_PLACEHOLDER,
@@ -38,6 +38,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.delete', (item: AliasItem) => aliasView.deleteAlias(item)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.rename', (item: AliasItem) => aliasView.renameAlias(item)),
   );
 
   context.subscriptions.push(
@@ -93,10 +97,35 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     // delete specific alias
+    const { key, value } = alias.data;
     deleteAliases({
-      key: alias.data.key,
-      value: alias.data.value,
+      key,
+      value,
     });
+    this.refresh();
+  }
+
+  async renameAlias(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const { key, value } = alias.data;
+
+    const command = await vscode.window.showInputBox({
+      placeHolder: CREATE_ALIAS_PLACEHOLDER,
+      value,
+    });
+
+    if (isEmpty(command)) {
+      vscode.window.showErrorMessage(ALIAS_IS_NOT_EMPTY);
+      return;
+    }
+
+    renameAliases({
+      key,
+      value,
+    }, command!);
     this.refresh();
   }
 

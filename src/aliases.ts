@@ -75,3 +75,37 @@ export function deleteAliases(specificAlias?: Alias) {
 
   reloadStoreFile();
 }
+
+export function renameAliases(specificAlias: Alias, command: string) {
+  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+
+  if (isEmpty(content)) {
+    return;
+  }
+
+  const data = content
+    .split('\n')
+    .filter(Boolean)
+    .map((alias) => alias.trim())
+    .reduce((acc: string[], alias) => {
+      const match = alias.match(/^alias (\w+)='(.*)'$/);
+
+      if (isArray(match)) {
+        const [oldCommand, key, value] = match;
+        if (key === specificAlias.key && value === specificAlias.value) {
+          acc.push(`alias ${key}='${command}'`);
+        } else {
+          acc.push(oldCommand);
+        }
+      }else {
+        acc.push(alias);
+      }
+
+      return acc;
+    }, [])
+    .join('\n');
+
+  fs.writeFileSync(storePath.path, data);
+
+  reloadStoreFile();
+}

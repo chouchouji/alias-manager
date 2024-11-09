@@ -45,6 +45,10 @@
         "command": "aliasView.run",
         "title": "Run",
         "icon": "$(run)"
+      },
+      {
+        "command": "aliasView.rename",
+        "title": "Rename Alias"
       }
     ],
     "commandPalette": [
@@ -58,6 +62,10 @@
       },
       {
         "command": "aliasView.delete",
+        "when": "false"
+      },
+      {
+        "command": "aliasView.rename",
         "when": "false"
       },
       {
@@ -87,6 +95,10 @@
           "command": "aliasView.run",
           "when": "view == aliasView && viewItem == alias_child",
           "group": "inline"
+        },
+        {
+          "command": "aliasView.rename",
+          "when": "view == aliasView && viewItem == alias_child"
         }
       ]
     },
