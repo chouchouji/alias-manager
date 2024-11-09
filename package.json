@@ -17,12 +17,22 @@
         "command": "aliasView.refresh",
         "title": "Refresh Aliases",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "aliasView.add",
+        "title": "Add Alias",
+        "icon": "$(add)"
       }
     ],
     "menus": {
       "view/title": [
         {
           "command": "aliasView.refresh",
+          "when": "view == aliasView",
+          "group": "navigation"
+        },
+        {
+          "command": "aliasView.add",
           "when": "view == aliasView",
           "group": "navigation"
         }

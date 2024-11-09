@@ -1,7 +1,9 @@
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
+import { exec } from 'node:child_process';
 import { isEmpty, isArray } from 'rattail';
+import { Alias } from './types';
 
 const homeDir = os.homedir();
 const zshrcPath = path.join(homeDir, '.zshrc');
@@ -16,8 +18,8 @@ export function getAliases() {
   const aliases = content
     .split('\n')
     .filter(Boolean)
-    .reduce((acc: { key: string; value: string }[], line) => {
-      const match = line.match(/^alias (\w+)='(.*)'$/);
+    .reduce((acc: Alias[], content) => {
+      const match = content.match(/^alias (\w+)='(.*)'$/);
       if (isArray(match)) {
         const [_command, key, value] = match;
         acc.push({
@@ -29,4 +31,18 @@ export function getAliases() {
     }, []);
 
   return aliases;
+}
+
+export function appendAliasToZshrc(content: string) {
+  const data = `
+alias ${content}
+`;
+
+  fs.appendFileSync(zshrcPath, data);
+
+  reloadZshrc();
+}
+
+function reloadZshrc() {
+  exec('source ~/.zshrc', { shell: '/bin/bash' });
 }
