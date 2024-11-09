@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { exec } from 'node:child_process';
-import { isEmpty, isArray } from 'rattail';
+import { isEmpty, isArray } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 

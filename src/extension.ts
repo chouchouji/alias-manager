@@ -9,8 +9,7 @@ import {
   NEED_CHECK_THE_FORMAT,
   SYSTEM_ALIAS,
 } from './constants';
-import { isEmpty, isNonEmptyArray } from 'rattail';
-import { getAliasName } from './utils';
+import { getAliasName, isEmpty, isNonEmptyArray } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
