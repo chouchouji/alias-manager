@@ -9,9 +9,17 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Alias Manager",
+      "properties": {
+        "alias-manager.defaultStorePath": {
+          "type": "string",
+          "description": "The path used to store aliases, default value is ${homedir}/.zshrc"
+        }
+      }
+    },
     "commands": [
       {
         "command": "aliasView.refresh",

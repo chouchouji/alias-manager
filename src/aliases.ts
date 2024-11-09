@@ -1,19 +1,15 @@
-import os from 'node:os';
-import path from 'node:path';
 import fs from 'node:fs';
 import { exec } from 'node:child_process';
 import { isEmpty, isArray } from 'rattail';
 import { Alias } from './types';
+import storePath from './path';
 
-const homeDir = os.homedir();
-const zshrcPath = path.join(homeDir, '.zshrc');
-
-function reloadZshrc() {
-  exec('source ~/.zshrc', { shell: '/bin/bash' });
+function reloadStoreFile() {
+  exec(`source ${storePath.path}`, { shell: '/bin/bash' });
 }
 
 export function getAliases() {
-  const content = fs.readFileSync(zshrcPath, 'utf-8').trim();
+  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
 
   if (isEmpty(content)) {
     return [];
@@ -38,18 +34,18 @@ export function getAliases() {
   return aliases;
 }
 
-export function appendAliasToZshrc(content: string) {
+export function appendAliasToStoreFile(content: string) {
   const data = `
 alias ${content}
 `;
 
-  fs.appendFileSync(zshrcPath, data);
+  fs.appendFileSync(storePath.path, data);
 
-  reloadZshrc();
+  reloadStoreFile();
 }
 
 export function deleteAliases(specificAlias?: Alias) {
-  const content = fs.readFileSync(zshrcPath, 'utf-8').trim();
+  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
 
   if (isEmpty(content)) {
     return;
@@ -75,7 +71,7 @@ export function deleteAliases(specificAlias?: Alias) {
     })
     .join('\n');
 
-  fs.writeFileSync(zshrcPath, data);
+  fs.writeFileSync(storePath.path, data);
 
-  reloadZshrc();
+  reloadStoreFile();
 }

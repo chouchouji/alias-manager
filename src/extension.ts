@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
-import { appendAliasToZshrc, deleteAliases, getAliases } from './aliases';
+import os from 'node:os';
+import path from 'node:path';
+import { appendAliasToStoreFile, deleteAliases, getAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
   CREATE_ALIAS_PLACEHOLDER,
@@ -10,9 +12,24 @@ import {
 import { isEmpty, isNonEmptyArray } from 'rattail';
 import { getAliasName } from './utils';
 import { Alias } from './types';
+import storePath from './path';
 
 export function activate(context: vscode.ExtensionContext) {
+  // set default store path
+  storePath.path = path.join(os.homedir(), '.zshrc');
+
   const aliasView = new AliasView();
+
+  // watch store path
+  vscode.workspace.onDidChangeConfiguration((event) => {
+    if (event.affectsConfiguration('alias-manager.defaultStorePath')) {
+      const defaultStorePath = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultStorePath');
+      if (defaultStorePath) {
+        storePath.path = defaultStorePath;
+        aliasView.refresh();
+      }
+    }
+  });
 
   context.subscriptions.push(vscode.window.registerTreeDataProvider('aliasView', aliasView));
 
@@ -63,7 +80,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    appendAliasToZshrc(alias!);
+    appendAliasToStoreFile(alias!);
 
     this.refresh();
   }
