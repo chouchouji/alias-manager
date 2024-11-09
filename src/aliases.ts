@@ -8,6 +8,10 @@ import { Alias } from './types';
 const homeDir = os.homedir();
 const zshrcPath = path.join(homeDir, '.zshrc');
 
+function reloadZshrc() {
+  exec('source ~/.zshrc', { shell: '/bin/bash' });
+}
+
 export function getAliases() {
   const content = fs.readFileSync(zshrcPath, 'utf-8').trim();
 
@@ -18,6 +22,7 @@ export function getAliases() {
   const aliases = content
     .split('\n')
     .filter(Boolean)
+    .map((alias) => alias.trim())
     .reduce((acc: Alias[], content) => {
       const match = content.match(/^alias (\w+)='(.*)'$/);
       if (isArray(match)) {
@@ -43,6 +48,34 @@ alias ${content}
   reloadZshrc();
 }
 
-function reloadZshrc() {
-  exec('source ~/.zshrc', { shell: '/bin/bash' });
+export function deleteAliases(specificAlias?: Alias) {
+  const content = fs.readFileSync(zshrcPath, 'utf-8').trim();
+
+  if (isEmpty(content)) {
+    return;
+  }
+
+  const data = content
+    .split('\n')
+    .filter(Boolean)
+    .map((alias) => alias.trim())
+    .filter((alias) => {
+      const match = alias.match(/^alias (\w+)='(.*)'$/);
+
+      if (!specificAlias) {
+        return !match;
+      }
+
+      if (isArray(match)) {
+        const [_command, key, value] = match;
+        return key !== specificAlias.key && value !== specificAlias.value;
+      }
+
+      return true;
+    })
+    .join('\n');
+
+  fs.writeFileSync(zshrcPath, data);
+
+  reloadZshrc();
 }

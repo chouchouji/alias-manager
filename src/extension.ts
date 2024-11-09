@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { appendAliasToZshrc, getAliases } from './aliases';
+import { appendAliasToZshrc, deleteAliases, getAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
   CREATE_ALIAS_PLACEHOLDER,
@@ -9,6 +9,7 @@ import {
 } from './constants';
 import { isEmpty, isNonEmptyArray } from 'rattail';
 import { getAliasName } from './utils';
+import { Alias } from './types';
 
 export function activate(context: vscode.ExtensionContext) {
   const aliasView = new AliasView();
@@ -18,6 +19,10 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.refresh', () => aliasView.refresh()));
 
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()));
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.delete', (item: AliasItem) => aliasView.deleteAlias(item)),
+  );
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
@@ -59,6 +64,22 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.refresh();
   }
 
+  deleteAlias(alias: AliasItem) {
+    // delete all aliases
+    if (!alias.data) {
+      deleteAliases();
+      this.refresh();
+      return;
+    }
+
+    // delete specific alias
+    deleteAliases({
+      key: alias.data.key,
+      value: alias.data.value,
+    });
+    this.refresh();
+  }
+
   getTreeItem(element: AliasItem): vscode.TreeItem {
     return element;
   }
@@ -74,21 +95,27 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   private getAliasTree(): AliasItem[] {
     const children = getAliases().map((alias) => {
       const { key, value } = alias;
-      return new AliasItem(`${key} = '${value}'`);
+      return new AliasItem(`${key} = '${value}'`, [], alias);
     });
 
-    return [new AliasItem(SYSTEM_ALIAS, children)];
+    return [new AliasItem(SYSTEM_ALIAS, children, undefined)];
   }
 }
 class AliasItem extends vscode.TreeItem {
+  contextValue = 'alias';
+  data: Alias | undefined = undefined;
+
   constructor(
     public readonly label: string,
     public readonly children: AliasItem[] = [],
+    public readonly alias: Alias | undefined,
   ) {
     super(
       label,
       isNonEmptyArray(children) ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.None,
     );
+
+    this.data = alias;
   }
 }
 

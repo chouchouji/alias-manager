@@ -22,6 +22,16 @@
         "command": "aliasView.add",
         "title": "Add Alias",
         "icon": "$(add)"
+      },
+      {
+        "command": "aliasView.delete",
+        "title": "Delete Alias"
+      }
+    ],
+    "commandPalette": [
+      {
+        "command": "aliasView.delete",
+        "when": "false"
       }
     ],
     "menus": {
@@ -35,6 +45,12 @@
           "command": "aliasView.add",
           "when": "view == aliasView",
           "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "aliasView.delete",
+          "when": "view == aliasView && viewItem == alias"
         }
       ]
     },
