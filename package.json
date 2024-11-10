@@ -5,7 +5,7 @@
   "icon": "resources/logo.png",
   "version": "0.0.2",
   "engines": {
-    "vscode": "^1.95.0"
+    "vscode": "^1.74.3"
   },
   "publisher": "chouchouji",
   "categories": [
@@ -161,7 +161,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.9",
     "@types/node": "20.x",
-    "@types/vscode": "^1.95.0",
+    "@types/vscode": "^1.74.3",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.7.0",
     "@varlet/release": "^0.3.1",
