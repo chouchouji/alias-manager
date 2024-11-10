@@ -186,4 +186,4 @@ class AliasItem extends vscode.TreeItem {
   }
 }
 
-export function deactivate() { }
+export function deactivate() {}
