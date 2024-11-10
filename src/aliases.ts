@@ -20,7 +20,7 @@ export function getAliases() {
     .filter(Boolean)
     .map((alias) => alias.trim())
     .reduce((acc: Alias[], content) => {
-      const match = content.match(/^alias (\w+)='(.*)'$/);
+      const match = content.match(/^alias (\w+)=['"](.*)['"]$/);
       if (isArray(match)) {
         const [_command, key, value] = match;
         acc.push({
@@ -56,7 +56,7 @@ export function deleteAliases(specificAlias?: Alias) {
     .filter(Boolean)
     .map((alias) => alias.trim())
     .filter((alias) => {
-      const match = alias.match(/^alias (\w+)='(.*)'$/);
+      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
 
       if (!specificAlias) {
         return !match;
@@ -88,7 +88,7 @@ export function renameAliases(specificAlias: Alias, command: string) {
     .filter(Boolean)
     .map((alias) => alias.trim())
     .reduce((acc: string[], alias) => {
-      const match = alias.match(/^alias (\w+)='(.*)'$/);
+      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
 
       if (isArray(match)) {
         const [oldCommand, key, value] = match;
