@@ -20,6 +20,9 @@
     "type": "git",
     "url": "https://github.com/chouchouji/alias-manager.git"
   },
+  "bugs": {
+    "url": "https://github.com/chouchouji/alias-manager/issues"
+  },
   "keywords": [
     "extension",
     "alias",
@@ -143,8 +146,7 @@
   "packageManager": "pnpm@9.1.1",
   "scripts": {
     "postinstall": "simple-git-hooks",
-    "vscode:prepublish": "pnpm run package",
-    "vscode:publish": "pnpm vsce package --no-dependencies",
+    "vscode:package": "pnpm vsce package --no-dependencies",
     "release": "pnpm run package && vr release --skip-npm-publish",
     "compile": "webpack",
     "watch": "webpack --watch",

@@ -12,7 +12,7 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
-
 .prettierignore
 prettier.config.mjs
 pnpm-lock.yaml
+*.github/**
