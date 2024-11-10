@@ -146,17 +146,12 @@
   "packageManager": "pnpm@9.1.1",
   "scripts": {
     "postinstall": "simple-git-hooks",
-    "vscode:package": "pnpm vsce package --no-dependencies",
-    "release": "pnpm run package && vr release --skip-npm-publish",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "package": "pnpm vsce package --no-dependencies",
+    "release": "vr release --skip-npm-publish",
     "lint": "eslint src --fix",
     "format": "prettier . --write",
-    "test": "vscode-test"
+    "dev": "tsup --watch",
+    "build": "tsup"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.9",
@@ -173,6 +168,7 @@
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "ts-loader": "^9.5.1",
+    "tsup": "8.3.5",
     "typescript": "^5.6.3",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
