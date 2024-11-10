@@ -140,6 +140,7 @@
       "eslint --fix"
     ]
   },
+  "packageManager": "pnpm@9.1.1",
   "scripts": {
     "postinstall": "simple-git-hooks",
     "vscode:prepublish": "pnpm run package",
@@ -151,7 +152,7 @@
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "format": "prettier . --write",
     "test": "vscode-test"
   },
