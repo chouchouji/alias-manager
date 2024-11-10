@@ -48,12 +48,15 @@ importers:
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.11.1
       ts-loader:
         specifier: ^9.5.1
-        version: 9.5.1(typescript@5.6.3)(webpack@5.96.1)
+        version: 9.5.1(typescript@5.6.3)(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))
       tsup:
         specifier: 8.3.5
         version: 8.3.5(typescript@5.6.3)
@@ -2206,6 +2209,11 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rimraf@6.0.1:
+    resolution: {integrity: sha512-9dkvaxAsk/xNXSJzMgFqqMCuFgt2+KsOFek3TMLfo8NCPfWpBmqwyNn5Y+NX56QUYfCtsyhF3ayiboEoUmJk/A==}
+    engines: {node: 20 || >=22}
+    hasBin: true
+
   rollup@4.25.0:
     resolution: {integrity: sha512-uVbClXmR6wvx5R1M3Od4utyLUxrmOcEm3pAtMphn73Apq19PDtHpgZoEvqH2YnnaNUuvKmg2DgRd2Sqv+odyqg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -3429,17 +3437,17 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4)(webpack@5.96.1)':
+  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.96.1)
 
-  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.96.1)':
+  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.96.1)
 
-  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack@5.96.1)':
+  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.96.1)
@@ -4938,6 +4946,11 @@ snapshots:
 
   reusify@1.0.4: {}
 
+  rimraf@6.0.1:
+    dependencies:
+      glob: 11.0.0
+      package-json-from-dist: 1.0.1
+
   rollup@4.25.0:
     dependencies:
       '@types/estree': 1.0.6
@@ -5151,7 +5164,7 @@ snapshots:
       readable-stream: 3.6.2
     optional: true
 
-  terser-webpack-plugin@5.3.10(esbuild@0.24.0)(webpack@5.96.1):
+  terser-webpack-plugin@5.3.10(esbuild@0.24.0)(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -5218,7 +5231,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-loader@9.5.1(typescript@5.6.3)(webpack@5.96.1):
+  ts-loader@9.5.1(typescript@5.6.3)(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.17.1
@@ -5331,9 +5344,9 @@ snapshots:
   webpack-cli@5.1.4(webpack@5.96.1):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4)(webpack@5.96.1)
-      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4)(webpack@5.96.1)
-      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4)(webpack@5.96.1)
+      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))
+      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))
+      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4(webpack@5.96.1))(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))
       colorette: 2.0.20
       commander: 10.0.1
       cross-spawn: 7.0.5
@@ -5375,7 +5388,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.24.0)(webpack@5.96.1)
+      terser-webpack-plugin: 5.3.10(esbuild@0.24.0)(webpack@5.96.1(esbuild@0.24.0)(webpack-cli@5.1.4))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     optionalDependencies:
