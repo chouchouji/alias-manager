@@ -139,7 +139,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
-    activeTerminal!.sendText(alias.data.key);
+    activeTerminal.sendText(alias.data.key);
   }
 
   getTreeItem(element: AliasItem): vscode.TreeItem {
