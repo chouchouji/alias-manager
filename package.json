@@ -7,9 +7,15 @@
   "engines": {
     "vscode": "^1.95.0"
   },
+  "publisher": "chouchouji",
   "categories": [
     "Other"
   ],
+  "author": {
+    "name": "chouchouji",
+    "email": "1305974212@qq.com"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/chouchouji/alias-manager.git"
