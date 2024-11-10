@@ -129,6 +129,7 @@
   "scripts": {
     "vscode:prepublish": "pnpm run package",
     "vscode:publish": "pnpm vsce package --no-dependencies",
+    "release": "pnpm run package && vr release --skip-npm-publish",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -145,6 +146,7 @@
     "@types/vscode": "^1.95.0",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.7.0",
+    "@varlet/release": "^0.3.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
     "@vscode/vsce": "^3.2.1",
