@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/chouchouji/alias-manager/compare/v0.0.3...v0.0.4) (2024-11-10)
+
+
+### Bug Fixes
+
+* adapt to double quotes ([920d88c](https://github.com/chouchouji/alias-manager/commit/920d88c8b7c554ef38c0bf8656e30f1cc64eec39))
+
+
+
 ## [0.0.3](https://github.com/chouchouji/alias-manager/compare/v0.0.2...v0.0.3) (2024-11-10)
 
 
