@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      rattail:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@types/mocha':
         specifier: ^10.0.9
@@ -1581,6 +1585,9 @@ packages:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
 
+  mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
   mkdirp-classic@0.5.3:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
 
@@ -1796,6 +1803,10 @@ packages:
 
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
+
+  rattail@1.0.0:
+    resolution: {integrity: sha512-ccYN21TuJWxP4/XI0BfYcc9NFE+wvNk5tT4J4oyYMG3vUryiW218NZdXAbtp6C1L4IZLjdCW/dFz1Ym4WwBGFA==}
+    engines: {pnpm: '>=9.0'}
 
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
@@ -4009,6 +4020,8 @@ snapshots:
 
   minipass@7.1.2: {}
 
+  mitt@3.0.1: {}
+
   mkdirp-classic@0.5.3:
     optional: true
 
@@ -4247,6 +4260,10 @@ snapshots:
   randombytes@2.1.0:
     dependencies:
       safe-buffer: 5.2.1
+
+  rattail@1.0.0:
+    dependencies:
+      mitt: 3.0.1
 
   rc@1.2.8:
     dependencies:
