@@ -122,10 +122,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    renameAliases({
-      key,
-      value,
-    }, command!);
+    renameAliases(
+      {
+        key,
+        value,
+      },
+      command!,
+    );
     this.refresh();
   }
 

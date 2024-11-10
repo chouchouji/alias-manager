@@ -97,7 +97,7 @@ export function renameAliases(specificAlias: Alias, command: string) {
         } else {
           acc.push(oldCommand);
         }
-      }else {
+      } else {
         acc.push(alias);
       }
 

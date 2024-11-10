@@ -128,6 +128,7 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
+    "vscode:publish": "pnpm vsce package --no-dependencies",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -146,6 +147,7 @@
     "@typescript-eslint/parser": "^8.7.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.1",
     "eslint": "^9.13.0",
     "prettier": "^3.3.3",
     "ts-loader": "^9.5.1",
