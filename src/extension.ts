@@ -19,16 +19,18 @@ export function activate(context: vscode.ExtensionContext) {
 
   const aliasView = new AliasView();
 
-  // watch store path
-  vscode.workspace.onDidChangeConfiguration((event) => {
-    if (event.affectsConfiguration('alias-manager.defaultStorePath')) {
-      const defaultStorePath = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultStorePath');
-      if (defaultStorePath) {
-        storePath.path = defaultStorePath;
-        aliasView.refresh();
+  context.subscriptions.push(
+    // watch store path
+    vscode.workspace.onDidChangeConfiguration((event) => {
+      if (event.affectsConfiguration('alias-manager.defaultStorePath')) {
+        const defaultStorePath = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultStorePath');
+        if (defaultStorePath) {
+          storePath.path = defaultStorePath;
+          aliasView.refresh();
+        }
       }
-    }
-  });
+    }),
+  );
 
   context.subscriptions.push(vscode.window.registerTreeDataProvider('aliasView', aliasView));
 
@@ -97,11 +99,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     // delete specific alias
-    const { key, value } = alias.data;
-    deleteAliases({
-      key,
-      value,
-    });
+    deleteAliases(alias.data);
     this.refresh();
   }
 
@@ -110,11 +108,9 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const { key, value } = alias.data;
-
     const command = await vscode.window.showInputBox({
       placeHolder: CREATE_ALIAS_PLACEHOLDER,
-      value,
+      value: alias.data.value,
     });
 
     if (isEmpty(command)) {
@@ -122,13 +118,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    renameAliases(
-      {
-        key,
-        value,
-      },
-      command!,
-    );
+    renameAliases(alias.data, command!);
     this.refresh();
   }
 
