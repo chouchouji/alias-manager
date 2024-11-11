@@ -37,7 +37,7 @@
       "properties": {
         "alias-manager.defaultStorePath": {
           "type": "string",
-          "description": "The path used to store aliases, default value is ${homedir}/.zshrc"
+          "description": "The path used to store aliases, default value is ${homedir}/.zshrc. e.g. /Users/chouchouji/.zshrc"
         }
       }
     },
