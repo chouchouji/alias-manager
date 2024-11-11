@@ -109,3 +109,22 @@ export function renameAliases(specificAlias: Alias, command: string) {
 
   reloadStoreFile();
 }
+
+export function getCopyAliases() {
+  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+
+  if (isEmpty(content)) {
+    return;
+  }
+
+  const data = content
+    .split('\n')
+    .map((alias) => alias.trim())
+    .filter((alias) => {
+      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
+      return !!match;
+    })
+    .join('\n');
+
+  return data;
+}

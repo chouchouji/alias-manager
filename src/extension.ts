@@ -1,12 +1,14 @@
 import * as vscode from 'vscode';
 import os from 'node:os';
 import path from 'node:path';
-import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases';
+import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCopyAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
+  COPY_ALIAS_SUCCESSFULLY,
   CREATE_ALIAS_PLACEHOLDER,
   DUPLICATE_ALIAS_NAME,
   NEED_CHECK_THE_FORMAT,
+  NO_ANY_ALIAS,
   SYSTEM_ALIAS,
 } from './constants';
 import { isEmpty, isNonEmptyArray } from 'rattail';
@@ -40,15 +42,21 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()));
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.delete', (item: AliasItem) => aliasView.deleteAlias(item)),
+    vscode.commands.registerCommand('aliasView.delete', (alias: AliasItem) => aliasView.deleteAlias(alias)),
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.rename', (item: AliasItem) => aliasView.renameAlias(item)),
+    vscode.commands.registerCommand('aliasView.rename', (alias: AliasItem) => aliasView.renameAlias(alias)),
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.run', (item: AliasItem) => aliasView.runAlias(item)),
+    vscode.commands.registerCommand('aliasView.run', (alias: AliasItem) => aliasView.runAlias(alias)),
+  );
+
+  context.subscriptions.push(vscode.commands.registerCommand('aliasView.copyAll', () => aliasView.copyAllAlias()));
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.copy', (alias: AliasItem) => aliasView.copyAlias(alias)),
   );
 }
 
@@ -131,6 +139,29 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
     activeTerminal.sendText(alias.data.key);
+  }
+
+  copyAlias(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const { key, value } = alias.data;
+    const content = `alias ${key}='${value}'`;
+
+    vscode.env.clipboard.writeText(content);
+    vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
+  }
+
+  copyAllAlias() {
+    const alias = getCopyAliases();
+    if (!alias) {
+      vscode.window.showWarningMessage(NO_ANY_ALIAS);
+      return;
+    }
+
+    vscode.env.clipboard.writeText(alias);
+    vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
   }
 
   getTreeItem(element: AliasItem): vscode.TreeItem {

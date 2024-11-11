@@ -53,6 +53,11 @@
         "icon": "$(add)"
       },
       {
+        "command": "aliasView.copyAll",
+        "title": "Copy All Alias",
+        "icon": "$(files)"
+      },
+      {
         "command": "aliasView.delete",
         "title": "Delete Alias"
       },
@@ -64,6 +69,10 @@
       {
         "command": "aliasView.rename",
         "title": "Rename Alias"
+      },
+      {
+        "command": "aliasView.copy",
+        "title": "Copy Alias"
       }
     ],
     "commandPalette": [
@@ -76,6 +85,10 @@
         "when": "true"
       },
       {
+        "command": "aliasView.copyAll",
+        "when": "true"
+      },
+      {
         "command": "aliasView.delete",
         "when": "false"
       },
@@ -85,6 +98,10 @@
       },
       {
         "command": "aliasView.run",
+        "when": "false"
+      },
+      {
+        "command": "aliasView.copy",
         "when": "false"
       }
     ],
@@ -97,6 +114,11 @@
         },
         {
           "command": "aliasView.add",
+          "when": "view == aliasView",
+          "group": "navigation"
+        },
+        {
+          "command": "aliasView.copyAll",
           "when": "view == aliasView",
           "group": "navigation"
         }
@@ -113,6 +135,10 @@
         },
         {
           "command": "aliasView.rename",
+          "when": "view == aliasView && viewItem == alias_child"
+        },
+        {
+          "command": "aliasView.copy",
           "when": "view == aliasView && viewItem == alias_child"
         }
       ]
