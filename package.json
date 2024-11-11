@@ -9,7 +9,8 @@
   },
   "publisher": "chouchouji",
   "categories": [
-    "Other"
+    "Other",
+    "Visualization"
   ],
   "author": {
     "name": "chouchouji",
@@ -147,7 +148,7 @@
   "scripts": {
     "clean": "rimraf node_modules dist *.vsix",
     "postinstall": "simple-git-hooks",
-    "package": "pnpm vsce package --no-dependencies",
+    "package": "rimraf *.vsix && pnpm vsce package --no-dependencies",
     "release": "vr release --skip-npm-publish",
     "lint": "eslint src --fix",
     "format": "prettier . --write",
