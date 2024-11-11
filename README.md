@@ -26,19 +26,19 @@ You can create a new alias.
 > Please ensure that you have understood how to create a right alias.
 > Don't allow to add `duplicate` alias.
 
-![create-alias](https://github.com/user-attachments/assets/29caefb6-fcbc-4324-b4a6-d3a8d6d30d82)
+![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)
 
 ### Rename Alias
 
 It supports rename an alias.
 
-![rename-alias](https://github.com/user-attachments/assets/1bd4e199-5476-4d8e-b126-7a62d5b35201)
+![rename](https://github.com/user-attachments/assets/a2c71fc5-0dc0-4873-9427-7bd509193b5b)
 
 ### Delete Alias(es)
 
 It supports delete all aliases or one alias.
 
-![delete-alias](https://github.com/user-attachments/assets/c61cd617-526b-45fb-9cf5-78d7eecbaa4e)
+![delete](https://github.com/user-attachments/assets/5817a6e2-78ab-48bb-9a89-4bbb2d4379dc)
 
 ### Run Alias
 
@@ -46,7 +46,7 @@ Click `run` button, it will activate terminal and exec that command.
 
 If the terminal shows error like `command not found`, close terminal and try again.
 
-![run-alias](https://github.com/user-attachments/assets/eb0cda22-cea0-4eed-a8d5-100a2a95a66b)
+![run](https://github.com/user-attachments/assets/ad3f5b4d-f9d8-4eda-8b48-1b6f6a2705c5)
 
 ### Set Store Path
 
