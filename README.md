@@ -48,6 +48,12 @@ If the terminal shows error like `command not found`, close terminal and try aga
 
 ![run](https://github.com/user-attachments/assets/ad3f5b4d-f9d8-4eda-8b48-1b6f6a2705c5)
 
+### Copy Alias
+
+It supports copy an alias or all aliases.
+
+![copy](https://github.com/user-attachments/assets/b9f4522e-4b87-4ba5-892c-1aafbbe0f187)
+
 ### Set Store Path
 
 The default store path is `${homedir}/.zshrc`, like `/Users/xxx/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
