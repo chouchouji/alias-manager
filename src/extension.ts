@@ -11,7 +11,7 @@ import {
   NO_ANY_ALIAS,
   SYSTEM_ALIAS,
 } from './constants';
-import { isEmpty, isNonEmptyArray } from 'rattail';
+import { isNonEmptyArray } from 'rattail';
 import { getAliasName } from './utils';
 import { Alias } from './types';
 import storePath from './path';
@@ -74,10 +74,15 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   async addAlias() {
     const alias = await vscode.window.showInputBox({
       placeHolder: CREATE_ALIAS_PLACEHOLDER,
-      value: '',
+      value: undefined,
     });
 
-    if (isEmpty(alias)) {
+    // cancel input alias
+    if (alias === undefined) {
+      return;
+    }
+
+    if (!alias.length) {
       vscode.window.showErrorMessage(ALIAS_IS_NOT_EMPTY);
       return;
     }
@@ -122,7 +127,12 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       value: alias.data.value,
     });
 
-    if (isEmpty(command)) {
+    // cancel input command
+    if (command === undefined) {
+      return;
+    }
+
+    if (!command.length) {
       vscode.window.showErrorMessage(ALIAS_IS_NOT_EMPTY);
       return;
     }
