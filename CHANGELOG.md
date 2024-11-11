@@ -1,3 +1,17 @@
+## [0.0.6](https://github.com/chouchouji/alias-manager/compare/v0.0.5...v0.0.6) (2024-11-11)
+
+
+### Features
+
+* support copy alias ([7e94c30](https://github.com/chouchouji/alias-manager/commit/7e94c30614b86670a36fcfca6d07e2cc000518ea))
+
+
+### Performance Improvements
+
+* do nothing after clicking esc ([5598c69](https://github.com/chouchouji/alias-manager/commit/5598c6907584921572a4861d5c62f83e042cddc4))
+
+
+
 ## [0.0.5](https://github.com/chouchouji/alias-manager/compare/v0.0.4...v0.0.5) (2024-11-10)
 
 
