@@ -13,7 +13,7 @@
 
 ## Features
 
-- 🎨 &nbsp; Support create, delete, rename and run system alias
+- 🎨 &nbsp; Support creating, deleting, renaming, copying and running system alias
 - 📦 &nbsp; Support custom path that used to store aliases
 
 ## Usage
@@ -30,13 +30,13 @@ You can create a new alias.
 
 ### Rename Alias
 
-It supports rename an alias.
+It supports renaming an alias.
 
 ![rename](https://github.com/user-attachments/assets/a2c71fc5-0dc0-4873-9427-7bd509193b5b)
 
 ### Delete Alias(es)
 
-It supports delete all aliases or one alias.
+It supports deleting all aliases or one alias.
 
 ![delete](https://github.com/user-attachments/assets/5817a6e2-78ab-48bb-9a89-4bbb2d4379dc)
 
@@ -50,7 +50,7 @@ If the terminal shows error like `command not found`, close terminal and try aga
 
 ### Copy Alias
 
-It supports copy an alias or all aliases.
+It supports copying an alias or all aliases.
 
 ![copy](https://github.com/user-attachments/assets/b9f4522e-4b87-4ba5-892c-1aafbbe0f187)
 
