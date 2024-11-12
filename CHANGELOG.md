@@ -1,3 +1,17 @@
+## [0.0.10](https://github.com/chouchouji/alias-manager/compare/v0.0.9...v0.0.10) (2024-11-12)
+
+
+### Bug Fixes
+
+* fix alias deletion removing duplicates with the same command ([cbd3cbe](https://github.com/chouchouji/alias-manager/commit/cbd3cbeacda89cb8849f22d276ca7172f48564d2))
+
+
+### Performance Improvements
+
+* alias or unalias for current active terminal after executing some operations ([9bde539](https://github.com/chouchouji/alias-manager/commit/9bde539c0a9240d084fd9c06a6348f1d6349eb8d))
+
+
+
 ## [0.0.9](https://github.com/chouchouji/alias-manager/compare/v0.0.8...v0.0.9) (2024-11-12)
 
 
