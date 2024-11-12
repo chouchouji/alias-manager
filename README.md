@@ -42,9 +42,10 @@ It supports deleting all aliases or one alias.
 
 ### Run Alias
 
-Click `run` button, it will activate terminal and exec that command.
+Click `run` button, it will activate terminal and execute that command.
 
-If the terminal shows error like `command not found`, close terminal and try again.
+> [!TIP]
+> If the terminal shows error like `command not found`, reopen terminal and try again.
 
 ![run](https://github.com/user-attachments/assets/ad3f5b4d-f9d8-4eda-8b48-1b6f6a2705c5)
 
