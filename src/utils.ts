@@ -1,15 +1,113 @@
-export function getAliasName(alias: string) {
-  if (!alias.includes('=')) {
-    return undefined;
+import { Alias } from './types';
+
+/**
+ * Check alias name or command is valid
+ *
+ * @example
+ * ```typescript
+ * isValid(`test`) // true
+ * ```
+ * @example
+ * ```typescript
+ * isValid(`'test'`) // true
+ * ```
+ * @example
+ * ```typescript
+ * isValid(`"test"`) // true
+ * ```
+ *
+ * @param {value} string
+ * @param {boolean} [skipNoQuote=false] - whether to skip no quote validation
+ * @returns If it is valid, return true
+ */
+function isValid(value: string, skipNoQuote = false) {
+  const firstChar = value.charAt(0);
+  const lastChar = value.charAt(value.length - 1);
+
+  if (firstChar === `'` && lastChar === `'`) {
+    return true;
   }
 
-  let res = '';
-  for (let i = 0; i < alias.length; i++) {
-    const char = alias.charAt(i);
+  if (firstChar === `"` && lastChar === `"`) {
+    return true;
+  }
+
+  if (![`'`, `"`].includes(firstChar) && ![`'`, `"`].includes(lastChar) && !skipNoQuote) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Resolve alias to alias name and command.
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias     nv='node -v'`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias nv='node -v'`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias nv="node -v"`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ * @example
+ * ```typescript
+ * resolveAlias(`alias 'nv'='node -v'`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias 'nv'="node -v"`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias "nv"='node -v'`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias "nv"="node -v"`) // { aliasName: 'nv', command: 'node -v' }
+ * ```
+ *
+ * @param {value} string
+ * @returns If it is not valid, return undefined
+ */
+export function resolveAlias(value: string): Alias | undefined {
+  if (!value.startsWith('alias')) {
+    return;
+  }
+
+  const formatValue = value.slice(5).trim();
+  let aliasName = '';
+  let command = '';
+  let hasEqual = false;
+
+  for (let char of formatValue) {
     if (char === '=') {
-      return res;
+      hasEqual = true;
+      continue;
     }
 
-    res += char;
+    if (!hasEqual) {
+      aliasName += char;
+    } else {
+      command += char;
+    }
   }
+
+  if (isValid(aliasName) && isValid(command, true)) {
+    return {
+      aliasName: aliasName.replace(/^['"](.*)['"]$/, '$1'),
+      command: command.replace(/^['"](.*)['"]$/, '$1'),
+    };
+  }
+
+  return undefined;
 }

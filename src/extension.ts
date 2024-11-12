@@ -12,7 +12,7 @@ import {
   SYSTEM_ALIAS,
 } from './constants';
 import { isNonEmptyArray } from 'rattail';
-import { getAliasName } from './utils';
+import { resolveAlias } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
@@ -87,19 +87,19 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const aliasName = getAliasName(alias!);
-    if (!aliasName) {
+    const resolvedAlias = resolveAlias(`alias ${alias}`);
+    if (!resolvedAlias) {
       vscode.window.showErrorMessage(NEED_CHECK_THE_FORMAT);
       return;
     }
 
-    const keys = getAliases().map((alias) => alias.key);
-    if (keys.includes(aliasName)) {
+    const aliasNames = getAliases().map((alias) => alias.aliasName);
+    if (aliasNames.includes(resolvedAlias.aliasName)) {
       vscode.window.showWarningMessage(DUPLICATE_ALIAS_NAME);
       return;
     }
 
-    appendAliasToStoreFile(alias!);
+    appendAliasToStoreFile(alias);
 
     this.refresh();
   }
@@ -124,7 +124,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     const command = await vscode.window.showInputBox({
       placeHolder: CREATE_ALIAS_PLACEHOLDER,
-      value: alias.data.value,
+      value: alias.data.command,
     });
 
     // cancel input command
@@ -137,7 +137,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    renameAliases(alias.data, command!);
+    renameAliases(alias.data, command);
     this.refresh();
   }
 
@@ -148,7 +148,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
-    activeTerminal.sendText(alias.data.key);
+    activeTerminal.sendText(alias.data.aliasName);
   }
 
   copyAlias(alias: AliasItem) {
@@ -156,8 +156,8 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const { key, value } = alias.data;
-    const content = `alias ${key}='${value}'`;
+    const { aliasName, command } = alias.data;
+    const content = `alias ${aliasName}='${command}'`;
 
     vscode.env.clipboard.writeText(content);
     vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
@@ -188,8 +188,8 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   private getAliasTree(): AliasItem[] {
     const children = getAliases().map((alias) => {
-      const { key, value } = alias;
-      return new AliasItem(`${key} = '${value}'`, [], alias);
+      const { aliasName, command } = alias;
+      return new AliasItem(`${aliasName} = '${command}'`, [], alias);
     });
 
     return [new AliasItem(SYSTEM_ALIAS, children, undefined, false)];

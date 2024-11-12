@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import { exec } from 'node:child_process';
-import { isEmpty, isArray } from 'rattail';
+import { isEmpty } from 'rattail';
 import { Alias } from './types';
 import storePath from './path';
+import { resolveAlias } from './utils';
 
 function reloadStoreFile() {
   exec(`source ${storePath.path}`, { shell: '/bin/bash' });
@@ -20,12 +21,12 @@ export function getAliases() {
     .filter(Boolean)
     .map((alias) => alias.trim())
     .reduce((acc: Alias[], content) => {
-      const match = content.match(/^alias (\w+)=['"](.*)['"]$/);
-      if (isArray(match)) {
-        const [_command, key, value] = match;
+      const alias = resolveAlias(content);
+      if (alias) {
+        const { aliasName, command } = alias;
         acc.push({
-          key,
-          value,
+          aliasName,
+          command,
         });
       }
       return acc;
@@ -55,16 +56,16 @@ export function deleteAliases(specificAlias?: Alias) {
     .split('\n')
     .filter(Boolean)
     .map((alias) => alias.trim())
-    .filter((alias) => {
-      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
+    .filter((content) => {
+      const alias = resolveAlias(content);
 
       if (!specificAlias) {
-        return !match;
+        return !alias;
       }
 
-      if (isArray(match)) {
-        const [_command, key, value] = match;
-        return key !== specificAlias.key && value !== specificAlias.value;
+      if (alias) {
+        const { aliasName, command } = alias;
+        return aliasName !== specificAlias.aliasName && command !== specificAlias.command;
       }
 
       return true;
@@ -87,18 +88,18 @@ export function renameAliases(specificAlias: Alias, command: string) {
     .split('\n')
     .filter(Boolean)
     .map((alias) => alias.trim())
-    .reduce((acc: string[], alias) => {
-      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
+    .reduce((acc: string[], content) => {
+      const alias = resolveAlias(content);
 
-      if (isArray(match)) {
-        const [oldCommand, key, value] = match;
-        if (key === specificAlias.key && value === specificAlias.value) {
-          acc.push(`alias ${key}='${command}'`);
+      if (alias) {
+        const { aliasName, command: OldCommand } = alias;
+        if (aliasName === specificAlias.aliasName && OldCommand === specificAlias.command) {
+          acc.push(`alias ${aliasName}='${command}'`);
         } else {
-          acc.push(oldCommand);
+          acc.push(content);
         }
       } else {
-        acc.push(alias);
+        acc.push(content);
       }
 
       return acc;
@@ -120,9 +121,9 @@ export function getCopyAliases() {
   const data = content
     .split('\n')
     .map((alias) => alias.trim())
-    .filter((alias) => {
-      const match = alias.match(/^alias (\w+)=['"](.*)['"]$/);
-      return !!match;
+    .filter((content) => {
+      const alias = resolveAlias(content);
+      return !!alias;
     })
     .join('\n');
 
