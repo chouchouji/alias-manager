@@ -101,19 +101,36 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     appendAliasToStoreFile(alias);
 
+    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+    activeTerminal.show();
+    activeTerminal.sendText(`alias ${alias}`);
+
     this.refresh();
   }
 
   deleteAlias(alias: AliasItem) {
     // delete all aliases
     if (!alias.data) {
+      const commands = getAliases().reduce((acc, alias) => {
+        return (acc += ` ${alias.aliasName}`);
+      }, 'unalias');
+      const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+      activeTerminal.show();
+      activeTerminal.sendText(commands);
+
       deleteAliases();
+
       this.refresh();
       return;
     }
 
     // delete specific alias
     deleteAliases(alias.data);
+
+    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+    activeTerminal.show();
+    activeTerminal.sendText(`unalias ${alias.data.aliasName}`);
+
     this.refresh();
   }
 
@@ -138,6 +155,11 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     renameAliases(alias.data, command);
+
+    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+    activeTerminal.show();
+    activeTerminal.sendText(`alias ${alias.data.aliasName}='${command}'`);
+
     this.refresh();
   }
 
