@@ -19,9 +19,9 @@ export function getAliases() {
   const aliases = content
     .split('\n')
     .filter(Boolean)
-    .map((alias) => alias.trim())
-    .reduce((acc: Alias[], content) => {
-      const alias = resolveAlias(content);
+    .map((text) => text.trim())
+    .reduce((acc: Alias[], text) => {
+      const alias = resolveAlias(text);
       if (alias) {
         const { aliasName, command } = alias;
         acc.push({
@@ -55,17 +55,17 @@ export function deleteAliases(specificAlias?: Alias) {
   const data = content
     .split('\n')
     .filter(Boolean)
-    .map((alias) => alias.trim())
-    .filter((content) => {
-      const alias = resolveAlias(content);
+    .map((text) => text.trim())
+    .filter((text) => {
+      const alias = resolveAlias(text);
 
       if (!specificAlias) {
         return !alias;
       }
 
       if (alias) {
-        const { aliasName, command } = alias;
-        return aliasName !== specificAlias.aliasName && command !== specificAlias.command;
+        const isSameAlias = alias.aliasName === specificAlias.aliasName && alias.command === specificAlias.command;
+        return !isSameAlias;
       }
 
       return true;
@@ -87,19 +87,19 @@ export function renameAliases(specificAlias: Alias, command: string) {
   const data = content
     .split('\n')
     .filter(Boolean)
-    .map((alias) => alias.trim())
-    .reduce((acc: string[], content) => {
-      const alias = resolveAlias(content);
+    .map((text) => text.trim())
+    .reduce((acc: string[], text) => {
+      const alias = resolveAlias(text);
 
       if (alias) {
         const { aliasName, command: OldCommand } = alias;
         if (aliasName === specificAlias.aliasName && OldCommand === specificAlias.command) {
           acc.push(`alias ${aliasName}='${command}'`);
         } else {
-          acc.push(content);
+          acc.push(text);
         }
       } else {
-        acc.push(content);
+        acc.push(text);
       }
 
       return acc;
