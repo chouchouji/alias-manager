@@ -1,3 +1,12 @@
+## [0.0.9](https://github.com/chouchouji/alias-manager/compare/v0.0.8...v0.0.9) (2024-11-12)
+
+
+### Bug Fixes
+
+* correct the rule of matching alias ([#7](https://github.com/chouchouji/alias-manager/issues/7)) ([642fe4b](https://github.com/chouchouji/alias-manager/commit/642fe4b79af2e48395c8fca7f0b08a0f8b16f871))
+
+
+
 ## [0.0.8](https://github.com/chouchouji/alias-manager/compare/v0.0.7...v0.0.8) (2024-11-12)
 
 
