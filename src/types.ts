@@ -1,4 +1,4 @@
 export interface Alias {
-  key: string;
-  value: string;
+  aliasName: string;
+  command: string;
 }
