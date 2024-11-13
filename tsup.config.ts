@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
+export default defineConfig((option) => ({
   entry: ['src/extension.ts'],
   external: ['vscode'],
   noExternal: ['rattail'],
@@ -9,5 +9,5 @@ export default defineConfig({
   format: ['cjs'],
   outDir: 'dist',
   sourcemap: true,
-  minify: true,
-});
+  minify: !option.watch,
+}));
