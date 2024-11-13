@@ -82,6 +82,14 @@
       {
         "command": "aliasView.copy",
         "title": "Copy Alias"
+      },
+      {
+        "command": "aliasView.removeFromCurrentGroup",
+        "title": "Remove From Current Group"
+      },
+      {
+        "command": "aliasView.addToGroup",
+        "title": "Add To Group"
       }
     ],
     "commandPalette": [
@@ -158,9 +166,27 @@
         {
           "command": "aliasView.copy",
           "when": "view == aliasView && viewItem == alias_child"
+        },
+        {
+          "submenu": "groupOperation",
+          "when": "view == aliasView && viewItem == alias_child"
+        }
+      ],
+      "groupOperation": [
+        {
+          "command": "aliasView.removeFromCurrentGroup"
+        },
+        {
+          "command": "aliasView.addToGroup"
         }
       ]
     },
+    "submenus": [
+      {
+        "id": "groupOperation",
+        "label": "Group Operation"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {

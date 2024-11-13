@@ -17,3 +17,5 @@ export const CREATE_GROUP_PLACEHOLDER = 'Please enter new group';
 export const GROUP_IS_NOT_EMPTY = 'Group is mandatory to execute this action';
 
 export const DUPLICATE_GROUP_NAME = 'Duplicate group';
+
+export const CHOOSE_GROUP_PLACEHOLDER = 'Please choose a group to add';

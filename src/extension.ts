@@ -4,6 +4,7 @@ import path from 'node:path';
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCopyAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
+  CHOOSE_GROUP_PLACEHOLDER,
   COPY_ALIAS_SUCCESSFULLY,
   CREATE_ALIAS_PLACEHOLDER,
   CREATE_GROUP_PLACEHOLDER,
@@ -68,6 +69,16 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.deleteGroup', (alias: AliasItem) => aliasView.deleteGroup(alias)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.addToGroup', (alias: AliasItem) => aliasView.addToGroup(alias)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.removeFromCurrentGroup', (alias: AliasItem) =>
+      aliasView.removeFromCurrentGroup(alias),
+    ),
   );
 }
 
@@ -214,6 +225,46 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
   }
 
+  removeFromCurrentGroup(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const {
+      group,
+      data: { aliasName, command },
+    } = alias;
+
+    const aliases = (this.globalState.get(alias.group) as Alias[]).filter((aliasItem) => {
+      return aliasItem.aliasName !== aliasName && aliasItem.command !== command;
+    });
+
+    this.globalState.update(group, aliases);
+
+    this.refresh();
+  }
+
+  async addToGroup(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const selectedGroup = await vscode.window.showQuickPick(
+      this.globalState.keys().filter((key) => key !== SYSTEM_ALIAS),
+      { placeHolder: CHOOSE_GROUP_PLACEHOLDER },
+    );
+
+    // cancel pick group
+    if (selectedGroup === undefined) {
+      return;
+    }
+
+    const aliases = (this.globalState.get(selectedGroup) ?? []) as Alias[];
+    this.globalState.update(selectedGroup, [...aliases, alias.data]);
+
+    this.refresh();
+  }
+
   deleteGroup(group: AliasItem) {
     this.globalState.update(group.label, undefined);
     this.refresh();
@@ -262,10 +313,10 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
       const children = (this.globalState.get(key) as Alias[]).map((alias) => {
         const { aliasName, command } = alias;
-        return new AliasItem(`${aliasName} = '${command}'`, [], alias);
+        return new AliasItem(`${aliasName} = '${command}'`, [], alias, true, key);
       });
 
-      aliases.push(new AliasItem(key, children, undefined, false));
+      aliases.push(new AliasItem(key, children, undefined, false, key));
       return aliases;
     }, []);
 
@@ -275,12 +326,14 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 class AliasItem extends vscode.TreeItem {
   contextValue = 'alias_child';
   data: Alias | undefined = undefined;
+  groupName: string;
 
   constructor(
     public readonly label: string,
     public readonly children: AliasItem[] = [],
     public readonly alias: Alias | undefined,
     public readonly isLeafNode: boolean = true,
+    public readonly group: string,
   ) {
     super(
       label,
@@ -288,6 +341,7 @@ class AliasItem extends vscode.TreeItem {
     );
 
     this.data = alias;
+    this.groupName = group;
 
     if (!isLeafNode) {
       this.contextValue = label === SYSTEM_ALIAS ? 'alias_system' : 'alias_parent';
