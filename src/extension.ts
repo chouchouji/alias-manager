@@ -20,7 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc');
 
-  const aliasView = new AliasView();
+  const globalState = context.globalState;
+
+  const aliasView = new AliasView(globalState);
 
   context.subscriptions.push(
     // watch store path
@@ -66,6 +68,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   >();
 
   readonly onDidChangeTreeData: vscode.Event<AliasItem | undefined | null | void> = this._onDidChangeTreeData.event;
+
+  globalState: vscode.Memento;
+
+  constructor(globalState: vscode.Memento) {
+    this.globalState = globalState;
+    this.globalState.update(SYSTEM_ALIAS, getAliases());
+  }
 
   refresh() {
     this._onDidChangeTreeData.fire();
@@ -209,12 +218,17 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   private getAliasTree(): AliasItem[] {
-    const children = getAliases().map((alias) => {
-      const { aliasName, command } = alias;
-      return new AliasItem(`${aliasName} = '${command}'`, [], alias);
-    });
+    const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
+      const children = (this.globalState.get(key) as Alias[]).map((alias) => {
+        const { aliasName, command } = alias;
+        return new AliasItem(`${aliasName} = '${command}'`, [], alias);
+      });
 
-    return [new AliasItem(SYSTEM_ALIAS, children, undefined, false)];
+      aliases.push(new AliasItem(key, children, undefined, false));
+      return aliases;
+    }, []);
+
+    return aliasTree;
   }
 }
 class AliasItem extends vscode.TreeItem {

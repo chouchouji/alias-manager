@@ -48,6 +48,11 @@
         "icon": "$(refresh)"
       },
       {
+        "command": "aliasView.newGroup",
+        "title": "New Group",
+        "icon": "${split-vertical}"
+      },
+      {
         "command": "aliasView.add",
         "title": "Add Alias",
         "icon": "$(add)"
@@ -119,6 +124,11 @@
         },
         {
           "command": "aliasView.copyAll",
+          "when": "view == aliasView",
+          "group": "navigation"
+        },
+        {
+          "command": "aliasView.newGroup",
           "when": "view == aliasView",
           "group": "navigation"
         }
