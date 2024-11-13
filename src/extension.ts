@@ -6,7 +6,10 @@ import {
   ALIAS_IS_NOT_EMPTY,
   COPY_ALIAS_SUCCESSFULLY,
   CREATE_ALIAS_PLACEHOLDER,
+  CREATE_GROUP_PLACEHOLDER,
   DUPLICATE_ALIAS_NAME,
+  DUPLICATE_GROUP_NAME,
+  GROUP_IS_NOT_EMPTY,
   NEED_CHECK_THE_FORMAT,
   NO_ANY_ALIAS,
   SYSTEM_ALIAS,
@@ -59,6 +62,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.copy', (alias: AliasItem) => aliasView.copyAlias(alias)),
+  );
+
+  context.subscriptions.push(vscode.commands.registerCommand('aliasView.newGroup', () => aliasView.addNewGroup()));
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.deleteGroup', (alias: AliasItem) => aliasView.deleteGroup(alias)),
   );
 }
 
@@ -205,6 +214,38 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
   }
 
+  deleteGroup(group: AliasItem) {
+    this.globalState.update(group.label, undefined);
+    this.refresh();
+  }
+
+  async addNewGroup() {
+    const group = await vscode.window.showInputBox({
+      placeHolder: CREATE_GROUP_PLACEHOLDER,
+      value: undefined,
+    });
+
+    // cancel input group
+    if (group === undefined) {
+      return;
+    }
+
+    if (!group.length) {
+      vscode.window.showErrorMessage(GROUP_IS_NOT_EMPTY);
+      return;
+    }
+
+    const hasSameGroup = this.globalState.keys().includes(group);
+    if (hasSameGroup) {
+      vscode.window.showErrorMessage(DUPLICATE_GROUP_NAME);
+      return;
+    }
+
+    this.globalState.update(group, []);
+
+    this.refresh();
+  }
+
   getTreeItem(element: AliasItem): vscode.TreeItem {
     return element;
   }
@@ -249,7 +290,7 @@ class AliasItem extends vscode.TreeItem {
     this.data = alias;
 
     if (!isLeafNode) {
-      this.contextValue = 'alias_parent';
+      this.contextValue = label === SYSTEM_ALIAS ? 'alias_system' : 'alias_parent';
     }
   }
 }

@@ -50,7 +50,11 @@
       {
         "command": "aliasView.newGroup",
         "title": "New Group",
-        "icon": "${split-vertical}"
+        "icon": "$(split-vertical)"
+      },
+      {
+        "command": "aliasView.deleteGroup",
+        "title": "Delete Group"
       },
       {
         "command": "aliasView.add",
@@ -137,6 +141,10 @@
         {
           "command": "aliasView.delete",
           "when": "view == aliasView"
+        },
+        {
+          "command": "aliasView.deleteGroup",
+          "when": "view == aliasView && viewItem == alias_parent"
         },
         {
           "command": "aliasView.run",
