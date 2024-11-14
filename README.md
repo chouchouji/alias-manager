@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/6a36b308-0d20-4996-bdb5-b6197444a80c" style="width: 180px; height: 180px;" alt="logo" />
+  <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" alt="logo" />
   <h1>Alias Manager</h1>
   <p>A tool used to manage your system aliases</p>
   <p>
@@ -14,7 +14,8 @@
 ## Features
 
 - 🎨 &nbsp; Support creating, deleting, renaming, copying and running system alias
-- 📦 &nbsp; Support custom path that used to store aliases
+- 📦 &nbsp; Support grouping aliases
+- 🔧 &nbsp; Support custom path that used to store aliases
 
 ## Usage
 
@@ -54,6 +55,20 @@ Click `run` button, it will activate terminal and execute that command.
 It supports copying an alias or all aliases.
 
 ![copy](https://github.com/user-attachments/assets/b9f4522e-4b87-4ba5-892c-1aafbbe0f187)
+
+### Group Alias
+
+It support creating, deleting and renaming a new group, adding an alias to a group and removing an alias from a group.
+
+All aliases are included in `System Aliases` which is data source. You can group different aliases by creating different groups. This is very helpful for you to quickly find aliases and operate aliases.
+
+#### Create, Delete And Rename
+
+![create-group](https://github.com/user-attachments/assets/1b9e6e22-3308-4ff6-9811-0c91ac416d7a)
+
+#### Add Or Remove An Alias
+
+![move-group](https://github.com/user-attachments/assets/9079a8cc-3be3-42a2-8c09-5b60aab64c07)
 
 ### Set Store Path
 

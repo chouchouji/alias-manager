@@ -48,6 +48,15 @@
         "icon": "$(refresh)"
       },
       {
+        "command": "aliasView.newGroup",
+        "title": "New Group",
+        "icon": "$(split-vertical)"
+      },
+      {
+        "command": "aliasView.deleteGroup",
+        "title": "Delete Group"
+      },
+      {
         "command": "aliasView.add",
         "title": "Add Alias",
         "icon": "$(add)"
@@ -73,6 +82,18 @@
       {
         "command": "aliasView.copy",
         "title": "Copy Alias"
+      },
+      {
+        "command": "aliasView.removeFromCurrentGroup",
+        "title": "Remove From Current Group"
+      },
+      {
+        "command": "aliasView.addToGroup",
+        "title": "Add To Another Group"
+      },
+      {
+        "command": "aliasView.renameGroup",
+        "title": "Rename Group"
       }
     ],
     "commandPalette": [
@@ -121,28 +142,60 @@
           "command": "aliasView.copyAll",
           "when": "view == aliasView",
           "group": "navigation"
+        },
+        {
+          "command": "aliasView.newGroup",
+          "when": "view == aliasView",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
         {
           "command": "aliasView.delete",
-          "when": "view == aliasView"
+          "when": "view == aliasView && (viewItem == alias_system_child || viewItem == alias_system_parent)"
+        },
+        {
+          "command": "aliasView.deleteGroup",
+          "when": "view == aliasView && viewItem == alias_parent"
+        },
+        {
+          "command": "aliasView.renameGroup",
+          "when": "view == aliasView && viewItem == alias_parent"
         },
         {
           "command": "aliasView.run",
-          "when": "view == aliasView && viewItem == alias_child",
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)",
           "group": "inline"
         },
         {
           "command": "aliasView.rename",
-          "when": "view == aliasView && viewItem == alias_child"
+          "when": "view == aliasView && viewItem == alias_system_child"
         },
         {
           "command": "aliasView.copy",
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+        },
+        {
+          "submenu": "groupOperation",
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+        }
+      ],
+      "groupOperation": [
+        {
+          "command": "aliasView.removeFromCurrentGroup",
           "when": "view == aliasView && viewItem == alias_child"
+        },
+        {
+          "command": "aliasView.addToGroup"
         }
       ]
     },
+    "submenus": [
+      {
+        "id": "groupOperation",
+        "label": "Group Operation"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {

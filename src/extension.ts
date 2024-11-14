@@ -4,9 +4,13 @@ import path from 'node:path';
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCopyAliases } from './aliases';
 import {
   ALIAS_IS_NOT_EMPTY,
+  CHOOSE_GROUP_PLACEHOLDER,
   COPY_ALIAS_SUCCESSFULLY,
   CREATE_ALIAS_PLACEHOLDER,
+  CREATE_GROUP_PLACEHOLDER,
   DUPLICATE_ALIAS_NAME,
+  DUPLICATE_GROUP_NAME,
+  GROUP_IS_NOT_EMPTY,
   NEED_CHECK_THE_FORMAT,
   NO_ANY_ALIAS,
   SYSTEM_ALIAS,
@@ -20,7 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc');
 
-  const aliasView = new AliasView();
+  const globalState = context.globalState;
+
+  const aliasView = new AliasView(globalState);
 
   context.subscriptions.push(
     // watch store path
@@ -58,6 +64,26 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.copy', (alias: AliasItem) => aliasView.copyAlias(alias)),
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.renameGroup', (alias: AliasItem) => aliasView.renameGroup(alias)),
+  );
+
+  context.subscriptions.push(vscode.commands.registerCommand('aliasView.newGroup', () => aliasView.addNewGroup()));
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.deleteGroup', (alias: AliasItem) => aliasView.deleteGroup(alias)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.addToGroup', (alias: AliasItem) => aliasView.addToGroup(alias)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.removeFromCurrentGroup', (alias: AliasItem) =>
+      aliasView.removeFromCurrentGroup(alias),
+    ),
+  );
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
@@ -66,6 +92,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   >();
 
   readonly onDidChangeTreeData: vscode.Event<AliasItem | undefined | null | void> = this._onDidChangeTreeData.event;
+
+  globalState: vscode.Memento;
+
+  constructor(globalState: vscode.Memento) {
+    this.globalState = globalState;
+    this.globalState.update(SYSTEM_ALIAS, getAliases());
+  }
 
   refresh() {
     this._onDidChangeTreeData.fire();
@@ -101,6 +134,10 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     appendAliasToStoreFile(alias);
 
+    // add this alias to system group
+    const aliases = this.globalState.get(SYSTEM_ALIAS) as Alias[];
+    this.globalState.update(SYSTEM_ALIAS, [...aliases, resolvedAlias]);
+
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
     activeTerminal.sendText(`alias ${alias}`);
@@ -120,12 +157,27 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
       deleteAliases();
 
+      // remove all aliases under every groups
+      this.globalState.keys().forEach((group) => {
+        this.globalState.update(group, []);
+      });
+
       this.refresh();
       return;
     }
 
     // delete specific alias
     deleteAliases(alias.data);
+
+    const { aliasName, command } = alias.data;
+    // remove all aliases under every groups
+    this.globalState.keys().forEach((groupName) => {
+      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
+        return !(aliasName === aliasItem.aliasName && command === aliasItem.command);
+      });
+
+      this.globalState.update(groupName, aliases);
+    });
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
@@ -155,6 +207,16 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     renameAliases(alias.data, command);
+
+    const { aliasName, command: oldCommand } = alias.data;
+    // rename one alias under every groups
+    this.globalState.keys().forEach((groupName) => {
+      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
+        return !(aliasName === aliasItem.aliasName && oldCommand === aliasItem.command);
+      });
+
+      this.globalState.update(groupName, [...aliases, { aliasName, command }]);
+    });
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
@@ -196,6 +258,107 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     vscode.window.showInformationMessage(COPY_ALIAS_SUCCESSFULLY);
   }
 
+  removeFromCurrentGroup(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const {
+      group,
+      data: { aliasName, command },
+    } = alias;
+
+    const aliases = (this.globalState.get(alias.group) as Alias[]).filter((aliasItem) => {
+      return aliasItem.aliasName !== aliasName && aliasItem.command !== command;
+    });
+
+    this.globalState.update(group, aliases);
+
+    this.refresh();
+  }
+
+  async addToGroup(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const selectedGroup = await vscode.window.showQuickPick(
+      this.globalState.keys().filter((key) => key !== SYSTEM_ALIAS),
+      { placeHolder: CHOOSE_GROUP_PLACEHOLDER },
+    );
+
+    // cancel pick group
+    if (selectedGroup === undefined) {
+      return;
+    }
+
+    const aliases = (this.globalState.get(selectedGroup) ?? []) as Alias[];
+    this.globalState.update(selectedGroup, [...aliases, alias.data]);
+
+    this.refresh();
+  }
+
+  deleteGroup(group: AliasItem) {
+    this.globalState.update(group.label, undefined);
+    this.refresh();
+  }
+
+  async renameGroup(alias: AliasItem) {
+    const group = await vscode.window.showInputBox({
+      placeHolder: CREATE_GROUP_PLACEHOLDER,
+      value: alias.group,
+    });
+
+    // cancel input group
+    if (group === undefined) {
+      return;
+    }
+
+    if (!group.length) {
+      vscode.window.showErrorMessage(GROUP_IS_NOT_EMPTY);
+      return;
+    }
+
+    const hasSameGroup = this.globalState.keys().includes(group);
+    if (hasSameGroup) {
+      vscode.window.showErrorMessage(DUPLICATE_GROUP_NAME);
+      return;
+    }
+
+    const aliases = this.globalState.get(alias.group);
+    this.globalState.update(alias.group, undefined);
+    this.globalState.update(group, aliases);
+
+    this.refresh();
+  }
+
+  async addNewGroup() {
+    const group = await vscode.window.showInputBox({
+      placeHolder: CREATE_GROUP_PLACEHOLDER,
+      value: undefined,
+    });
+
+    // cancel input group
+    if (group === undefined) {
+      return;
+    }
+
+    if (!group.length) {
+      vscode.window.showErrorMessage(GROUP_IS_NOT_EMPTY);
+      return;
+    }
+
+    const hasSameGroup = this.globalState.keys().includes(group);
+    if (hasSameGroup) {
+      vscode.window.showErrorMessage(DUPLICATE_GROUP_NAME);
+      return;
+    }
+
+    this.globalState.update(group, []);
+
+    this.refresh();
+  }
+
   getTreeItem(element: AliasItem): vscode.TreeItem {
     return element;
   }
@@ -209,23 +372,30 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   private getAliasTree(): AliasItem[] {
-    const children = getAliases().map((alias) => {
-      const { aliasName, command } = alias;
-      return new AliasItem(`${aliasName} = '${command}'`, [], alias);
-    });
+    const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
+      const children = (this.globalState.get(key) as Alias[]).map((alias) => {
+        const { aliasName, command } = alias;
+        return new AliasItem(`${aliasName} = '${command}'`, [], alias, true, key);
+      });
 
-    return [new AliasItem(SYSTEM_ALIAS, children, undefined, false)];
+      aliases.push(new AliasItem(key, children, undefined, false, key));
+      return aliases;
+    }, []);
+
+    return aliasTree;
   }
 }
 class AliasItem extends vscode.TreeItem {
   contextValue = 'alias_child';
   data: Alias | undefined = undefined;
+  groupName: string;
 
   constructor(
     public readonly label: string,
     public readonly children: AliasItem[] = [],
     public readonly alias: Alias | undefined,
     public readonly isLeafNode: boolean = true,
+    public readonly group: string,
   ) {
     super(
       label,
@@ -233,9 +403,14 @@ class AliasItem extends vscode.TreeItem {
     );
 
     this.data = alias;
+    this.groupName = group;
 
     if (!isLeafNode) {
-      this.contextValue = 'alias_parent';
+      // parent node
+      this.contextValue = label === SYSTEM_ALIAS ? 'alias_system_parent' : 'alias_parent';
+    } else {
+      // leaf node
+      this.contextValue = group === SYSTEM_ALIAS ? 'alias_system_child' : 'alias_child';
     }
   }
 }
