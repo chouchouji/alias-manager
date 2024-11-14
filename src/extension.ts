@@ -130,6 +130,10 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     appendAliasToStoreFile(alias);
 
+    // add this alias to system group
+    const aliases = this.globalState.get(SYSTEM_ALIAS) as Alias[];
+    this.globalState.update(SYSTEM_ALIAS, [...aliases, resolvedAlias]);
+
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
     activeTerminal.sendText(`alias ${alias}`);
@@ -149,12 +153,27 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
       deleteAliases();
 
+      // remove all aliases under every groups
+      this.globalState.keys().forEach((group) => {
+        this.globalState.update(group, []);
+      });
+
       this.refresh();
       return;
     }
 
     // delete specific alias
     deleteAliases(alias.data);
+
+    const { aliasName, command } = alias.data;
+    // remove all aliases under every groups
+    this.globalState.keys().forEach((groupName) => {
+      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
+        return !(aliasName === aliasItem.aliasName && command === aliasItem.command);
+      });
+
+      this.globalState.update(groupName, aliases);
+    });
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
@@ -184,6 +203,16 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     renameAliases(alias.data, command);
+
+    const { aliasName, command: oldCommand } = alias.data;
+    // rename one alias under every groups
+    this.globalState.keys().forEach((groupName) => {
+      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
+        return !(aliasName === aliasItem.aliasName && oldCommand === aliasItem.command);
+      });
+
+      this.globalState.update(groupName, [...aliases, { aliasName, command }]);
+    });
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();

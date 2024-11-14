@@ -161,7 +161,7 @@
         },
         {
           "command": "aliasView.rename",
-          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+          "when": "view == aliasView && viewItem == alias_system_child"
         },
         {
           "command": "aliasView.copy",
