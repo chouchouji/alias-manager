@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/chouchouji/alias-manager/compare/v0.1.1...v0.1.2) (2024-11-14)
+
+
+### Bug Fixes
+
+* don't allow the last char of alias name to be a space ([0f408e9](https://github.com/chouchouji/alias-manager/commit/0f408e9e5c82b0a5051b30ae73412633f0c17f76))
+
+
+
 ## [0.1.1](https://github.com/chouchouji/alias-manager/compare/v0.1.0...v0.1.1) (2024-11-14)
 
 
