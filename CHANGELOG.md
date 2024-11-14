@@ -1,3 +1,17 @@
+# [0.1.0](https://github.com/chouchouji/alias-manager/compare/v0.0.10...v0.1.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* rename same alias for group only ([ff7bdaa](https://github.com/chouchouji/alias-manager/commit/ff7bdaaa12c7ac383bdf1793e93d53f715ac9616))
+
+
+### Features
+
+* support group ([#8](https://github.com/chouchouji/alias-manager/issues/8)) ([61f94c8](https://github.com/chouchouji/alias-manager/commit/61f94c8cd8c40779693ff877bc962823661f1568))
+
+
+
 ## [0.0.10](https://github.com/chouchouji/alias-manager/compare/v0.0.9...v0.0.10) (2024-11-12)
 
 
