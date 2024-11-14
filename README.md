@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" style="width: 180px; height: 180px;" alt="logo" />
+  <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" alt="logo" />
   <h1>Alias Manager</h1>
   <p>A tool used to manage your system aliases</p>
   <p>
@@ -54,6 +54,16 @@ Click `run` button, it will activate terminal and execute that command.
 It supports copying an alias or all aliases.
 
 ![copy](https://github.com/user-attachments/assets/b9f4522e-4b87-4ba5-892c-1aafbbe0f187)
+
+### Group Alias
+
+It support creating, deleting and renaming a new group, adding an alias to a group and removing an alias from a group.
+
+#### Create, Delete And Rename Group
+
+#### Add An Alias To Group
+
+#### Remove An Alias From Group
 
 ### Set Store Path
 
