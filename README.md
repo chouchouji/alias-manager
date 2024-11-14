@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/6a36b308-0d20-4996-bdb5-b6197444a80c" style="width: 180px; height: 180px;" alt="logo" />
+  <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" style="width: 180px; height: 180px;" alt="logo" />
   <h1>Alias Manager</h1>
   <p>A tool used to manage your system aliases</p>
   <p>
