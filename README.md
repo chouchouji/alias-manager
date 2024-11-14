@@ -14,7 +14,8 @@
 ## Features
 
 - 🎨 &nbsp; Support creating, deleting, renaming, copying and running system alias
-- 📦 &nbsp; Support custom path that used to store aliases
+- 📦 &nbsp; Support grouping aliases
+- 🔧 &nbsp; Support custom path that used to store aliases
 
 ## Usage
 
@@ -59,11 +60,15 @@ It supports copying an alias or all aliases.
 
 It support creating, deleting and renaming a new group, adding an alias to a group and removing an alias from a group.
 
-#### Create, Delete And Rename Group
+All aliases are included in `System Aliases` which is data source. You can group different aliases by creating different groups. This is very helpful for you to quickly find aliases and operate aliases.
 
-#### Add An Alias To Group
+#### Create, Delete And Rename
 
-#### Remove An Alias From Group
+![create-group](https://github.com/user-attachments/assets/1b9e6e22-3308-4ff6-9811-0c91ac416d7a)
+
+#### Add Or Remove An Alias
+
+![move-group](https://github.com/user-attachments/assets/9079a8cc-3be3-42a2-8c09-5b60aab64c07)
 
 ### Set Store Path
 
