@@ -344,7 +344,11 @@ class AliasItem extends vscode.TreeItem {
     this.groupName = group;
 
     if (!isLeafNode) {
-      this.contextValue = label === SYSTEM_ALIAS ? 'alias_system' : 'alias_parent';
+      // parent node
+      this.contextValue = label === SYSTEM_ALIAS ? 'alias_system_parent' : 'alias_parent';
+    } else {
+      // leaf node
+      this.contextValue = group === SYSTEM_ALIAS ? 'alias_system_child' : 'alias_child';
     }
   }
 }

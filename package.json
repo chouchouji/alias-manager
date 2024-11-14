@@ -89,7 +89,7 @@
       },
       {
         "command": "aliasView.addToGroup",
-        "title": "Add To Group"
+        "title": "Add To Another Group"
       }
     ],
     "commandPalette": [
@@ -148,7 +148,7 @@
       "view/item/context": [
         {
           "command": "aliasView.delete",
-          "when": "view == aliasView"
+          "when": "view == aliasView && (viewItem == alias_system_child || viewItem == alias_system_parent)"
         },
         {
           "command": "aliasView.deleteGroup",
@@ -156,25 +156,26 @@
         },
         {
           "command": "aliasView.run",
-          "when": "view == aliasView && viewItem == alias_child",
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)",
           "group": "inline"
         },
         {
           "command": "aliasView.rename",
-          "when": "view == aliasView && viewItem == alias_child"
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
         },
         {
           "command": "aliasView.copy",
-          "when": "view == aliasView && viewItem == alias_child"
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
         },
         {
           "submenu": "groupOperation",
-          "when": "view == aliasView && viewItem == alias_child"
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
         }
       ],
       "groupOperation": [
         {
-          "command": "aliasView.removeFromCurrentGroup"
+          "command": "aliasView.removeFromCurrentGroup",
+          "when": "view == aliasView && viewItem == alias_child"
         },
         {
           "command": "aliasView.addToGroup"
