@@ -211,11 +211,18 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     const { aliasName, command: oldCommand } = alias.data;
     // rename one alias under every groups
     this.globalState.keys().forEach((groupName) => {
-      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
-        return !(aliasName === aliasItem.aliasName && oldCommand === aliasItem.command);
-      });
+      const aliases = this.globalState.get(groupName) as Alias[];
+      const hasSameAlias = aliases.find(
+        (aliasItem) => aliasName === aliasItem.aliasName && oldCommand === aliasItem.command,
+      );
 
-      this.globalState.update(groupName, [...aliases, { aliasName, command }]);
+      if (hasSameAlias) {
+        const restAliases = aliases.filter((aliasItem) => {
+          return !(aliasName === aliasItem.aliasName && oldCommand === aliasItem.command);
+        });
+        restAliases.push({ aliasName, command });
+        this.globalState.update(groupName, restAliases);
+      }
     });
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
