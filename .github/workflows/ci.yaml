@@ -1,4 +1,4 @@
-name: Lint files
+name: Lint And Test
 
 on: [push, pull_request]
 
