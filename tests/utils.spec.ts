@@ -7,7 +7,7 @@ const alias = {
 };
 
 describe('test alias resolve', () => {
-  it('alias with blank between alias keyword and alias name', () => {
+  it('alias with space between alias keyword and alias name', () => {
     const value = `alias    nv='node -v'`;
     expect(resolveAlias(value)).toStrictEqual(alias);
   });
@@ -47,7 +47,12 @@ describe('test alias resolve', () => {
     expect(resolveAlias(value)).toStrictEqual(undefined);
   });
 
-  it('blank after =', () => {
+  it('space before =', () => {
+    const value = `alias nv ='node -v'`;
+    expect(resolveAlias(value)).toStrictEqual(undefined);
+  });
+
+  it('space after =', () => {
     const value = `alias nv= 'node -v'`;
     expect(resolveAlias(value)).toStrictEqual(undefined);
   });

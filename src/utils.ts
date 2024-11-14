@@ -102,6 +102,11 @@ export function resolveAlias(value: string): Alias | undefined {
     }
   }
 
+  // don't allow the last char of alias name to be a space
+  if (aliasName.charAt(aliasName.length - 1) === ' ') {
+    return;
+  }
+
   if (isValid(aliasName) && isValid(command, true)) {
     return {
       aliasName: aliasName.replace(/^['"](.*)['"]$/, '$1'),
@@ -109,5 +114,5 @@ export function resolveAlias(value: string): Alias | undefined {
     };
   }
 
-  return undefined;
+  return;
 }
