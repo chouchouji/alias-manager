@@ -65,6 +65,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('aliasView.copy', (alias: AliasItem) => aliasView.copyAlias(alias)),
   );
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.renameGroup', (alias: AliasItem) => aliasView.renameGroup(alias)),
+  );
+
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.newGroup', () => aliasView.addNewGroup()));
 
   context.subscriptions.push(
@@ -296,6 +300,35 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   deleteGroup(group: AliasItem) {
     this.globalState.update(group.label, undefined);
+    this.refresh();
+  }
+
+  async renameGroup(alias: AliasItem) {
+    const group = await vscode.window.showInputBox({
+      placeHolder: CREATE_GROUP_PLACEHOLDER,
+      value: alias.group,
+    });
+
+    // cancel input group
+    if (group === undefined) {
+      return;
+    }
+
+    if (!group.length) {
+      vscode.window.showErrorMessage(GROUP_IS_NOT_EMPTY);
+      return;
+    }
+
+    const hasSameGroup = this.globalState.keys().includes(group);
+    if (hasSameGroup) {
+      vscode.window.showErrorMessage(DUPLICATE_GROUP_NAME);
+      return;
+    }
+
+    const aliases = this.globalState.get(alias.group);
+    this.globalState.update(alias.group, undefined);
+    this.globalState.update(group, aliases);
+
     this.refresh();
   }
 

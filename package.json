@@ -90,6 +90,10 @@
       {
         "command": "aliasView.addToGroup",
         "title": "Add To Another Group"
+      },
+      {
+        "command": "aliasView.renameGroup",
+        "title": "Rename Group"
       }
     ],
     "commandPalette": [
@@ -152,6 +156,10 @@
         },
         {
           "command": "aliasView.deleteGroup",
+          "when": "view == aliasView && viewItem == alias_parent"
+        },
+        {
+          "command": "aliasView.renameGroup",
           "when": "view == aliasView && viewItem == alias_parent"
         },
         {
