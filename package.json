@@ -104,37 +104,49 @@
         "title": "Sort By Frequency"
       }
     ],
-    "commandPalette": [
-      {
-        "command": "aliasView.refresh",
-        "when": "true"
-      },
-      {
-        "command": "aliasView.add",
-        "when": "true"
-      },
-      {
-        "command": "aliasView.copyAll",
-        "when": "true"
-      },
-      {
-        "command": "aliasView.delete",
-        "when": "false"
-      },
-      {
-        "command": "aliasView.rename",
-        "when": "false"
-      },
-      {
-        "command": "aliasView.run",
-        "when": "false"
-      },
-      {
-        "command": "aliasView.copy",
-        "when": "false"
-      }
-    ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "aliasView.deleteGroup",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.delete",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.rename",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.run",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.copy",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.removeFromCurrentGroup",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.addToGroup",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.renameGroup",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.sortByAlphabet",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.sortByFrequency",
+          "when": "false"
+        }
+      ],
       "view/title": [
         {
           "command": "aliasView.refresh",
