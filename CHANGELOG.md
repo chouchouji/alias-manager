@@ -1,3 +1,12 @@
+## [0.1.4](https://github.com/chouchouji/alias-manager/compare/v0.1.3...v0.1.4) (2024-11-15)
+
+
+### Bug Fixes
+
+* move commandPalette into menus ([3a77c5d](https://github.com/chouchouji/alias-manager/commit/3a77c5dab12d4f44a6598d7715f74345355a10e8))
+
+
+
 ## [0.1.3](https://github.com/chouchouji/alias-manager/compare/v0.1.2...v0.1.3) (2024-11-15)
 
 
