@@ -1,7 +1,7 @@
 {
   "name": "alias-manager",
   "displayName": "Alias Manager",
-  "description": "A tool used to manage your system aliases",
+  "description": "System alias manager",
   "icon": "resources/logo.png",
   "version": "0.1.2",
   "engines": {
