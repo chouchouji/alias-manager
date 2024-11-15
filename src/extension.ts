@@ -291,7 +291,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     this.globalState.update(alias.group, aliases);
 
-    this.refresh(alias);
+    this.refresh();
   }
 
   async addToGroup(alias: AliasItem) {
@@ -300,7 +300,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     const selectedGroup = await vscode.window.showQuickPick(
-      this.globalState.keys().filter((key) => key !== SYSTEM_ALIAS),
+      this.globalState.keys().filter((key) => ![SYSTEM_ALIAS, alias.group].includes(key)),
       { placeHolder: CHOOSE_GROUP_PLACEHOLDER },
     );
 
