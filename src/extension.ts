@@ -43,7 +43,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(vscode.window.registerTreeDataProvider('aliasView', aliasView));
 
-  context.subscriptions.push(vscode.commands.registerCommand('aliasView.refresh', () => aliasView.refresh()));
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.refresh', (alias?: AliasItem) => aliasView.refresh(alias)),
+  );
 
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()));
 
@@ -104,8 +106,8 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.globalState.update(SYSTEM_ALIAS, getAliases());
   }
 
-  refresh() {
-    this._onDidChangeTreeData.fire();
+  refresh(alias?: AliasItem) {
+    this._onDidChangeTreeData.fire(alias);
   }
 
   async addAlias() {
@@ -285,7 +287,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     this.globalState.update(group, aliases);
 
-    this.refresh();
+    this.refresh(alias);
   }
 
   async addToGroup(alias: AliasItem) {
@@ -376,7 +378,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     this.globalState.update(alias.group, aliases);
 
-    this.refresh();
+    this.refresh(alias);
   }
 
   getTreeItem(element: AliasItem): vscode.TreeItem {
