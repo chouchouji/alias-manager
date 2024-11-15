@@ -1,3 +1,18 @@
+## [0.1.3](https://github.com/chouchouji/alias-manager/compare/v0.1.2...v0.1.3) (2024-11-15)
+
+
+### Bug Fixes
+
+* don't allow to add alias to current group ([ac0a917](https://github.com/chouchouji/alias-manager/commit/ac0a9178795e7eb415d4a02722de0a8a4ae6a6f5))
+
+
+### Features
+
+* support sorting by alphabet ([#9](https://github.com/chouchouji/alias-manager/issues/9)) ([1a9b94f](https://github.com/chouchouji/alias-manager/commit/1a9b94f87d9e02c1a08236af24f5e684a3d90d14))
+* support sorting by frequency ([#11](https://github.com/chouchouji/alias-manager/issues/11)) ([2a7d903](https://github.com/chouchouji/alias-manager/commit/2a7d9038943c91ac9f8b0f183a999dcbe00b126b))
+
+
+
 ## [0.1.2](https://github.com/chouchouji/alias-manager/compare/v0.1.1...v0.1.2) (2024-11-14)
 
 
