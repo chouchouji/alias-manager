@@ -1,4 +1,4 @@
-import { resolveAlias } from '../src/utils';
+import { resolveAlias, isSameAlias } from '../src/utils';
 import { it, expect, describe } from 'vitest';
 
 const alias = {
@@ -55,5 +55,27 @@ describe('test alias resolve', () => {
   it('space after =', () => {
     const value = `alias nv= 'node -v'`;
     expect(resolveAlias(value)).toStrictEqual(undefined);
+  });
+});
+
+describe('test same alias', () => {
+  it('have same alias name and command', () => {
+    expect(isSameAlias({ aliasName: 'nv', command: 'node -v' }, { aliasName: 'nv', command: 'node -v' })).toBe(true);
+  });
+
+  it('same alias name and different command', () => {
+    expect(isSameAlias({ aliasName: 'nv', command: 'node -v' }, { aliasName: 'nv', command: 'node --version' })).toBe(
+      false,
+    );
+  });
+
+  it('different alias name and same command', () => {
+    expect(isSameAlias({ aliasName: 'nv2', command: 'node -v' }, { aliasName: 'nv', command: 'node -v' })).toBe(false);
+  });
+
+  it('different alias name and different command', () => {
+    expect(isSameAlias({ aliasName: 'nv2', command: 'node -v' }, { aliasName: 'nv', command: 'node --version' })).toBe(
+      false,
+    );
   });
 });

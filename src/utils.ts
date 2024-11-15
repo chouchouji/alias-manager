@@ -116,3 +116,7 @@ export function resolveAlias(value: string): Omit<Alias, 'frequency'> | undefine
 
   return;
 }
+
+export function isSameAlias(targetAlias: Alias, sourceAlias: Alias) {
+  return targetAlias.aliasName === sourceAlias.aliasName && targetAlias.command === sourceAlias.command;
+}

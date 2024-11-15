@@ -16,7 +16,7 @@ import {
   SYSTEM_ALIAS,
 } from './constants';
 import { isNonEmptyArray } from 'rattail';
-import { resolveAlias } from './utils';
+import { resolveAlias, isSameAlias } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
@@ -181,11 +181,10 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     // delete specific alias
     deleteAliases(alias.data);
 
-    const { aliasName, command } = alias.data;
     // remove all aliases under every groups
     this.globalState.keys().forEach((groupName) => {
       const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
-        return !(aliasName === aliasItem.aliasName && command === aliasItem.command);
+        return !isSameAlias(alias.data!, aliasItem);
       });
 
       this.globalState.update(groupName, aliases);
@@ -220,18 +219,14 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     renameAliases(alias.data, command);
 
-    const { aliasName, command: oldCommand, frequency } = alias.data;
+    const { aliasName, frequency } = alias.data;
     // rename one alias under every groups
     this.globalState.keys().forEach((groupName) => {
       const aliases = this.globalState.get(groupName) as Alias[];
-      const hasSameAlias = aliases.find(
-        (aliasItem) => aliasName === aliasItem.aliasName && oldCommand === aliasItem.command,
-      );
+      const hasSameAlias = aliases.find((aliasItem) => isSameAlias(alias.data!, aliasItem));
 
       if (hasSameAlias) {
-        const restAliases = aliases.filter((aliasItem) => {
-          return !(aliasName === aliasItem.aliasName && oldCommand === aliasItem.command);
-        });
+        const restAliases = aliases.filter((aliasItem) => !isSameAlias(alias.data!, aliasItem));
         restAliases.push({ aliasName, command, frequency });
         this.globalState.update(groupName, restAliases);
       }
@@ -249,12 +244,8 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const { aliasName, command } = alias.data;
-
     const systemAliases = this.globalState.get(alias.group) as Alias[];
-    const runAlias = systemAliases.find(
-      (systemAlias) => systemAlias.aliasName === aliasName && systemAlias.command === command,
-    );
+    const runAlias = systemAliases.find((systemAlias) => isSameAlias(alias.data!, systemAlias));
     if (runAlias) {
       runAlias.frequency = (runAlias.frequency ?? 0) + 1;
       this.globalState.update(alias.group, systemAliases);
@@ -262,6 +253,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     activeTerminal.show();
+    const { aliasName } = alias.data;
     activeTerminal.sendText(aliasName);
   }
 
@@ -293,16 +285,11 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const {
-      group,
-      data: { aliasName, command },
-    } = alias;
+    const aliases = (this.globalState.get(alias.group) as Alias[]).filter(
+      (aliasItem) => !isSameAlias(alias.data!, aliasItem),
+    );
 
-    const aliases = (this.globalState.get(alias.group) as Alias[]).filter((aliasItem) => {
-      return !(aliasItem.aliasName === aliasName && aliasItem.command === command);
-    });
-
-    this.globalState.update(group, aliases);
+    this.globalState.update(alias.group, aliases);
 
     this.refresh(alias);
   }
