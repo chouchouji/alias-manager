@@ -13,9 +13,10 @@
 
 ## Features
 
-- 🎨 &nbsp; Support creating, deleting, renaming, copying and running system alias
-- 📦 &nbsp; Support grouping aliases
-- 🔧 &nbsp; Support custom path that used to store aliases
+- Support creating, deleting, renaming, copying and running system alias
+- Support grouping aliases
+- Support sorting aliases by frequency or alphabet
+- Support custom path that used to store aliases
 
 ## Usage
 
@@ -69,6 +70,10 @@ All aliases are included in `System Aliases` which is data source. You can group
 #### Add Or Remove An Alias
 
 ![move-group](https://github.com/user-attachments/assets/9079a8cc-3be3-42a2-8c09-5b60aab64c07)
+
+### Sort Alias
+
+![sort](https://github.com/user-attachments/assets/fb904718-c01d-416a-9c7a-4f6795cee2eb)
 
 ### Set Store Path
 
