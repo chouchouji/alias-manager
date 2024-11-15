@@ -94,6 +94,10 @@
       {
         "command": "aliasView.renameGroup",
         "title": "Rename Group"
+      },
+      {
+        "command": "aliasView.sortByAlphabet",
+        "title": "Sort By Alphabet"
       }
     ],
     "commandPalette": [
@@ -178,6 +182,10 @@
         {
           "submenu": "groupOperation",
           "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+        },
+        {
+          "submenu": "sortAlias",
+          "when": "view == aliasView && (viewItem == alias_parent || viewItem == alias_system_parent)"
         }
       ],
       "groupOperation": [
@@ -188,12 +196,21 @@
         {
           "command": "aliasView.addToGroup"
         }
+      ],
+      "sortAlias": [
+        {
+          "command": "aliasView.sortByAlphabet"
+        }
       ]
     },
     "submenus": [
       {
         "id": "groupOperation",
         "label": "Group Operation"
+      },
+      {
+        "id": "sortAlias",
+        "label": "Sort Alias"
       }
     ],
     "viewsContainers": {
