@@ -98,6 +98,10 @@
       {
         "command": "aliasView.sortByAlphabet",
         "title": "Sort By Alphabet"
+      },
+      {
+        "command": "aliasView.sortByFrequency",
+        "title": "Sort By Frequency"
       }
     ],
     "commandPalette": [
@@ -200,6 +204,9 @@
       "sortAlias": [
         {
           "command": "aliasView.sortByAlphabet"
+        },
+        {
+          "command": "aliasView.sortByFrequency"
         }
       ]
     },
