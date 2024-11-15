@@ -79,7 +79,7 @@ function isValid(value: string, skipNoQuote = false) {
  * @param {value} string
  * @returns If it is not valid, return undefined
  */
-export function resolveAlias(value: string): Alias | undefined {
+export function resolveAlias(value: string): Omit<Alias, 'frequency'> | undefined {
   if (!value.startsWith('alias')) {
     return;
   }

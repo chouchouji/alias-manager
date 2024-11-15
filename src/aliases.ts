@@ -27,6 +27,7 @@ export function getAliases() {
         acc.push({
           aliasName,
           command,
+          frequency: 0,
         });
       }
       return acc;
