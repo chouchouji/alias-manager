@@ -84,6 +84,10 @@ export function activate(context: vscode.ExtensionContext) {
       aliasView.removeFromCurrentGroup(alias),
     ),
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.sortByAlphabet', (alias: AliasItem) => aliasView.sortByAlphabet(alias)),
+  );
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
@@ -362,6 +366,15 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     this.globalState.update(group, []);
+
+    this.refresh();
+  }
+
+  sortByAlphabet(alias: AliasItem) {
+    const aliases = this.globalState.get(alias.group) as Alias[];
+    aliases.sort((a, b) => a.aliasName.toLowerCase().localeCompare(b.aliasName.toLowerCase()));
+
+    this.globalState.update(alias.group, aliases);
 
     this.refresh();
   }

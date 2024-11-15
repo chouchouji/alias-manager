@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" alt="logo" />
   <h1>Alias Manager</h1>
-  <p>A tool used to manage your system aliases</p>
+  <p>A vscode extension used to manage your system aliases</p>
   <p>
     <img src="https://img.shields.io/github/package-json/v/chouchouji/alias-manager" alt="version">
     <img src="https://img.shields.io/github/stars/chouchouji/alias-manager" alt="stars">
