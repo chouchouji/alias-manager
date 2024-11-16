@@ -4,7 +4,7 @@ import path from 'node:path';
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCopyAliases } from './aliases';
 import { SYSTEM_ALIAS } from './constants';
 import { isNonEmptyArray } from 'rattail';
-import { resolveAlias, isSameAlias } from './utils';
+import { resolveAlias, isSameAlias, normalizeAliasesToArray } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
@@ -135,7 +135,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     appendAliasToStoreFile(alias);
 
     // add this alias to system group
-    const aliases = this.globalState.get(SYSTEM_ALIAS) as Alias[];
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(SYSTEM_ALIAS));
     this.globalState.update(SYSTEM_ALIAS, [...aliases, { ...resolvedAlias, frequency: 0 }]);
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
@@ -171,9 +171,9 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     // remove all aliases under every groups
     this.globalState.keys().forEach((groupName) => {
-      const aliases = (this.globalState.get(groupName) as Alias[]).filter((aliasItem) => {
-        return !isSameAlias(alias.data!, aliasItem);
-      });
+      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName)).filter(
+        (aliasItem) => !isSameAlias(alias.data!, aliasItem),
+      );
 
       this.globalState.update(groupName, aliases);
     });
@@ -210,7 +210,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     const { aliasName, frequency } = alias.data;
     // rename one alias under every groups
     this.globalState.keys().forEach((groupName) => {
-      const aliases = this.globalState.get(groupName) as Alias[];
+      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName));
       const hasSameAlias = aliases.find((aliasItem) => isSameAlias(alias.data!, aliasItem));
 
       if (hasSameAlias) {
@@ -232,7 +232,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const systemAliases = this.globalState.get(alias.group) as Alias[];
+    const systemAliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
     const runAlias = systemAliases.find((systemAlias) => isSameAlias(alias.data!, systemAlias));
     if (runAlias) {
       runAlias.frequency = (runAlias.frequency ?? 0) + 1;
@@ -273,7 +273,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const aliases = (this.globalState.get(alias.group) as Alias[]).filter(
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group)).filter(
       (aliasItem) => !isSameAlias(alias.data!, aliasItem),
     );
 
@@ -297,7 +297,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const aliases = (this.globalState.get(selectedGroup) ?? []) as Alias[];
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(selectedGroup));
     this.globalState.update(selectedGroup, [...aliases, alias.data]);
 
     this.refresh();
@@ -330,7 +330,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const aliases = this.globalState.get(alias.group);
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
     this.globalState.update(alias.group, undefined);
     this.globalState.update(group, aliases);
 
@@ -365,7 +365,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   sortByAlphabet(alias: AliasItem) {
-    const aliases = this.globalState.get(alias.group) as Alias[];
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
     aliases.sort((a, b) => a.aliasName.toLowerCase().localeCompare(b.aliasName.toLowerCase()));
 
     this.globalState.update(alias.group, aliases);
@@ -374,7 +374,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   sortByFrequency(alias: AliasItem) {
-    const aliases = this.globalState.get(alias.group) as Alias[];
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
     aliases.sort((a, b) => (a.frequency ?? 0) - (b.frequency ?? 0));
 
     this.globalState.update(alias.group, aliases);
@@ -396,7 +396,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   private getAliasTree(): AliasItem[] {
     const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
-      const children = (this.globalState.get(key) as Alias[]).map((alias) => {
+      const children = normalizeAliasesToArray<Alias>(this.globalState.get(key)).map((alias) => {
         const { aliasName, command } = alias;
         return new AliasItem(`${aliasName} = '${command}'`, [], alias, true, key);
       });

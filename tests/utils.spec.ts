@@ -1,5 +1,6 @@
-import { resolveAlias, isSameAlias } from '../src/utils';
+import { resolveAlias, isSameAlias, normalizeAliasesToArray } from '../src/utils';
 import { it, expect, describe } from 'vitest';
+import { Alias } from '../src/types';
 
 const alias = {
   aliasName: 'nv',
@@ -77,5 +78,19 @@ describe('test same alias', () => {
     expect(isSameAlias({ aliasName: 'nv2', command: 'node -v' }, { aliasName: 'nv', command: 'node --version' })).toBe(
       false,
     );
+  });
+});
+
+describe('test normalize aliases to array', () => {
+  it('param is empty alias array', () => {
+    expect(normalizeAliasesToArray<Alias>([])).toStrictEqual([]);
+  });
+
+  it('param is alias array with value', () => {
+    expect(normalizeAliasesToArray<Alias>([alias])).toStrictEqual([alias]);
+  });
+
+  it('param is undefined', () => {
+    expect(normalizeAliasesToArray<Alias>(undefined)).toStrictEqual([]);
   });
 });

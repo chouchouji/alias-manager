@@ -1,4 +1,5 @@
 import { Alias } from './types';
+import { isArray } from 'rattail';
 
 /**
  * Check alias name or command is valid
@@ -119,4 +120,8 @@ export function resolveAlias(value: string): Omit<Alias, 'frequency'> | undefine
 
 export function isSameAlias(targetAlias: Alias, sourceAlias: Alias) {
   return targetAlias.aliasName === sourceAlias.aliasName && targetAlias.command === sourceAlias.command;
+}
+
+export function normalizeAliasesToArray<T>(value: T[] | undefined) {
+  return isArray(value) ? value : [];
 }
