@@ -6,16 +6,34 @@
     {
       "type": "npm",
       "script": "dev",
-      "problemMatcher": "$tsc",
       "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ],
+        "pattern": {
+          "regexp": "^(?:\\s*)(.+?):(\\d+):(\\d+) - (error TS\\d+): (.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Watching files for changes",
+          "endsPattern": "Build successful"
+        }
+      },
       "presentation": {
-        "reveal": "never",
+        "reveal": "always",
         "group": "watchers"
       },
       "group": {
         "kind": "build",
         "isDefault": true
       }
-    },
+    }
   ]
 }
