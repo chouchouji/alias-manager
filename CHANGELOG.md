@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/chouchouji/alias-manager/compare/v0.1.4...v0.2.0) (2024-11-16)
+
+
+### Features
+
+* support changing language ([57db0cb](https://github.com/chouchouji/alias-manager/commit/57db0cbb807b0603a013c95c05a429fb3a442308))
+
+
+
 ## [0.1.4](https://github.com/chouchouji/alias-manager/compare/v0.1.3...v0.1.4) (2024-11-15)
 
 
