@@ -38,6 +38,12 @@
         "alias-manager.defaultStorePath": {
           "type": "string",
           "description": "The path used to store aliases, default value is ${homedir}/.zshrc. e.g. /Users/chouchouji/.zshrc"
+        },
+        "alias-manager.defaultLanguage": {
+          "type": "string",
+          "description": "Select the language you want to use",
+          "default": "en-US",
+          "enum": ["zh-CN", "en-US"]
         }
       }
     },
