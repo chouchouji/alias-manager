@@ -13,10 +13,11 @@
 
 ## Features
 
-- Support creating, deleting, renaming, copying and running system alias
-- Support grouping aliases
-- Support sorting aliases by frequency or alphabet
-- Support custom path that used to store aliases
+- 🎨 &nbsp;Support creating, deleting, renaming, copying and running system alias
+- 📦 &nbsp;Support grouping aliases
+- 🔠 &nbsp;Support sorting aliases by frequency or alphabet
+- 🔧 &nbsp;Support custom path that used to store aliases
+- 🌍 &nbsp;Support internationalization
 
 ## Usage
 
@@ -80,6 +81,11 @@ All aliases are included in `System Aliases` which is data source. You can group
 The default store path is `${homedir}/.zshrc`, like `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
 
 ![store-path](https://github.com/user-attachments/assets/9db44131-99a9-4aa7-b83d-2f0352488553)
+
+
+## Internationalization
+
+The default language is `english`. If you have added [chinese vscode extension](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans) in vscode extensions, the language of `alias manager` extension will be changed to chinese automatically after restarting vscode.
 
 ## Feedback
 
