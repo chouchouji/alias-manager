@@ -1,0 +1,21 @@
+{
+  "refreshAliases": "刷新别名",
+  "newGroup": "创建组",
+  "deleteGroup": "删除组",
+  "addAlias": "新增别名",
+  "copyAllAlias": "复制全部别名",
+  "deleteAlias": "删除别名",
+  "run": "运行",
+  "renameAlias": "重命名别名",
+  "copyAlias": "复制别名",
+  "removeFromCurrentGroup": "从当前组中移除",
+  "addToAnotherGroup": "添加到另一个组",
+  "renameGroup": "重命名组",
+  "sortByAlphabet": "按字母排序",
+  "sortByFrequency": "按使用频率排序",
+  "groupOperation": "组操作项",
+  "sortAlias": "排序别名",
+  "aliasManager": "别名管理",
+  "aliasView": "别名视图",
+  "defaultStorePathDescription": "存储别名的路径, 默认是 ${homedir}/.zshrc, 例如 /Users/chouchouji/.zshrc"
+}

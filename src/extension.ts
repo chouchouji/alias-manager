@@ -5,18 +5,8 @@ import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCo
 import { SYSTEM_ALIAS } from './constants';
 import { isNonEmptyArray } from 'rattail';
 import { resolveAlias, isSameAlias } from './utils';
-import { Alias, Language } from './types';
+import { Alias } from './types';
 import storePath from './path';
-import { t, type LanguageKey } from './language';
-
-let locale: (key: LanguageKey) => string;
-
-function setLocale() {
-  const language = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultLanguage');
-  if (language) {
-    locale = t(language as Language);
-  }
-}
 
 export function activate(context: vscode.ExtensionContext) {
   // set default store path
@@ -35,17 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
           storePath.path = defaultStorePath;
           aliasView.refresh();
         }
-      }
-    }),
-  );
-
-  setLocale();
-
-  context.subscriptions.push(
-    // watch language
-    vscode.workspace.onDidChangeConfiguration((event) => {
-      if (event.affectsConfiguration('alias-manager.defaultLanguage')) {
-        setLocale();
       }
     }),
   );
@@ -127,7 +106,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   async addAlias() {
     const alias = await vscode.window.showInputBox({
-      placeHolder: locale('CREATE_ALIAS_PLACEHOLDER'),
+      placeHolder: vscode.l10n.t('Please enter new alias'),
       value: undefined,
     });
 
@@ -137,19 +116,19 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     if (!alias.length) {
-      vscode.window.showErrorMessage(locale('ALIAS_IS_NOT_EMPTY'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Alias is mandatory to execute this action'));
       return;
     }
 
     const resolvedAlias = resolveAlias(`alias ${alias}`);
     if (!resolvedAlias) {
-      vscode.window.showErrorMessage(locale('NEED_CHECK_THE_FORMAT'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Please check the format of the input content'));
       return;
     }
 
     const aliasNames = getAliases().map((alias) => alias.aliasName);
     if (aliasNames.includes(resolvedAlias.aliasName)) {
-      vscode.window.showWarningMessage(locale('DUPLICATE_ALIAS_NAME'));
+      vscode.window.showWarningMessage(vscode.l10n.t('Duplicate alias'));
       return;
     }
 
@@ -212,7 +191,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     const command = await vscode.window.showInputBox({
-      placeHolder: locale('CREATE_ALIAS_PLACEHOLDER'),
+      placeHolder: vscode.l10n.t('Please enter new alias'),
       value: alias.data.command,
     });
 
@@ -222,7 +201,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     if (!command.length) {
-      vscode.window.showErrorMessage(locale('ALIAS_IS_NOT_EMPTY'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Alias is mandatory to execute this action'));
       return;
     }
 
@@ -275,18 +254,18 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     const content = `alias ${aliasName}='${command}'`;
 
     vscode.env.clipboard.writeText(content);
-    vscode.window.showInformationMessage(locale('COPY_ALIAS_SUCCESSFULLY'));
+    vscode.window.showInformationMessage(vscode.l10n.t('Alias has been added to the clipboard Successfully'));
   }
 
   copyAllAlias() {
     const alias = getCopyAliases();
     if (!alias) {
-      vscode.window.showWarningMessage(locale('NO_ANY_ALIAS'));
+      vscode.window.showWarningMessage(vscode.l10n.t('No alias'));
       return;
     }
 
     vscode.env.clipboard.writeText(alias);
-    vscode.window.showInformationMessage(locale('COPY_ALIAS_SUCCESSFULLY'));
+    vscode.window.showInformationMessage(vscode.l10n.t('Alias has been added to the clipboard Successfully'));
   }
 
   removeFromCurrentGroup(alias: AliasItem) {
@@ -310,7 +289,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     const selectedGroup = await vscode.window.showQuickPick(
       this.globalState.keys().filter((key) => ![SYSTEM_ALIAS, alias.group].includes(key)),
-      { placeHolder: locale('CHOOSE_GROUP_PLACEHOLDER') },
+      { placeHolder: vscode.l10n.t('Please choose a group to add') },
     );
 
     // cancel pick group
@@ -331,7 +310,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   async renameGroup(alias: AliasItem) {
     const group = await vscode.window.showInputBox({
-      placeHolder: locale('CREATE_GROUP_PLACEHOLDER'),
+      placeHolder: vscode.l10n.t('Please enter new group'),
       value: alias.group,
     });
 
@@ -341,13 +320,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     if (!group.length) {
-      vscode.window.showErrorMessage(locale('GROUP_IS_NOT_EMPTY'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Group is mandatory to execute this action'));
       return;
     }
 
     const hasSameGroup = this.globalState.keys().includes(group);
     if (hasSameGroup) {
-      vscode.window.showErrorMessage(locale('DUPLICATE_GROUP_NAME'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Duplicate group'));
       return;
     }
 
@@ -360,7 +339,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   async addNewGroup() {
     const group = await vscode.window.showInputBox({
-      placeHolder: locale('CREATE_GROUP_PLACEHOLDER'),
+      placeHolder: vscode.l10n.t('Please enter new group'),
       value: undefined,
     });
 
@@ -370,13 +349,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     if (!group.length) {
-      vscode.window.showErrorMessage(locale('GROUP_IS_NOT_EMPTY'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Group is mandatory to execute this action'));
       return;
     }
 
     const hasSameGroup = this.globalState.keys().includes(group);
     if (hasSameGroup) {
-      vscode.window.showErrorMessage(locale('DUPLICATE_GROUP_NAME'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Duplicate group'));
       return;
     }
 

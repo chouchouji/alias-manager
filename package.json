@@ -31,83 +31,78 @@
   ],
   "homepage": "https://github.com/chouchouji/alias-manager",
   "main": "./dist/extension.js",
+  "l10n": "./l10n",
   "contributes": {
     "configuration": {
-      "title": "Alias Manager",
+      "title": "%aliasManager%",
       "properties": {
         "alias-manager.defaultStorePath": {
           "type": "string",
-          "description": "The path used to store aliases, default value is ${homedir}/.zshrc. e.g. /Users/chouchouji/.zshrc"
-        },
-        "alias-manager.defaultLanguage": {
-          "type": "string",
-          "description": "Select the language you want to use",
-          "default": "en-US",
-          "enum": ["zh-CN", "en-US"]
+          "description": "%defaultStorePathDescription%"
         }
       }
     },
     "commands": [
       {
         "command": "aliasView.refresh",
-        "title": "Refresh Aliases",
+        "title": "%refreshAliases%",
         "icon": "$(refresh)"
       },
       {
         "command": "aliasView.newGroup",
-        "title": "New Group",
+        "title": "%newGroup%",
         "icon": "$(split-vertical)"
       },
       {
         "command": "aliasView.deleteGroup",
-        "title": "Delete Group"
+        "title": "%deleteGroup%"
       },
       {
         "command": "aliasView.add",
-        "title": "Add Alias",
+        "title": "%addAlias%",
         "icon": "$(add)"
       },
       {
         "command": "aliasView.copyAll",
-        "title": "Copy All Alias",
+        "title": "%copyAllAlias%",
         "icon": "$(files)"
       },
       {
         "command": "aliasView.delete",
-        "title": "Delete Alias"
+        "title": "%deleteAlias%"
       },
       {
         "command": "aliasView.run",
-        "title": "Run",
+        "title": "%run%",
         "icon": "$(run)"
       },
       {
         "command": "aliasView.rename",
-        "title": "Rename Alias"
+        "title": "%renameAlias%"
       },
       {
         "command": "aliasView.copy",
-        "title": "Copy Alias"
+        "title": "%copyAlias%"
       },
       {
         "command": "aliasView.removeFromCurrentGroup",
-        "title": "Remove From Current Group"
+        "title": "%removeFromCurrentGroup%"
       },
       {
         "command": "aliasView.addToGroup",
-        "title": "Add To Another Group"
+        "title": "%addToAnotherGroup%"
       },
       {
         "command": "aliasView.renameGroup",
-        "title": "Rename Group"
+        "title": "%renameGroup%"
       },
       {
         "command": "aliasView.sortByAlphabet",
-        "title": "Sort By Alphabet"
+        "title": "%sortByAlphabet%"
       },
       {
         "command": "aliasView.sortByFrequency",
-        "title": "Sort By Frequency"
+        "title": "%sortByFrequency%"
       }
     ],
     "menus": {
@@ -231,18 +226,18 @@
     "submenus": [
       {
         "id": "groupOperation",
-        "label": "Group Operation"
+        "label": "%groupOperation%"
       },
       {
         "id": "sortAlias",
-        "label": "Sort Alias"
+        "label": "%sortAlias%"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
           "id": "aliasManager",
-          "title": "Alias Manager",
+          "title": "%aliasManager%",
           "icon": "resources/icon.svg"
         }
       ]
@@ -251,7 +246,7 @@
       "aliasManager": [
         {
           "id": "aliasView",
-          "name": "Alias View"
+          "name": "%aliasView%"
         }
       ]
     }

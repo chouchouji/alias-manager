@@ -1,0 +1,21 @@
+{
+  "refreshAliases": "Refresh Alias",
+  "newGroup": "New Group",
+  "deleteGroup": "Delete Group",
+  "addAlias": "Add Alias",
+  "copyAllAlias": "Copy All Alias",
+  "deleteAlias": "Delete Alias",
+  "run": "Run",
+  "renameAlias": "Rename Alias",
+  "copyAlias": "Copy Alias",
+  "removeFromCurrentGroup": "Remove From Current Group",
+  "addToAnotherGroup": "Add To Another Group",
+  "renameGroup": "Rename Group",
+  "sortByAlphabet": "Sort By Alphabet",
+  "sortByFrequency": "Sort By Frequency",
+  "groupOperation": "Group Operation",
+  "sortAlias": "Sort Alias",
+  "aliasManager": "Alias Manager",
+  "aliasView": "Alias View",
+  "defaultStorePathDescription": "The path used to store aliases, default value is ${homedir}/.zshrc. e.g. /Users/chouchouji/.zshrc"
+}
