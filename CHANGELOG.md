@@ -1,4 +1,9 @@
-## [0.2.2](https://github.com/chouchouji/alias-manager/compare/v0.2.1...v0.2.2) (2024-11-17)
+## [0.2.3](https://github.com/chouchouji/alias-manager/compare/v0.2.1...v0.2.3) (2024-11-17)
+
+
+### Features
+
+* support setting description ([#12](https://github.com/chouchouji/alias-manager/issues/12)) ([db2273a](https://github.com/chouchouji/alias-manager/commit/db2273af617c3de97860ec87d0a7a34e94e4e084))
 
 
 
