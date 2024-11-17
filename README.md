@@ -16,6 +16,7 @@
 - 🎨 &nbsp;Support creating, deleting, renaming, copying and running system alias
 - 📦 &nbsp;Support grouping aliases
 - 🔠 &nbsp;Support sorting aliases by frequency or alphabet
+- 📝 &nbsp;Support setting description for every alias
 - 🔧 &nbsp;Support custom path that used to store aliases
 - 🌍 &nbsp;Support internationalization
 
@@ -75,6 +76,12 @@ All aliases are included in `System Aliases` which is data source. You can group
 ### Sort Alias
 
 ![sort](https://github.com/user-attachments/assets/fb904718-c01d-416a-9c7a-4f6795cee2eb)
+
+### Set Description 
+
+You can set description for every alias. Clear input box to hide the description. 
+
+![description](https://github.com/user-attachments/assets/930dcf4f-6e62-4216-91ba-ca9d1de5c369)
 
 ### Set Store Path
 

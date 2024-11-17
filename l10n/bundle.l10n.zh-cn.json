@@ -1,5 +1,6 @@
 {
     "Please enter new alias": "请输入新的别名",
+    "Please enter new description": "请输入新的备注",
     "Duplicate alias": "别名重复",
     "Please check the format of the input content": "请检查输入内容的格式",
     "Alias is mandatory to execute this action": "别名不能为空",

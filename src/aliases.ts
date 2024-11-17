@@ -28,6 +28,7 @@ export function getAliases() {
           aliasName,
           command,
           frequency: 0,
+          description: '',
         });
       }
       return acc;
