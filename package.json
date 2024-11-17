@@ -103,12 +103,20 @@
       {
         "command": "aliasView.sortByFrequency",
         "title": "%sortByFrequency%"
+      },
+      {
+        "command": "aliasView.setDescription",
+        "title": "%setDescription%"
       }
     ],
     "menus": {
       "commandPalette": [
         {
           "command": "aliasView.deleteGroup",
+          "when": "false"
+        },
+        {
+          "command": "aliasView.setDescription",
           "when": "false"
         },
         {
@@ -194,6 +202,10 @@
         },
         {
           "command": "aliasView.copy",
+          "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+        },
+        {
+          "command": "aliasView.setDescription",
           "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
         },
         {

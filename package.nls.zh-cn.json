@@ -6,6 +6,7 @@
   "copyAllAlias": "复制全部别名",
   "deleteAlias": "删除别名",
   "run": "运行",
+  "setDescription": "更新备注",
   "renameAlias": "重命名别名",
   "copyAlias": "复制别名",
   "removeFromCurrentGroup": "从当前组中移除",

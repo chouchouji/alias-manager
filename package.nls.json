@@ -6,6 +6,7 @@
   "copyAllAlias": "Copy All Alias",
   "deleteAlias": "Delete Alias",
   "run": "Run",
+  "setDescription": "Set Description",
   "renameAlias": "Rename Alias",
   "copyAlias": "Copy Alias",
   "removeFromCurrentGroup": "Remove From Current Group",
