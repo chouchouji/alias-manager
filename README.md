@@ -28,7 +28,7 @@ You can create a new alias.
 
 > [!TIP]
 > Please ensure that you have understood how to create a right alias.
-> Don't allow to add `duplicate` alias.
+> Don't allow to create `duplicate` alias.
 
 ![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)
 
@@ -38,7 +38,7 @@ It supports renaming an alias.
 
 ![rename](https://github.com/user-attachments/assets/a2c71fc5-0dc0-4873-9427-7bd509193b5b)
 
-### Delete Alias(es)
+### Delete Alias
 
 It supports deleting all aliases or one alias.
 
@@ -65,11 +65,14 @@ It support creating, deleting and renaming a new group, adding an alias to a gro
 
 All aliases are included in `System Aliases` which is data source. You can group different aliases by creating different groups. This is very helpful for you to quickly find aliases and operate aliases.
 
-#### Create, Delete And Rename
+#### Create, Delete Or Rename Group
+
+> [!TIP]
+> Don't allow to create `duplicate` group.
 
 ![create-group](https://github.com/user-attachments/assets/1b9e6e22-3308-4ff6-9811-0c91ac416d7a)
 
-#### Add Or Remove An Alias
+#### Add Alias To Group Or Remove Alias From Group
 
 ![move-group](https://github.com/user-attachments/assets/9079a8cc-3be3-42a2-8c09-5b60aab64c07)
 
