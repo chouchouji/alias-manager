@@ -3,14 +3,18 @@ import { exec } from 'node:child_process';
 import { isEmpty } from 'rattail';
 import { Alias } from './types';
 import storePath from './path';
-import { resolveAlias } from './utils';
+import { resolveAlias, isSameAlias } from './utils';
 
 function reloadStoreFile() {
   exec(`source ${storePath.path}`, { shell: '/bin/bash' });
 }
 
+function getAliasFromPath() {
+  return fs.readFileSync(storePath.path, 'utf-8').trim();
+}
+
 export function getAliases() {
-  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+  const content = getAliasFromPath();
 
   if (isEmpty(content)) {
     return [];
@@ -48,7 +52,7 @@ alias ${content}
 }
 
 export function deleteAliases(specificAlias?: Alias) {
-  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+  const content = getAliasFromPath();
 
   if (isEmpty(content)) {
     return;
@@ -66,8 +70,7 @@ export function deleteAliases(specificAlias?: Alias) {
       }
 
       if (alias) {
-        const isSameAlias = alias.aliasName === specificAlias.aliasName && alias.command === specificAlias.command;
-        return !isSameAlias;
+        return !isSameAlias(alias, specificAlias);
       }
 
       return true;
@@ -80,7 +83,7 @@ export function deleteAliases(specificAlias?: Alias) {
 }
 
 export function renameAliases(specificAlias: Alias, command: string) {
-  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+  const content = getAliasFromPath();
 
   if (isEmpty(content)) {
     return;
@@ -94,8 +97,8 @@ export function renameAliases(specificAlias: Alias, command: string) {
       const alias = resolveAlias(text);
 
       if (alias) {
-        const { aliasName, command: OldCommand } = alias;
-        if (aliasName === specificAlias.aliasName && OldCommand === specificAlias.command) {
+        const { aliasName } = alias;
+        if (isSameAlias(alias, specificAlias)) {
           acc.push(`alias ${aliasName}='${command}'`);
         } else {
           acc.push(text);
@@ -114,7 +117,7 @@ export function renameAliases(specificAlias: Alias, command: string) {
 }
 
 export function getCopyAliases() {
-  const content = fs.readFileSync(storePath.path, 'utf-8').trim();
+  const content = getAliasFromPath();
 
   if (isEmpty(content)) {
     return;
