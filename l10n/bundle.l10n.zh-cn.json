@@ -9,5 +9,6 @@
     "Please enter new group": "请输入新的组名",
     "Group is mandatory to execute this action": "组不能为空",
     "Duplicate group": "组名称重复",
-    "Please choose a group to add": "请选择一个组添加别名"
+    "Please choose a group to add": "请选择一个组添加别名",
+    "frequency": "运行次数"
 }

@@ -8,6 +8,10 @@ import { resolveAlias, isSameAlias, normalizeAliasesToArray } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
+function setTooltip(frequency?: number) {
+  return `${vscode.l10n.t('frequency')}: ${frequency ?? 0}`;
+}
+
 export function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc');
@@ -272,6 +276,9 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     if (runAlias) {
       runAlias.frequency = (runAlias.frequency ?? 0) + 1;
       this.globalState.update(alias.group, systemAliases);
+
+      alias.tooltip = setTooltip(runAlias.frequency);
+      this.refresh(alias);
     }
 
     const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
@@ -466,6 +473,8 @@ class AliasItem extends vscode.TreeItem {
     this.data = alias;
     this.groupName = group;
     this.description = remark;
+
+    this.tooltip = setTooltip(this.alias?.frequency);
 
     if (!isLeafNode) {
       // parent node
