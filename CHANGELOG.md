@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/chouchouji/alias-manager/compare/v0.2.3...v0.2.4) (2024-11-19)
+
+
+### Features
+
+* show frequency in tooltip ([f3a8571](https://github.com/chouchouji/alias-manager/commit/f3a8571e72aefc1da9e2a3721ec1f4de2d9ea7a2))
+
+
+
 ## [0.2.3](https://github.com/chouchouji/alias-manager/compare/v0.2.1...v0.2.3) (2024-11-17)
 
 
