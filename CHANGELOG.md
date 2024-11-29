@@ -1,3 +1,17 @@
+## [0.2.5](https://github.com/chouchouji/alias-manager/compare/v0.2.4...v0.2.5) (2024-11-29)
+
+
+### Bug Fixes
+
+* don't execute unalias command when no any alias ([5d84972](https://github.com/chouchouji/alias-manager/commit/5d8497247fab22a241dc96c017a69afcf5b2cde6))
+
+
+### Features
+
+* support copying all alias in one group ([4c5ef33](https://github.com/chouchouji/alias-manager/commit/4c5ef336242210d0e3752556c6e032d673f4fcd9))
+
+
+
 ## [0.2.4](https://github.com/chouchouji/alias-manager/compare/v0.2.3...v0.2.4) (2024-11-19)
 
 
