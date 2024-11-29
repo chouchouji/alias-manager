@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chouchouji/alias-manager.git"
+    "url": "git+https://github.com/chouchouji/alias-manager.git"
   },
   "bugs": {
     "url": "https://github.com/chouchouji/alias-manager/issues"
