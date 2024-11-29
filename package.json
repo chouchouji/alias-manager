@@ -63,11 +63,6 @@
         "icon": "$(add)"
       },
       {
-        "command": "aliasView.copyAll",
-        "title": "%copyAllAlias%",
-        "icon": "$(files)"
-      },
-      {
         "command": "aliasView.deleteAlias",
         "title": "%deleteAlias%"
       },
@@ -87,6 +82,10 @@
       {
         "command": "aliasView.copy",
         "title": "%copyAlias%"
+      },
+      {
+        "command": "aliasView.copyAllAlias",
+        "title": "%copyAllAlias%"
       },
       {
         "command": "aliasView.removeFromCurrentGroup",
@@ -140,6 +139,10 @@
           "when": "false"
         },
         {
+          "command": "aliasView.copyAllAlias",
+          "when": "false"
+        },
+        {
           "command": "aliasView.removeFromCurrentGroup",
           "when": "false"
         },
@@ -168,11 +171,6 @@
         },
         {
           "command": "aliasView.add",
-          "when": "view == aliasView",
-          "group": "navigation"
-        },
-        {
-          "command": "aliasView.copyAll",
           "when": "view == aliasView",
           "group": "navigation"
         },
@@ -211,6 +209,10 @@
         {
           "command": "aliasView.copy",
           "when": "view == aliasView && (viewItem == alias_child || viewItem == alias_system_child)"
+        },
+        {
+          "command": "aliasView.copyAllAlias",
+          "when": "view == aliasView && (viewItem == alias_parent || viewItem == alias_system_parent)"
         },
         {
           "command": "aliasView.setDescription",

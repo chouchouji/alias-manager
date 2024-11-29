@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import os from 'node:os';
 import path from 'node:path';
-import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, getCopyAliases } from './aliases';
+import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases';
 import { SYSTEM_ALIAS } from './constants';
 import { isNonEmptyArray } from 'rattail';
 import { resolveAlias, isSameAlias, normalizeAliasesToArray } from './utils';
@@ -57,7 +57,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('aliasView.run', (alias: AliasItem) => aliasView.runAlias(alias)),
   );
 
-  context.subscriptions.push(vscode.commands.registerCommand('aliasView.copyAll', () => aliasView.copyAllAlias()));
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.copyAllAlias', (alias: AliasItem) => aliasView.copyAllAlias(alias)),
+  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.copy', (alias: AliasItem) => aliasView.copyAlias(alias)),
@@ -311,14 +313,16 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     vscode.window.showInformationMessage(vscode.l10n.t('Alias has been added to the clipboard Successfully'));
   }
 
-  copyAllAlias() {
-    const alias = getCopyAliases();
-    if (!alias) {
+  copyAllAlias(alias: AliasItem) {
+    const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.groupName));
+    if (!aliases.length) {
       vscode.window.showWarningMessage(vscode.l10n.t('No alias'));
       return;
     }
 
-    vscode.env.clipboard.writeText(alias);
+    const content = aliases.map(({ aliasName, command }) => `alias ${aliasName}='${command}'`).join('\n');
+
+    vscode.env.clipboard.writeText(content);
     vscode.window.showInformationMessage(vscode.l10n.t('Alias has been added to the clipboard Successfully'));
   }
 

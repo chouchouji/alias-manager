@@ -115,22 +115,3 @@ export function renameAliases(specificAlias: Alias, command: string) {
 
   reloadStoreFile();
 }
-
-export function getCopyAliases() {
-  const content = getAliasFromPath();
-
-  if (isEmpty(content)) {
-    return;
-  }
-
-  const data = content
-    .split('\n')
-    .map((alias) => alias.trim())
-    .filter((content) => {
-      const alias = resolveAlias(content);
-      return !!alias;
-    })
-    .join('\n');
-
-  return data;
-}
