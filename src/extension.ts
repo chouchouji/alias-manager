@@ -8,8 +8,8 @@ import { resolveAlias, isSameAlias, normalizeAliasesToArray } from './utils';
 import { Alias } from './types';
 import storePath from './path';
 
-function setTooltip(frequency?: number) {
-  return `${vscode.l10n.t('frequency')}: ${frequency ?? 0}`;
+function setTooltip(frequency = 0) {
+  return `${vscode.l10n.t('frequency')}: ${frequency}`;
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -42,7 +42,11 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()));
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.delete', (alias: AliasItem) => aliasView.deleteAlias(alias)),
+    vscode.commands.registerCommand('aliasView.deleteAlias', (alias: AliasItem) => aliasView.deleteAlias(alias)),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.deleteAllAlias', (alias: AliasItem) => aliasView.deleteAllAlias()),
   );
 
   context.subscriptions.push(
@@ -186,24 +190,32 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.refresh();
   }
 
+  deleteAllAlias() {
+    const aliases = getAliases();
+
+    if (!aliases.length) {
+      return;
+    }
+
+    const commands = aliases.reduce((acc, alias) => {
+      return (acc += ` ${alias.aliasName}`);
+    }, 'unalias');
+    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+    activeTerminal.show();
+    activeTerminal.sendText(commands);
+
+    deleteAliases();
+
+    // remove all aliases under every groups
+    this.globalState.keys().forEach((group) => {
+      this.globalState.update(group, []);
+    });
+
+    this.refresh();
+  }
+
   deleteAlias(alias: AliasItem) {
-    // delete all aliases
     if (!alias.data) {
-      const commands = getAliases().reduce((acc, alias) => {
-        return (acc += ` ${alias.aliasName}`);
-      }, 'unalias');
-      const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-      activeTerminal.show();
-      activeTerminal.sendText(commands);
-
-      deleteAliases();
-
-      // remove all aliases under every groups
-      this.globalState.keys().forEach((group) => {
-        this.globalState.update(group, []);
-      });
-
-      this.refresh();
       return;
     }
 
@@ -409,8 +421,12 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   sortByAlphabet(alias: AliasItem) {
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
-    aliases.sort((a, b) => a.aliasName.toLowerCase().localeCompare(b.aliasName.toLowerCase()));
 
+    if (!aliases.length) {
+      return;
+    }
+
+    aliases.sort((a, b) => a.aliasName.toLowerCase().localeCompare(b.aliasName.toLowerCase()));
     this.globalState.update(alias.group, aliases);
 
     this.refresh();
@@ -418,8 +434,12 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   sortByFrequency(alias: AliasItem) {
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
-    aliases.sort((a, b) => (a.frequency ?? 0) - (b.frequency ?? 0));
 
+    if (!aliases.length) {
+      return;
+    }
+
+    aliases.sort((a, b) => (a.frequency ?? 0) - (b.frequency ?? 0));
     this.globalState.update(alias.group, aliases);
 
     this.refresh();

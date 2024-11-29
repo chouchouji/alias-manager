@@ -5,7 +5,7 @@ class StorePath {
     return this._path;
   }
 
-  set path(path) {
+  set path(path: string) {
     this._path = path;
   }
 }

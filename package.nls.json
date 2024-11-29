@@ -5,6 +5,7 @@
   "addAlias": "Add Alias",
   "copyAllAlias": "Copy All Alias",
   "deleteAlias": "Delete Alias",
+  "deleteAllAlias": "Delete All Alias",
   "run": "Run",
   "setDescription": "Set Description",
   "renameAlias": "Rename Alias",

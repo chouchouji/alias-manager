@@ -68,8 +68,12 @@
         "icon": "$(files)"
       },
       {
-        "command": "aliasView.delete",
+        "command": "aliasView.deleteAlias",
         "title": "%deleteAlias%"
+      },
+      {
+        "command": "aliasView.deleteAllAlias",
+        "title": "%deleteAllAlias%"
       },
       {
         "command": "aliasView.run",
@@ -120,7 +124,7 @@
           "when": "false"
         },
         {
-          "command": "aliasView.delete",
+          "command": "aliasView.deleteAlias",
           "when": "false"
         },
         {
@@ -180,8 +184,12 @@
       ],
       "view/item/context": [
         {
-          "command": "aliasView.delete",
-          "when": "view == aliasView && (viewItem == alias_system_child || viewItem == alias_system_parent)"
+          "command": "aliasView.deleteAlias",
+          "when": "view == aliasView && viewItem == alias_system_child"
+        },
+        {
+          "command": "aliasView.deleteAllAlias",
+          "when": "view == aliasView && viewItem == alias_system_parent"
         },
         {
           "command": "aliasView.deleteGroup",
