@@ -55,9 +55,9 @@ Click `run` button, it will activate terminal and execute that command.
 
 ### Copy Alias
 
-It supports copying an alias or all aliases.
+It supports copying an alias or all aliases in one group.
 
-![copy](https://github.com/user-attachments/assets/b9f4522e-4b87-4ba5-892c-1aafbbe0f187)
+![copy](https://github.com/user-attachments/assets/23991d48-8de3-4a49-9dd9-f6ef6a6dd2b8)
 
 ### Group Alias
 
