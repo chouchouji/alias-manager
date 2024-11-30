@@ -1,3 +1,7 @@
+# [0.3.0](https://github.com/chouchouji/alias-manager/compare/v0.2.5...v0.3.0) (2024-11-30)
+
+
+
 ## [0.2.5](https://github.com/chouchouji/alias-manager/compare/v0.2.4...v0.2.5) (2024-11-29)
 
 
