@@ -15,3 +15,4 @@ vsc-extension-quickstart.md
 prettier.config.mjs
 pnpm-lock.yaml
 *.github/**
+README.zh-CN.md
