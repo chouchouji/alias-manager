@@ -6,7 +6,7 @@ import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from
 import { SYSTEM_ALIAS } from './constants';
 import storePath from './path';
 import { Alias } from './types';
-import { isSameAlias, normalizeAliasesToArray, resolveAlias } from './utils';
+import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from './utils';
 
 function setTooltip(frequency = 0) {
   return `${vscode.l10n.t('frequency')}: ${frequency}`;
@@ -203,10 +203,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const command = aliases.reduce((acc, alias) => {
-      return (acc += ` ${alias.aliasName}`);
-    }, 'unalias');
-    executeCommandInTerminal(command);
+    executeCommandInTerminal(formatUnaliasCommand(aliases));
 
     deleteAliases();
 
@@ -235,7 +232,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       this.globalState.update(groupName, aliases);
     });
 
-    executeCommandInTerminal(`unalias ${alias.data.aliasName}`);
+    executeCommandInTerminal(formatUnaliasCommand([alias.data]));
 
     this.refresh();
   }

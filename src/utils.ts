@@ -128,6 +128,22 @@ export function isSameAlias(targetAlias: Alias, sourceAlias: Alias) {
   return targetAlias.aliasName === sourceAlias.aliasName && targetAlias.command === sourceAlias.command;
 }
 
+/**
+ * covert value to array
+ * @param {Array | undefined} value
+ * @returns {boolean}
+ */
 export function normalizeAliasesToArray<T>(value: T[] | undefined) {
   return isArray(value) ? value : [];
+}
+
+/**
+ * generate unalias command
+ * @param {Alias[]} aliases
+ * @returns {string}
+ */
+export function formatUnaliasCommand(aliases: Alias[]) {
+  return aliases.reduce((acc, alias) => {
+    return (acc += ` ${alias.aliasName}`);
+  }, 'unalias');
 }

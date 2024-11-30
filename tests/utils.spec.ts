@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Alias } from '../src/types';
-import { isSameAlias, normalizeAliasesToArray, resolveAlias } from '../src/utils';
+import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from '../src/utils';
 
 const alias = {
   aliasName: 'nv',
@@ -92,5 +92,11 @@ describe('test normalize aliases to array', () => {
 
   it('param is undefined', () => {
     expect(normalizeAliasesToArray<Alias>(undefined)).toStrictEqual([]);
+  });
+});
+
+describe('test format unalias command', () => {
+  it('param is alias array with value', () => {
+    expect(formatUnaliasCommand([alias, alias])).toBe('unalias nv nv');
   });
 });
