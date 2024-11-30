@@ -7,7 +7,6 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "jsx": "preserve",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
