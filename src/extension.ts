@@ -100,6 +100,12 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
+function executeCommandInTerminal(command: string) {
+  const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
+  activeTerminal.show();
+  activeTerminal.sendText(command);
+}
+
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<AliasItem | undefined | null | void> = new vscode.EventEmitter<
     AliasItem | undefined | null | void
@@ -185,9 +191,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     });
     this.globalState.update(SYSTEM_ALIAS, aliases);
 
-    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    activeTerminal.show();
-    activeTerminal.sendText(`alias ${alias}`);
+    executeCommandInTerminal(`alias ${alias}`);
 
     this.refresh();
   }
@@ -199,12 +203,10 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const commands = aliases.reduce((acc, alias) => {
+    const command = aliases.reduce((acc, alias) => {
       return (acc += ` ${alias.aliasName}`);
     }, 'unalias');
-    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    activeTerminal.show();
-    activeTerminal.sendText(commands);
+    executeCommandInTerminal(command);
 
     deleteAliases();
 
@@ -233,9 +235,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       this.globalState.update(groupName, aliases);
     });
 
-    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    activeTerminal.show();
-    activeTerminal.sendText(`unalias ${alias.data.aliasName}`);
+    executeCommandInTerminal(`unalias ${alias.data.aliasName}`);
 
     this.refresh();
   }
@@ -273,10 +273,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       }
     });
 
-    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    activeTerminal.show();
-    activeTerminal.sendText(`alias ${alias.data.aliasName}='${command}'`);
-
+    executeCommandInTerminal(`alias ${alias.data.aliasName}='${command}'`);
     this.refresh();
   }
 
@@ -295,10 +292,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       this.refresh(alias);
     }
 
-    const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    activeTerminal.show();
-    const { aliasName } = alias.data;
-    activeTerminal.sendText(aliasName);
+    executeCommandInTerminal(alias.data.aliasName);
   }
 
   copyAlias(alias: AliasItem) {
