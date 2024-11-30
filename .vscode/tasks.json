@@ -9,10 +9,7 @@
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
-        "fileLocation": [
-          "relative",
-          "${workspaceFolder}"
-        ],
+        "fileLocation": ["relative", "${workspaceFolder}"],
         "pattern": {
           "regexp": "^(?:\\s*)(.+?):(\\d+):(\\d+) - (error TS\\d+): (.*)$",
           "file": 1,

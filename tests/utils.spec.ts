@@ -1,6 +1,6 @@
-import { resolveAlias, isSameAlias, normalizeAliasesToArray } from '../src/utils';
-import { it, expect, describe } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Alias } from '../src/types';
+import { isSameAlias, normalizeAliasesToArray, resolveAlias } from '../src/utils';
 
 const alias = {
   aliasName: 'nv',

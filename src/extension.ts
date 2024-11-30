@@ -1,12 +1,12 @@
-import * as vscode from 'vscode';
 import os from 'node:os';
 import path from 'node:path';
+import { isNonEmptyArray } from 'rattail';
+import * as vscode from 'vscode';
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases';
 import { SYSTEM_ALIAS } from './constants';
-import { isNonEmptyArray } from 'rattail';
-import { resolveAlias, isSameAlias, normalizeAliasesToArray } from './utils';
-import { Alias } from './types';
 import storePath from './path';
+import { Alias } from './types';
+import { isSameAlias, normalizeAliasesToArray, resolveAlias } from './utils';
 
 function setTooltip(frequency = 0) {
   return `${vscode.l10n.t('frequency')}: ${frequency}`;

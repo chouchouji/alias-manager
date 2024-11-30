@@ -279,33 +279,28 @@
   },
   "nano-staged": {
     "*.ts": [
-      "prettier --write",
-      "eslint --fix"
+      "biome check --write"
     ]
   },
   "packageManager": "pnpm@9.1.1",
   "scripts": {
+    "check": "biome check --write",
     "clean": "rimraf node_modules dist *.vsix",
     "postinstall": "simple-git-hooks",
     "package": "rimraf *.vsix && pnpm build && vsce package --no-dependencies",
     "release": "vr release --skip-npm-publish",
-    "lint": "eslint . --fix",
-    "format": "prettier . --write",
     "dev": "tsup --watch",
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "20.x",
     "@types/vscode": "^1.74.3",
-    "@typescript-eslint/eslint-plugin": "^8.10.0",
-    "@typescript-eslint/parser": "^8.7.0",
     "@varlet/release": "^0.3.1",
     "@vscode/vsce": "^3.2.1",
-    "eslint": "^9.13.0",
     "nano-staged": "^0.8.0",
-    "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "simple-git-hooks": "^2.11.1",
     "tsup": "8.3.0",

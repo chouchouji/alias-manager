@@ -1,9 +1,9 @@
-import fs from 'node:fs';
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import { isEmpty } from 'rattail';
-import { Alias } from './types';
 import storePath from './path';
-import { resolveAlias, isSameAlias } from './utils';
+import { Alias } from './types';
+import { isSameAlias, resolveAlias } from './utils';
 
 function reloadStoreFile() {
   exec(`source ${storePath.path}`, { shell: '/bin/bash' });

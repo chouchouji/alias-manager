@@ -1,5 +1,5 @@
-import { Alias } from './types';
 import { isArray } from 'rattail';
+import { Alias } from './types';
 
 /**
  * Check alias name or command is valid
