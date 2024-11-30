@@ -3,6 +3,9 @@
   <h1>Alias Manager</h1>
   <p>A vscode extension used to manage your system aliases</p>
   <p>
+    <a href="https://github.com/chouchouji/alias-manager/blob/main/README.zh-CN.md">中文介绍</a>
+  </p>
+  <p>
     <img src="https://img.shields.io/github/package-json/v/chouchouji/alias-manager" alt="version">
     <img src="https://img.shields.io/github/stars/chouchouji/alias-manager" alt="stars">
     <img src="https://img.shields.io/github/license/chouchouji/alias-manager" alt="license">
