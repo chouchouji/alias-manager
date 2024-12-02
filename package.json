@@ -282,7 +282,6 @@
       "biome check --write"
     ]
   },
-  "packageManager": "pnpm@9.1.1",
   "scripts": {
     "check": "biome check --write",
     "clean": "rimraf node_modules dist *.vsix",
