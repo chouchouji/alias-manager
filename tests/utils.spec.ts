@@ -96,7 +96,15 @@ describe('test normalize aliases to array', () => {
 });
 
 describe('test format unalias command', () => {
-  it('param is alias array with value', () => {
+  it('param is alias array with empty value', () => {
+    expect(formatUnaliasCommand([])).toBe('unalias');
+  });
+
+  it('param is alias array with single value', () => {
+    expect(formatUnaliasCommand([alias])).toBe('unalias nv');
+  });
+
+  it('param is alias array with multiple value', () => {
     expect(formatUnaliasCommand([alias, alias])).toBe('unalias nv nv');
   });
 });
