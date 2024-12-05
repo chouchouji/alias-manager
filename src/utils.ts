@@ -1,5 +1,5 @@
 import { isArray } from 'rattail';
-import { Alias } from './types';
+import type { Alias } from './types';
 
 /**
  * Check alias name or command is valid
@@ -90,7 +90,7 @@ export function resolveAlias(value: string): Omit<Alias, 'frequency' | 'descript
   let command = '';
   let hasEqual = false;
 
-  for (let char of formatValue) {
+  for (const char of formatValue) {
     if (char === '=') {
       hasEqual = true;
       continue;
@@ -144,6 +144,6 @@ export function normalizeAliasesToArray<T>(value: T[] | undefined) {
  */
 export function formatUnaliasCommand(aliases: Alias[]) {
   return aliases.reduce((acc, alias) => {
-    return (acc += ` ${alias.aliasName}`);
+    return `${acc} ${alias.aliasName}`;
   }, 'unalias');
 }

@@ -1,5 +1,5 @@
 class StorePath {
-  private _path: string = '';
+  private _path = '';
 
   get path() {
     return this._path;

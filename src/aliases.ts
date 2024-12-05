@@ -2,7 +2,7 @@ import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import { isEmpty } from 'rattail';
 import storePath from './path';
-import { Alias } from './types';
+import type { Alias } from './types';
 import { isSameAlias, resolveAlias } from './utils';
 
 function reloadStoreFile() {

@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases';
 import { SYSTEM_ALIAS } from './constants';
 import storePath from './path';
-import { Alias } from './types';
+import type { Alias } from './types';
 import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from './utils';
 
 function setTooltip(frequency = 0) {
@@ -107,11 +107,12 @@ function executeCommandInTerminal(command: string) {
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
-  private _onDidChangeTreeData: vscode.EventEmitter<AliasItem | undefined | null | void> = new vscode.EventEmitter<
-    AliasItem | undefined | null | void
+  private _onDidChangeTreeData: vscode.EventEmitter<AliasItem | undefined | null | undefined> = new vscode.EventEmitter<
+    AliasItem | undefined | null | undefined
   >();
 
-  readonly onDidChangeTreeData: vscode.Event<AliasItem | undefined | null | void> = this._onDidChangeTreeData.event;
+  readonly onDidChangeTreeData: vscode.Event<AliasItem | undefined | null | undefined> =
+    this._onDidChangeTreeData.event;
 
   globalState: vscode.Memento;
 
@@ -139,15 +140,15 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    this.globalState.keys().forEach((groupName) => {
+    for (const groupName of this.globalState.keys()) {
       const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName));
-      const sameAlias = aliases.find((aliasItem) => isSameAlias(alias.data!, aliasItem));
+      const sameAlias = aliases.find((aliasItem) => isSameAlias(alias.data as Alias, aliasItem));
 
       if (sameAlias) {
         sameAlias.description = description;
         this.globalState.update(groupName, aliases);
       }
-    });
+    }
 
     this.refresh();
   }
@@ -208,9 +209,9 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     deleteAliases();
 
     // remove all aliases under every groups
-    this.globalState.keys().forEach((group) => {
-      this.globalState.update(group, []);
-    });
+    for (const groupName of this.globalState.keys()) {
+      this.globalState.update(groupName, []);
+    }
 
     this.refresh();
   }
@@ -224,13 +225,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     deleteAliases(alias.data);
 
     // remove all aliases under every groups
-    this.globalState.keys().forEach((groupName) => {
+    for (const groupName of this.globalState.keys()) {
       const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName)).filter(
-        (aliasItem) => !isSameAlias(alias.data!, aliasItem),
+        (aliasItem) => !isSameAlias(alias.data as Alias, aliasItem),
       );
 
       this.globalState.update(groupName, aliases);
-    });
+    }
 
     executeCommandInTerminal(formatUnaliasCommand([alias.data]));
 
@@ -260,15 +261,15 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     renameAliases(alias.data, command);
 
     // rename one alias under every groups
-    this.globalState.keys().forEach((groupName) => {
+    for (const groupName of this.globalState.keys()) {
       const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName));
-      const sameAlias = aliases.find((aliasItem) => isSameAlias(alias.data!, aliasItem));
+      const sameAlias = aliases.find((aliasItem) => isSameAlias(alias.data as Alias, aliasItem));
 
       if (sameAlias) {
         sameAlias.command = command;
         this.globalState.update(groupName, aliases);
       }
-    });
+    }
 
     executeCommandInTerminal(`alias ${alias.data.aliasName}='${command}'`);
     this.refresh();
@@ -280,7 +281,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     const systemAliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group));
-    const runAlias = systemAliases.find((systemAlias) => isSameAlias(alias.data!, systemAlias));
+    const runAlias = systemAliases.find((systemAlias) => isSameAlias(alias.data as Alias, systemAlias));
     if (runAlias) {
       runAlias.frequency = (runAlias.frequency ?? 0) + 1;
       this.globalState.update(alias.group, systemAliases);
@@ -323,7 +324,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group)).filter(
-      (aliasItem) => !isSameAlias(alias.data!, aliasItem),
+      (aliasItem) => !isSameAlias(alias.data as Alias, aliasItem),
     );
 
     this.globalState.update(alias.group, aliases);
@@ -447,19 +448,19 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   getChildren(element?: AliasItem): Thenable<AliasItem[]> {
     if (element) {
       return Promise.resolve(element.children);
-    } else {
-      return Promise.resolve(this.getAliasTree());
     }
+
+    return Promise.resolve(this.getAliasTree());
   }
 
   private getAliasTree(): AliasItem[] {
     const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
       const children = normalizeAliasesToArray<Alias>(this.globalState.get(key)).map((alias) => {
         const { aliasName, command, description = '' } = alias;
-        return new AliasItem(`${aliasName} = '${command}'`, [], alias, true, key, description);
+        return new AliasItem(`${aliasName} = '${command}'`, alias, key, description, [], true);
       });
 
-      aliases.push(new AliasItem(key, children, undefined, false, key, ''));
+      aliases.push(new AliasItem(key, undefined, key, '', children, false));
       return aliases;
     }, []);
 
@@ -468,17 +469,17 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 }
 class AliasItem extends vscode.TreeItem {
   contextValue = 'alias_child';
-  description: string = '';
+  description = '';
   data: Alias | undefined = undefined;
   groupName: string;
 
   constructor(
     public readonly label: string,
-    public readonly children: AliasItem[] = [],
     public readonly alias: Alias | undefined,
-    public readonly isLeafNode: boolean = true,
     public readonly group: string,
     public readonly remark: string,
+    public readonly children: AliasItem[] = [],
+    public readonly isLeafNode: boolean = true,
   ) {
     super(
       label,

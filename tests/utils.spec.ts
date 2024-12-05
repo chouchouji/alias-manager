@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Alias } from '../src/types';
+import type { Alias } from '../src/types';
 import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from '../src/utils';
 
 const alias = {

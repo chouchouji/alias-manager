@@ -19,7 +19,7 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["pnpm-lock.yaml", "node_modules", ".vscode", "l10n", "package*.json"]
+    "ignore": ["pnpm-lock.yaml", ".vscode", "l10n", "package*.json"]
   },
   "organizeImports": {
     "enabled": true
@@ -27,13 +27,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
-      "style": {
-        "useBlockStatements": "warn"
-      },
-      "suspicious": {
-        "noDoubleEquals": "warn"
-      }
+      "recommended": true
     },
     "ignore": ["dist"]
   },
