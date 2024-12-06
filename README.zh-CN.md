@@ -37,9 +37,9 @@
 
 ### 重命名
 
-支持对已有别名重命名
+支持对已有别名的名称和指令名称重命名
 
-![rename](https://github.com/user-attachments/assets/a2c71fc5-0dc0-4873-9427-7bd509193b5b)
+![rename](https://github.com/user-attachments/assets/088510aa-d8dc-487b-bc17-a408579fa9d2)
 
 ### 删除
 

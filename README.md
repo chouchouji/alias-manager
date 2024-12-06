@@ -37,9 +37,9 @@ You can create a new alias.
 
 ### Rename Alias
 
-It supports renaming an alias.
+It supports renaming alias name and command for an alias.
 
-![rename](https://github.com/user-attachments/assets/a2c71fc5-0dc0-4873-9427-7bd509193b5b)
+![rename](https://github.com/user-attachments/assets/088510aa-d8dc-487b-bc17-a408579fa9d2)
 
 ### Delete Alias
 

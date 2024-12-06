@@ -82,7 +82,7 @@ export function deleteAliases(specificAlias?: Alias) {
   reloadStoreFile();
 }
 
-export function renameAliases(specificAlias: Alias, command: string) {
+export function renameAliases(specificAlias: Alias, targetAlias: Pick<Alias, 'aliasName' | 'command'>) {
   const content = getAliasFromPath();
 
   if (isEmpty(content)) {
@@ -96,13 +96,8 @@ export function renameAliases(specificAlias: Alias, command: string) {
     .reduce((acc: string[], text) => {
       const alias = resolveAlias(text);
 
-      if (alias) {
-        const { aliasName } = alias;
-        if (isSameAlias(alias, specificAlias)) {
-          acc.push(`alias ${aliasName}='${command}'`);
-        } else {
-          acc.push(text);
-        }
+      if (alias && isSameAlias(alias, specificAlias)) {
+        acc.push(`alias ${targetAlias.aliasName}='${targetAlias.command}'`);
       } else {
         acc.push(text);
       }
