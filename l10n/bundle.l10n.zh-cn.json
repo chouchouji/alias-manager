@@ -1,9 +1,13 @@
 {
     "Please enter new alias": "请输入新的别名",
+    "Please enter new alias name": "请输入新的别名名称",
+    "Please enter new alias command": "请输入新的指令名称",
     "Please enter new description": "请输入新的备注",
     "Duplicate alias": "别名重复",
     "Please check the format of the input content": "请检查输入内容的格式",
     "Alias is mandatory to execute this action": "别名不能为空",
+    "Alias name is mandatory to execute this action": "别名名称不能为空",
+    "Alias command is mandatory to execute this action": "指令名称不能为空",
     "No alias": "没有任何别名",
     "Alias has been added to the clipboard Successfully": "别名已成功复制到剪贴板",
     "Please enter new group": "请输入新的组名",

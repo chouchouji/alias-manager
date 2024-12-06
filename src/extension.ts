@@ -50,7 +50,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.rename', (alias: AliasItem) => aliasView.renameAlias(alias)),
+    vscode.commands.registerCommand('aliasView.renameAliasName', (alias: AliasItem) =>
+      aliasView.renameAliasName(alias),
+    ),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('aliasView.renameAliasCommand', (alias: AliasItem) =>
+      aliasView.renameAliasCommand(alias),
+    ),
   );
 
   context.subscriptions.push(
@@ -238,13 +246,50 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.refresh();
   }
 
-  async renameAlias(alias: AliasItem) {
+  async renameAliasName(alias: AliasItem) {
+    if (!alias.data) {
+      return;
+    }
+
+    const aliasName = await vscode.window.showInputBox({
+      placeHolder: vscode.l10n.t('Please enter new alias name'),
+      value: alias.data.aliasName,
+    });
+
+    // cancel input aliasName
+    if (aliasName === undefined) {
+      return;
+    }
+
+    if (!aliasName.length) {
+      vscode.window.showErrorMessage(vscode.l10n.t('Alias name is mandatory to execute this action'));
+      return;
+    }
+
+    renameAliases(alias.data, { aliasName, command: alias.data.command });
+
+    // rename one alias under every groups
+    for (const groupName of this.globalState.keys()) {
+      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName));
+      const sameAlias = aliases.find((aliasItem) => isSameAlias(alias.data as Alias, aliasItem));
+
+      if (sameAlias) {
+        sameAlias.aliasName = aliasName;
+        this.globalState.update(groupName, aliases);
+      }
+    }
+
+    executeCommandInTerminal(`alias ${aliasName}='${alias.data.command}'`);
+    this.refresh();
+  }
+
+  async renameAliasCommand(alias: AliasItem) {
     if (!alias.data) {
       return;
     }
 
     const command = await vscode.window.showInputBox({
-      placeHolder: vscode.l10n.t('Please enter new alias'),
+      placeHolder: vscode.l10n.t('Please enter new alias command'),
       value: alias.data.command,
     });
 
@@ -254,11 +299,11 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     if (!command.length) {
-      vscode.window.showErrorMessage(vscode.l10n.t('Alias is mandatory to execute this action'));
+      vscode.window.showErrorMessage(vscode.l10n.t('Alias command is mandatory to execute this action'));
       return;
     }
 
-    renameAliases(alias.data, command);
+    renameAliases(alias.data, { aliasName: alias.data.aliasName, command });
 
     // rename one alias under every groups
     for (const groupName of this.globalState.keys()) {
