@@ -2,6 +2,14 @@ import { isArray } from 'rattail';
 import type { Alias } from './types';
 
 /**
+ * Check all values in array are same to target
+ * @returns {boolean}
+ */
+export function allNotEqualToTarget<T>(values: T[], target: T) {
+  return values.every((value) => value !== target);
+}
+
+/**
  * Check alias name or command is valid
  *
  * @example
@@ -18,10 +26,9 @@ import type { Alias } from './types';
  * ```
  *
  * @param {value} string
- * @param {boolean} [skipNoQuote=false] - whether to skip no quote validation
  * @returns If it is valid, return true
  */
-function isValid(value: string, skipNoQuote = false) {
+export function isValid(value: string) {
   const firstChar = value.charAt(0);
   const lastChar = value.charAt(value.length - 1);
 
@@ -33,7 +40,7 @@ function isValid(value: string, skipNoQuote = false) {
     return true;
   }
 
-  if (![`'`, `"`].includes(firstChar) && ![`'`, `"`].includes(lastChar) && !skipNoQuote) {
+  if (![`'`, `"`].includes(firstChar) && ![`'`, `"`].includes(lastChar)) {
     return true;
   }
 
@@ -77,6 +84,16 @@ function isValid(value: string, skipNoQuote = false) {
  * resolveAlias(`alias "nv"="node -v"`) // { aliasName: 'nv', command: 'node -v' }
  * ```
  *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias nv=node -v`) // { aliasName: 'nv', command: 'node' }
+ * ```
+ *
+ * @example
+ * ```typescript
+ * resolveAlias(`alias nv=node`) // { aliasName: 'nv', command: 'node' }
+ * ```
+ *
  * @param {value} string
  * @returns If it is not valid, return undefined
  */
@@ -108,7 +125,18 @@ export function resolveAlias(value: string): Pick<Alias, 'aliasName' | 'command'
     return;
   }
 
-  if (isValid(aliasName) && isValid(command, true)) {
+  const firstCommandChar = command.charAt(0);
+  const lastCommandChar = command.charAt(command.length - 1);
+
+  // clear command if command isn't wrapper by quote, e.g. node -v -> node
+  if (
+    allNotEqualToTarget([firstCommandChar, lastCommandChar], `'`) &&
+    allNotEqualToTarget([firstCommandChar, lastCommandChar], `"`)
+  ) {
+    command = command.split(' ')[0];
+  }
+
+  if (isValid(aliasName) && isValid(command)) {
     return {
       aliasName: aliasName.replace(/^['"](.*)['"]$/, '$1'),
       command: command.replace(/^['"](.*)['"]$/, '$1'),
@@ -129,7 +157,7 @@ export function isSameAlias(targetAlias: Alias, sourceAlias: Alias) {
 }
 
 /**
- * covert value to array
+ * Covert value to array
  * @param {Array | undefined} value
  * @returns {boolean}
  */
@@ -138,7 +166,7 @@ export function normalizeAliasesToArray<T>(value: T[] | undefined) {
 }
 
 /**
- * generate unalias command
+ * Generate unalias command
  * @param {Alias[]} aliases
  * @returns {string}
  */
