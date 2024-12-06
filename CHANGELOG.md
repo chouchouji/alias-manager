@@ -1,4 +1,14 @@
-## [0.3.1](https://github.com/chouchouji/alias-manager/compare/v0.3.0...v0.3.1) (2024-12-06)
+## [0.3.2](https://github.com/chouchouji/alias-manager/compare/v0.3.0...v0.3.2) (2024-12-06)
+
+
+### Bug Fixes
+
+* get all alias from file after clicking refresh button ([#17](https://github.com/chouchouji/alias-manager/issues/17)) ([a11c09c](https://github.com/chouchouji/alias-manager/commit/a11c09c039a7cc8b6ba2af7ef86680bf5565fb7b))
+
+
+### Features
+
+* support renaming alias name ([#14](https://github.com/chouchouji/alias-manager/issues/14)) ([c79bd37](https://github.com/chouchouji/alias-manager/commit/c79bd379db4e8ce04518c97d22114fcdf669f9cf))
 
 
 
