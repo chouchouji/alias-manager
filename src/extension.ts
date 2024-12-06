@@ -499,6 +499,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   private getAliasTree(): AliasItem[] {
+    this.globalState.update(SYSTEM_ALIAS, getAliases());
     const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
       const children = normalizeAliasesToArray<Alias>(this.globalState.get(key)).map((alias) => {
         const { aliasName, command, description = '' } = alias;
