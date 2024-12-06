@@ -1,3 +1,12 @@
+## [0.3.3](https://github.com/chouchouji/alias-manager/compare/v0.3.2...v0.3.3) (2024-12-06)
+
+
+### Features
+
+* support setting command without quote ([#18](https://github.com/chouchouji/alias-manager/issues/18)) ([fde5592](https://github.com/chouchouji/alias-manager/commit/fde55927f614e9ce67022be2dfa2cccc15a7b2a4))
+
+
+
 ## [0.3.2](https://github.com/chouchouji/alias-manager/compare/v0.3.0...v0.3.2) (2024-12-06)
 
 
