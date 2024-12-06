@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { Alias } from '../src/types';
-import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from '../src/utils';
+import {
+  allNotEqualToTarget,
+  formatUnaliasCommand,
+  isSameAlias,
+  isValid,
+  normalizeAliasesToArray,
+  resolveAlias,
+} from '../src/utils';
 
 const alias = {
   aliasName: 'nv',
@@ -43,11 +50,6 @@ describe('test alias resolve', () => {
     expect(resolveAlias(value)).toStrictEqual(alias);
   });
 
-  it('alias command without quote', () => {
-    const value = `alias "nv"=node -v`;
-    expect(resolveAlias(value)).toStrictEqual(undefined);
-  });
-
   it('space before =', () => {
     const value = `alias nv ='node -v'`;
     expect(resolveAlias(value)).toStrictEqual(undefined);
@@ -56,6 +58,22 @@ describe('test alias resolve', () => {
   it('space after =', () => {
     const value = `alias nv= 'node -v'`;
     expect(resolveAlias(value)).toStrictEqual(undefined);
+  });
+
+  it('alias name without quote and command has space without quote', () => {
+    const value = 'alias nv=node -v';
+    expect(resolveAlias(value)).toStrictEqual({
+      aliasName: alias.aliasName,
+      command: 'node',
+    });
+  });
+
+  it('alias name without quote and command without space and quote', () => {
+    const value = 'alias nv=node';
+    expect(resolveAlias(value)).toStrictEqual({
+      aliasName: alias.aliasName,
+      command: 'node',
+    });
   });
 });
 
@@ -106,5 +124,29 @@ describe('test format unalias command', () => {
 
   it('param is alias array with multiple value', () => {
     expect(formatUnaliasCommand([alias, alias])).toBe('unalias nv nv');
+  });
+});
+
+describe('test alias name and command are valid', () => {
+  it('param without quote', () => {
+    expect(isValid('test')).toBe(true);
+  });
+
+  it('param without quote', () => {
+    expect(isValid(`'test'`)).toBe(true);
+  });
+
+  it('param without quote', () => {
+    expect(isValid(`"test"`)).toBe(true);
+  });
+});
+
+describe('test all values are not equal to target', () => {
+  it('param are same to target', () => {
+    expect(allNotEqualToTarget(['1', '1'], '2')).toBe(true);
+  });
+
+  it('param are not same to target', () => {
+    expect(allNotEqualToTarget(['2', '1'], '2')).toBe(false);
   });
 });
