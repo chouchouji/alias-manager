@@ -25,6 +25,9 @@
 
 ## Usage
 
+> [!TIP]
+> It does not support `windows`. If you have interest to adapt, welcome to submit pr.
+
 ### Create Alias
 
 You can create a new alias.
