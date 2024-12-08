@@ -26,7 +26,9 @@ export function activate(context: vscode.ExtensionContext) {
       if (event.affectsConfiguration('alias-manager.defaultStorePath')) {
         const defaultStorePath = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultStorePath');
         if (defaultStorePath) {
-          storePath.path = defaultStorePath;
+          storePath.path = defaultStorePath.startsWith('~')
+            ? defaultStorePath.replace('~', os.homedir())
+            : defaultStorePath;
           aliasView.refresh();
         }
       }

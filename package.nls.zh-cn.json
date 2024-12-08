@@ -20,5 +20,5 @@
   "sortAlias": "排序别名",
   "aliasManager": "别名管理",
   "aliasView": "别名视图",
-  "defaultStorePathDescription": "存储别名的路径, 默认是 ${homedir}/.zshrc, 例如 /Users/chouchouji/.zshrc"
+  "defaultStorePathDescription": "存储别名的路径, 默认是 {homedir}/.zshrc, 例如 ~/.zshrc 或者 /Users/chouchouji/.zshrc"
 }

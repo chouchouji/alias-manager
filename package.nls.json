@@ -20,5 +20,5 @@
   "sortAlias": "Sort Alias",
   "aliasManager": "Alias Manager",
   "aliasView": "Alias View",
-  "defaultStorePathDescription": "The path used to store aliases, default value is ${homedir}/.zshrc. e.g. /Users/chouchouji/.zshrc"
+  "defaultStorePathDescription": "The path used to store aliases, default value is {homedir}/.zshrc. e.g. ~/.zshrc or /Users/chouchouji/.zshrc"
 }

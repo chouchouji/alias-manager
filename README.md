@@ -94,7 +94,7 @@ You can set description for every alias. Clear input box to hide the description
 
 ### Set Store Path
 
-The default store path is `${homedir}/.zshrc`, like `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
+The default store path is `{homedir}/.zshrc`, like `~/.zshrc` or `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
 
 ![store-path](https://github.com/user-attachments/assets/9db44131-99a9-4aa7-b83d-2f0352488553)
 
