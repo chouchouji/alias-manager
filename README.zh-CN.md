@@ -96,7 +96,7 @@
 
 默认存储路径是 `{homedir}/.zshrc`, 比如 `~/.zshrc` 或者 `/Users/chouchouji/.zshrc`。 如果你想自定义存储路径, 可通过 `Setting/Extensions/Alias Manager` 修改。
 
-![store-path](https://github.com/user-attachments/assets/9db44131-99a9-4aa7-b83d-2f0352488553)
+![store-path](https://github.com/user-attachments/assets/2f3e5dfd-b97b-45d1-bb35-46c10fb89e80)
 
 
 ## 国际化
