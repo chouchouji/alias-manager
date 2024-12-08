@@ -40,7 +40,10 @@ export function getAliases(path: fs.PathOrFileDescriptor) {
   return aliases;
 }
 
-export function appendAliasToStoreFile(path: fs.PathOrFileDescriptor, content: string) {
+export function appendAliasToStoreFile(
+  path: fs.PathOrFileDescriptor,
+  content: string,
+) {
   const data = `
 alias ${content}`;
   fs.appendFileSync(path, data);
@@ -48,7 +51,10 @@ alias ${content}`;
   reloadStoreFile(path);
 }
 
-export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias?: Alias) {
+export function deleteAliases(
+  path: fs.PathOrFileDescriptor,
+  specificAlias?: Alias,
+) {
   const content = getContentFromPath(path);
 
   if (isEmpty(content)) {

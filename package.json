@@ -295,7 +295,8 @@
     ]
   },
   "scripts": {
-    "check": "biome check --write",
+    "check": "biome check --write --verbose",
+    "lint": "biome lint --verbose",
     "clean": "rimraf node_modules dist *.vsix",
     "postinstall": "simple-git-hooks",
     "package": "rimraf *.vsix && pnpm build && vsce package --no-dependencies",

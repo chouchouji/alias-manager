@@ -79,23 +79,39 @@ describe('test alias resolve', () => {
 
 describe('test same alias', () => {
   it('have same alias name and command', () => {
-    expect(isSameAlias({ aliasName: 'nv', command: 'node -v' }, { aliasName: 'nv', command: 'node -v' })).toBe(true);
+    expect(
+      isSameAlias(
+        { aliasName: 'nv', command: 'node -v' },
+        { aliasName: 'nv', command: 'node -v' },
+      ),
+    ).toBe(true);
   });
 
   it('same alias name and different command', () => {
-    expect(isSameAlias({ aliasName: 'nv', command: 'node -v' }, { aliasName: 'nv', command: 'node --version' })).toBe(
-      false,
-    );
+    expect(
+      isSameAlias(
+        { aliasName: 'nv', command: 'node -v' },
+        { aliasName: 'nv', command: 'node --version' },
+      ),
+    ).toBe(false);
   });
 
   it('different alias name and same command', () => {
-    expect(isSameAlias({ aliasName: 'nv2', command: 'node -v' }, { aliasName: 'nv', command: 'node -v' })).toBe(false);
+    expect(
+      isSameAlias(
+        { aliasName: 'nv2', command: 'node -v' },
+        { aliasName: 'nv', command: 'node -v' },
+      ),
+    ).toBe(false);
   });
 
   it('different alias name and different command', () => {
-    expect(isSameAlias({ aliasName: 'nv2', command: 'node -v' }, { aliasName: 'nv', command: 'node --version' })).toBe(
-      false,
-    );
+    expect(
+      isSameAlias(
+        { aliasName: 'nv2', command: 'node -v' },
+        { aliasName: 'nv', command: 'node --version' },
+      ),
+    ).toBe(false);
   });
 });
 

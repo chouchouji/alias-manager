@@ -22,6 +22,6 @@ jobs:
         run: pnpm i
       
       - name: Lint
-        run: pnpm check
+        run: pnpm lint
 
 

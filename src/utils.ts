@@ -97,7 +97,9 @@ export function isValid(value: string) {
  * @param {value} string
  * @returns If it is not valid, return undefined
  */
-export function resolveAlias(value: string): Pick<Alias, 'aliasName' | 'command'> | undefined {
+export function resolveAlias(
+  value: string,
+): Pick<Alias, 'aliasName' | 'command'> | undefined {
   if (!value.startsWith('alias')) {
     return;
   }
@@ -153,7 +155,10 @@ export function resolveAlias(value: string): Pick<Alias, 'aliasName' | 'command'
  * @returns {boolean}
  */
 export function isSameAlias(targetAlias: Alias, sourceAlias: Alias) {
-  return targetAlias.aliasName === sourceAlias.aliasName && targetAlias.command === sourceAlias.command;
+  return (
+    targetAlias.aliasName === sourceAlias.aliasName &&
+    targetAlias.command === sourceAlias.command
+  );
 }
 
 /**
