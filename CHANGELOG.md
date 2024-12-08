@@ -1,3 +1,12 @@
+## [0.3.4](https://github.com/chouchouji/alias-manager/compare/v0.3.3...v0.3.4) (2024-12-08)
+
+
+### Features
+
+* support replacing os.homedir() with ~ ([8a95318](https://github.com/chouchouji/alias-manager/commit/8a953180a1beded8d23f64c161e46078215660a4))
+
+
+
 ## [0.3.3](https://github.com/chouchouji/alias-manager/compare/v0.3.2...v0.3.3) (2024-12-06)
 
 
