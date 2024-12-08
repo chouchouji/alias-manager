@@ -1,20 +1,19 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import { isEmpty } from 'rattail';
-import storePath from './path';
 import type { Alias } from './types';
 import { isSameAlias, resolveAlias } from './utils';
 
-function reloadStoreFile() {
-  exec(`source ${storePath.path}`, { shell: '/bin/bash' });
+function reloadStoreFile(path: fs.PathOrFileDescriptor) {
+  exec(`source ${path}`, { shell: '/bin/bash' });
 }
 
-function getAliasFromPath() {
-  return fs.readFileSync(storePath.path, 'utf-8').trim();
+export function getContentFromPath(path: fs.PathOrFileDescriptor) {
+  return fs.readFileSync(path, 'utf-8');
 }
 
-export function getAliases() {
-  const content = getAliasFromPath();
+export function getAliases(path: fs.PathOrFileDescriptor) {
+  const content = getContentFromPath(path);
 
   if (isEmpty(content)) {
     return [];
@@ -41,18 +40,16 @@ export function getAliases() {
   return aliases;
 }
 
-export function appendAliasToStoreFile(content: string) {
+export function appendAliasToStoreFile(path: fs.PathOrFileDescriptor, content: string) {
   const data = `
-alias ${content}
-`;
+alias ${content}`;
+  fs.appendFileSync(path, data);
 
-  fs.appendFileSync(storePath.path, data);
-
-  reloadStoreFile();
+  reloadStoreFile(path);
 }
 
-export function deleteAliases(specificAlias?: Alias) {
-  const content = getAliasFromPath();
+export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias?: Alias) {
+  const content = getContentFromPath(path);
 
   if (isEmpty(content)) {
     return;
@@ -60,7 +57,6 @@ export function deleteAliases(specificAlias?: Alias) {
 
   const data = content
     .split('\n')
-    .filter(Boolean)
     .map((text) => text.trim())
     .filter((text) => {
       const alias = resolveAlias(text);
@@ -77,13 +73,17 @@ export function deleteAliases(specificAlias?: Alias) {
     })
     .join('\n');
 
-  fs.writeFileSync(storePath.path, data);
+  fs.writeFileSync(path, data);
 
-  reloadStoreFile();
+  reloadStoreFile(path);
 }
 
-export function renameAliases(specificAlias: Alias, targetAlias: Pick<Alias, 'aliasName' | 'command'>) {
-  const content = getAliasFromPath();
+export function renameAliases(
+  path: fs.PathOrFileDescriptor,
+  specificAlias: Alias,
+  targetAlias: Pick<Alias, 'aliasName' | 'command'>,
+) {
+  const content = getContentFromPath(path);
 
   if (isEmpty(content)) {
     return;
@@ -91,7 +91,6 @@ export function renameAliases(specificAlias: Alias, targetAlias: Pick<Alias, 'al
 
   const data = content
     .split('\n')
-    .filter(Boolean)
     .map((text) => text.trim())
     .reduce((acc: string[], text) => {
       const alias = resolveAlias(text);
@@ -106,7 +105,7 @@ export function renameAliases(specificAlias: Alias, targetAlias: Pick<Alias, 'al
     }, [])
     .join('\n');
 
-  fs.writeFileSync(storePath.path, data);
+  fs.writeFileSync(path, data);
 
-  reloadStoreFile();
+  reloadStoreFile(path);
 }

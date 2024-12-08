@@ -126,7 +126,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   constructor(globalState: vscode.Memento) {
     this.globalState = globalState;
-    this.globalState.update(SYSTEM_ALIAS, getAliases());
+    this.globalState.update(SYSTEM_ALIAS, getAliases(storePath.path));
   }
 
   refresh(alias?: AliasItem) {
@@ -183,13 +183,13 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const aliasNames = getAliases().map((alias) => alias.aliasName);
+    const aliasNames = getAliases(storePath.path).map((alias) => alias.aliasName);
     if (aliasNames.includes(resolvedAlias.aliasName)) {
       vscode.window.showWarningMessage(vscode.l10n.t('Duplicate alias'));
       return;
     }
 
-    appendAliasToStoreFile(alias);
+    appendAliasToStoreFile(storePath.path, alias);
 
     // add this alias to system group
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(SYSTEM_ALIAS));
@@ -206,7 +206,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   deleteAllAlias() {
-    const aliases = getAliases();
+    const aliases = getAliases(storePath.path);
 
     if (!aliases.length) {
       return;
@@ -214,7 +214,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
     executeCommandInTerminal(formatUnaliasCommand(aliases));
 
-    deleteAliases();
+    deleteAliases(storePath.path);
 
     // remove all aliases under every groups
     for (const groupName of this.globalState.keys()) {
@@ -230,7 +230,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     }
 
     // delete specific alias
-    deleteAliases(alias.data);
+    deleteAliases(storePath.path, alias.data);
 
     // remove all aliases under every groups
     for (const groupName of this.globalState.keys()) {
@@ -266,7 +266,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    renameAliases(alias.data, { aliasName, command: alias.data.command });
+    renameAliases(storePath.path, alias.data, { aliasName, command: alias.data.command });
 
     // rename one alias under every groups
     for (const groupName of this.globalState.keys()) {
@@ -303,7 +303,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    renameAliases(alias.data, { aliasName: alias.data.aliasName, command });
+    renameAliases(storePath.path, alias.data, { aliasName: alias.data.aliasName, command });
 
     // rename one alias under every groups
     for (const groupName of this.globalState.keys()) {
@@ -499,7 +499,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   private getAliasTree(): AliasItem[] {
-    this.globalState.update(SYSTEM_ALIAS, getAliases());
+    this.globalState.update(SYSTEM_ALIAS, getAliases(storePath.path));
     const aliasTree = this.globalState.keys().reduce((aliases: AliasItem[], key: string) => {
       const children = normalizeAliasesToArray<Alias>(this.globalState.get(key)).map((alias) => {
         const { aliasName, command, description = '' } = alias;
