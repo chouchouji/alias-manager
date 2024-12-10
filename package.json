@@ -3,7 +3,7 @@
   "displayName": "Alias Manager",
   "description": "System alias manager",
   "icon": "resources/logo.png",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "engines": {
     "vscode": "^1.74.3"
   },
