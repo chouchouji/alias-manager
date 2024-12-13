@@ -1,3 +1,13 @@
+## [0.3.6](https://github.com/chouchouji/alias-manager/compare/v0.3.5...v0.3.6) (2024-12-13)
+
+
+### Performance Improvements
+
+* add second confirmation modal for deleting all aliases ([7027638](https://github.com/chouchouji/alias-manager/commit/7027638cf868b0275e535c7644de396da235d2e5))
+* show warning message when no any group can be added ([e9114dd](https://github.com/chouchouji/alias-manager/commit/e9114ddf39a342d9fee8a0c45040992894c8f1d4))
+
+
+
 ## [0.3.5](https://github.com/chouchouji/alias-manager/compare/v0.3.4...v0.3.5) (2024-12-10)
 
 
