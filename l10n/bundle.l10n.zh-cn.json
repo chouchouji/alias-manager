@@ -15,5 +15,7 @@
   "Duplicate group": "组名称重复",
   "Please choose a group to add": "请选择一个组添加别名",
   "frequency": "运行次数",
-  "No any group can be added": "没有可以添加的组"
+  "No any group can be added": "没有可以添加的组",
+  "Are you sure to delete all alias?": "确认删除所有的别名吗？",
+  "Confirm": "确认"
 }

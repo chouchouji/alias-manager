@@ -277,9 +277,18 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this.refresh();
   }
 
-  deleteAllAlias() {
-    const aliases = getAliases(storePath.path);
+  async deleteAllAlias() {
+    const text = await vscode.window.showInformationMessage(
+      vscode.l10n.t('Are you sure to delete all alias?'),
+      { modal: true },
+      vscode.l10n.t('Confirm'),
+    );
+    // click cancel button
+    if (text === undefined) {
+      return;
+    }
 
+    const aliases = getAliases(storePath.path);
     if (!aliases.length) {
       return;
     }
