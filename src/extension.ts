@@ -484,12 +484,17 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return;
     }
 
-    const selectedGroup = await vscode.window.showQuickPick(
-      this.globalState
-        .keys()
-        .filter((key) => ![SYSTEM_ALIAS, alias.group].includes(key)),
-      { placeHolder: vscode.l10n.t('Please choose a group to add') },
-    );
+    const groups = this.globalState
+      .keys()
+      .filter((key) => ![SYSTEM_ALIAS, alias.group].includes(key));
+    if (!groups.length) {
+      vscode.window.showWarningMessage('No any group can be added');
+      return;
+    }
+
+    const selectedGroup = await vscode.window.showQuickPick(groups, {
+      placeHolder: vscode.l10n.t('Please choose a group to add'),
+    });
 
     // cancel pick group
     if (selectedGroup === undefined) {
