@@ -1,47 +1,50 @@
 {
   "name": "alias-manager",
   "displayName": "Alias Manager",
-  "description": "System alias manager",
-  "icon": "resources/logo.png",
   "version": "0.3.6",
-  "engines": {
-    "vscode": "^1.74.3"
-  },
-  "publisher": "chouchouji",
+  "description": "System alias manager",
   "categories": [
     "Other",
     "Visualization"
   ],
-  "author": {
-    "name": "chouchouji",
-    "email": "1305974212@qq.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chouchouji/alias-manager.git"
-  },
-  "bugs": {
-    "url": "https://github.com/chouchouji/alias-manager/issues"
-  },
   "keywords": [
     "extension",
     "alias",
     "manage"
   ],
   "homepage": "https://github.com/chouchouji/alias-manager",
-  "main": "./dist/extension.js",
+  "bugs": {
+    "url": "https://github.com/chouchouji/alias-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chouchouji/alias-manager.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "chouchouji",
+    "email": "1305974212@qq.com"
+  },
+  "engines": {
+    "vscode": "^1.74.3"
+  },
+  "publisher": "chouchouji",
+  "icon": "resources/logo.png",
   "l10n": "./l10n",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "build": "tsup",
+    "check": "biome check --write --verbose",
+    "clean": "rimraf node_modules dist *.vsix",
+    "dev": "tsup --watch",
+    "postinstall": "simple-git-hooks",
+    "lint": "biome lint --verbose",
+    "package": "rimraf *.vsix && pnpm build && vsce package --no-dependencies",
+    "release": "vr release --skip-npm-publish",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "contributes": {
-    "configuration": {
-      "title": "%aliasManager%",
-      "properties": {
-        "alias-manager.defaultStorePath": {
-          "type": "string",
-          "description": "%defaultStorePathDescription%"
-        }
-      }
-    },
     "commands": [
       {
         "command": "aliasView.refresh",
@@ -116,6 +119,15 @@
         "title": "%setDescription%"
       }
     ],
+    "configuration": {
+      "title": "%aliasManager%",
+      "properties": {
+        "alias-manager.defaultStorePath": {
+          "type": "string",
+          "description": "%defaultStorePathDescription%"
+        }
+      }
+    },
     "menus": {
       "commandPalette": [
         {
@@ -267,20 +279,20 @@
         "label": "%sortAlias%"
       }
     ],
+    "views": {
+      "aliasManager": [
+        {
+          "id": "aliasView",
+          "name": "%aliasView%"
+        }
+      ]
+    },
     "viewsContainers": {
       "activitybar": [
         {
           "id": "aliasManager",
           "title": "%aliasManager%",
           "icon": "resources/icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "aliasManager": [
-        {
-          "id": "aliasView",
-          "name": "%aliasView%"
         }
       ]
     }
@@ -294,17 +306,8 @@
       "biome check --write"
     ]
   },
-  "scripts": {
-    "check": "biome check --write --verbose",
-    "lint": "biome lint --verbose",
-    "clean": "rimraf node_modules dist *.vsix",
-    "postinstall": "simple-git-hooks",
-    "package": "rimraf *.vsix && pnpm build && vsce package --no-dependencies",
-    "release": "vr release --skip-npm-publish",
-    "dev": "tsup --watch",
-    "build": "tsup",
-    "test": "vitest run",
-    "test:watch": "vitest"
+  "dependencies": {
+    "rattail": "^1.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -319,8 +322,5 @@
     "tsup": "8.3.0",
     "typescript": "^5.6.3",
     "vitest": "2.1.5"
-  },
-  "dependencies": {
-    "rattail": "^1.0.0"
   }
 }
