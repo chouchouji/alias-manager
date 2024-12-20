@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/5ccef482-e2f6-410d-bcd5-857450e5c326" alt="logo" />
+  <img src="https://github.com/user-attachments/assets/0142f86f-7d55-4708-a1de-0757188ac913" alt="logo" />
   <h1>Alias Manager</h1>
   <p>管理系统别名的vscode插件</p>
   <p>
