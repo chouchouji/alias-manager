@@ -313,7 +313,7 @@
     "@biomejs/biome": "1.9.4",
     "@types/node": "20.x",
     "@types/vscode": "^1.74.3",
-    "@varlet/release": "^0.3.1",
+    "@varlet/release": "^0.3.2",
     "@vscode/vsce": "^3.2.1",
     "mock-fs": "^5.4.1",
     "nano-staged": "^0.8.0",

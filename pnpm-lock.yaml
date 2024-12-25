@@ -22,8 +22,8 @@ importers:
         specifier: ^1.74.3
         version: 1.95.0
       '@varlet/release':
-        specifier: ^0.3.1
-        version: 0.3.1
+        specifier: ^0.3.2
+        version: 0.3.2
       '@vscode/vsce':
         specifier: ^3.2.1
         version: 3.2.1
@@ -648,9 +648,9 @@ packages:
   '@types/wrap-ansi@3.0.0':
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
 
-  '@varlet/release@0.3.1':
-    resolution: {integrity: sha512-MVOc2mp9HtjMQFm/wzNrexJWzfqEaFRGQ4RiBmeC6yNtoV0fx0zoEKc1DBz5ZbbLzz/TTF9oEDjKmbB23lJ+Ow==}
-    engines: {node: '>=16.0.0', pnpm: '>=8.0'}
+  '@varlet/release@0.3.2':
+    resolution: {integrity: sha512-wPQ4UrQ/m/d54nTc8VVkchWV7iiVizjaOpdTWMtjDKAe/keVdbGwuUSbPprmOaocgXwp3PfQrAV3ChPHFfnPFg==}
+    engines: {node: '>=16.0.0', pnpm: '>=9.0'}
     hasBin: true
 
   '@vitest/expect@2.1.5':
@@ -2595,7 +2595,7 @@ snapshots:
 
   '@types/wrap-ansi@3.0.0': {}
 
-  '@varlet/release@0.3.1':
+  '@varlet/release@0.3.2':
     dependencies:
       '@inquirer/prompts': 6.0.1
       commander: 11.1.0
