@@ -227,7 +227,9 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   async addAlias() {
     const alias = await vscode.window.showInputBox({
-      placeHolder: vscode.l10n.t('Please enter new alias'),
+      placeHolder: vscode.l10n.t(
+        `Please enter new alias. e.g. alias nv='node -v'`,
+      ),
       value: undefined,
     });
 

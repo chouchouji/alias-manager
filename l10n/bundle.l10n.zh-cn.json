@@ -1,5 +1,5 @@
 {
-  "Please enter new alias": "请输入新的别名",
+  "Please enter new alias": "请输入新的别名，例如：alias nv='node -v'",
   "Please enter new alias name": "请输入新的别名名称",
   "Please enter new alias command": "请输入新的指令名称",
   "Please enter new description": "请输入新的备注",
