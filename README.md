@@ -25,7 +25,7 @@
 
 ### TIP
 
-If you don't know alias, I think it is very useful to read this [article](https://gnu-linux.readthedocs.io/zh/latest/Chapter01/00_alias.html?utm_source=chatgpt.com).
+If you don't know alias, I think it is very useful to read this [article](https://www.gnu.org/software/bash/manual/bash.html#Aliases).
 
 ## Usage
 
