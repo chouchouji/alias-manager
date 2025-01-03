@@ -23,6 +23,10 @@
 - 🔧 &nbsp;支持自定义存储别名的路径
 - 🌍 &nbsp;支持国际化
 
+## 提示
+
+如果你不了解alias，可以先阅读这篇[文章](https://gnu-linux.readthedocs.io/zh/latest/Chapter01/00_alias.html?utm_source=chatgpt.com)。
+
 ## 使用指南
 
 > [!TIP]
@@ -33,7 +37,6 @@
 支持创建新的别名
 
 > [!TIP]
-> 请确认你已经知道了如何正确的创建别名
 > 别名不能重复
 
 ![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)

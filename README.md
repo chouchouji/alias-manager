@@ -23,6 +23,10 @@
 - 🔧 &nbsp;Support custom path that used to store aliases
 - 🌍 &nbsp;Support internationalization
 
+### TIP
+
+If you don't know alias, I think it is very useful to read this [article](https://gnu-linux.readthedocs.io/zh/latest/Chapter01/00_alias.html?utm_source=chatgpt.com).
+
 ## Usage
 
 > [!TIP]
@@ -33,7 +37,6 @@
 You can create a new alias.
 
 > [!TIP]
-> Please ensure that you have understood how to create a right alias.
 > Don't allow to create `duplicate` alias.
 
 ![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)
