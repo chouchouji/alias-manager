@@ -3,6 +3,7 @@
   <h1>Alias Manager</h1>
   <p>A vscode extension used to manage your system aliases</p>
   <p>
+    <span>English</span> | 
     <a href="https://github.com/chouchouji/alias-manager/blob/main/README.zh-CN.md">中文介绍</a>
   </p>
   <p>
@@ -23,79 +24,80 @@
 - 🔧 &nbsp;Support custom path that used to store aliases
 - 🌍 &nbsp;Support internationalization
 
-### TIP
-
-If you don't know alias, I think it is very useful to read this [article](https://www.gnu.org/software/bash/manual/bash.html#Aliases).
-
-## Usage
+## TIP
 
 > [!TIP]
 > It does not support `windows`. If you have interest to adapt, welcome to submit pr.
 
-### Create Alias
+## Intro
 
-You can create a new alias.
+### Basic Usage
 
-> [!TIP]
-> Don't allow to create `duplicate` alias.
+#### Create Alias
+
+You can create a new alias by `+` icon. It will show an input where you can set your favorite alias. 
+
+The format of alias likes `gpl='git pull'`, `gpl` is alias name, `git pull` is alias command. 
 
 ![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)
 
-### Rename Alias
+#### Run Alias
 
-It supports renaming alias name and command for an alias.
-
-![rename](https://github.com/user-attachments/assets/088510aa-d8dc-487b-bc17-a408579fa9d2)
-
-### Delete Alias
-
-It supports deleting all aliases or one alias.
-
-![delete](https://github.com/user-attachments/assets/5817a6e2-78ab-48bb-9a89-4bbb2d4379dc)
-
-### Run Alias
-
-Click `run` button, it will activate terminal and execute that command.
+Click `run` button, it will activate terminal and execute that command. Or, input the alias in terminal, the command will be executed.
 
 > [!TIP]
 > If the terminal shows error like `command not found`, reopen terminal and try again.
 
 ![run](https://github.com/user-attachments/assets/ad3f5b4d-f9d8-4eda-8b48-1b6f6a2705c5)
 
-### Copy Alias
+### Advanced Usage
+
+#### Rename Alias
+
+It supports renaming alias name and command for an alias.
+
+![rename](https://github.com/user-attachments/assets/088510aa-d8dc-487b-bc17-a408579fa9d2)
+
+#### Delete Alias
+
+It supports deleting all aliases or one alias.
+
+![delete](https://github.com/user-attachments/assets/5817a6e2-78ab-48bb-9a89-4bbb2d4379dc)
+
+#### Copy Alias
 
 It supports copying an alias or all aliases in one group.
 
 ![copy](https://github.com/user-attachments/assets/23991d48-8de3-4a49-9dd9-f6ef6a6dd2b8)
 
-### Group Alias
+#### Group Alias
 
 It support creating, deleting and renaming a new group, adding an alias to a group and removing an alias from a group.
 
 All aliases are included in `System Aliases` which is data source. You can group different aliases by creating different groups. This is very helpful for you to quickly find aliases and operate aliases.
 
-#### Create, Delete Or Rename Group
+##### Create, Delete Or Rename Group
 
 > [!TIP]
 > Don't allow to create `duplicate` group.
 
 ![create-group](https://github.com/user-attachments/assets/1b9e6e22-3308-4ff6-9811-0c91ac416d7a)
 
-#### Add Alias To Group Or Remove Alias From Group
+##### Add Alias To Group Or Remove Alias From Group
 
 ![move-group](https://github.com/user-attachments/assets/9079a8cc-3be3-42a2-8c09-5b60aab64c07)
 
-### Sort Alias
+#### Sort Alias
 
 ![sort](https://github.com/user-attachments/assets/fb904718-c01d-416a-9c7a-4f6795cee2eb)
 
-### Set Description 
+#### Set Description 
 
 You can set description for every alias. Clear input box to hide the description. 
 
 ![description](https://github.com/user-attachments/assets/930dcf4f-6e62-4216-91ba-ca9d1de5c369)
 
-### Set Store Path
+#### Set Store Path
 
 The default store path is `{homedir}/.zshrc`, like `~/.zshrc` or `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
 
