@@ -13,4 +13,6 @@ vsc-extension-quickstart.md
 pnpm-lock.yaml
 *.github/**
 README.zh-CN.md
-biome.json
+.prettierignore
+prettier.config.mjs
+eslint.config.mjs
