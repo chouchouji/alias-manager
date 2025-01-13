@@ -35,9 +35,9 @@
 
 #### Create Alias
 
-You can create a new alias by `+` icon. It will show an input where you can set your favorite alias. 
+You can create a new alias by `+` icon. It will show an input where you can set your favorite alias.
 
-The format of alias likes `gpl='git pull'`, `gpl` is alias name, `git pull` is alias command. 
+The format of alias likes `gpl='git pull'`, `gpl` is alias name, `git pull` is alias command.
 
 ![add](https://github.com/user-attachments/assets/1af0175f-c5b2-4b1b-a5bb-26f48688f73f)
 
@@ -91,18 +91,17 @@ All aliases are included in `System Aliases` which is data source. You can group
 
 ![sort](https://github.com/user-attachments/assets/fb904718-c01d-416a-9c7a-4f6795cee2eb)
 
-#### Set Description 
+#### Set Description
 
-You can set description for every alias. Clear input box to hide the description. 
+You can set description for every alias. Clear input box to hide the description.
 
 ![description](https://github.com/user-attachments/assets/930dcf4f-6e62-4216-91ba-ca9d1de5c369)
 
 #### Set Store Path
 
-The default store path is `{homedir}/.zshrc`, like `~/.zshrc` or `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager` 
+The default store path is `{homedir}/.zshrc`, like `~/.zshrc` or `/Users/chouchouji/.zshrc`. If you want to custom your alias store path, modify it by `Setting/Extensions/Alias Manager`
 
 ![store-path](https://github.com/user-attachments/assets/2f3e5dfd-b97b-45d1-bb35-46c10fb89e80)
-
 
 ## Internationalization
 

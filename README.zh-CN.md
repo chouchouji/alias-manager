@@ -93,7 +93,7 @@
 
 #### 备注
 
-支持为每个别名添加备注，清空输入框可以隐藏备注。 
+支持为每个别名添加备注，清空输入框可以隐藏备注。
 
 ![description](https://github.com/user-attachments/assets/930dcf4f-6e62-4216-91ba-ca9d1de5c369)
 
@@ -102,7 +102,6 @@
 默认存储路径是 `{homedir}/.zshrc`, 比如 `~/.zshrc` 或者 `/Users/chouchouji/.zshrc`。 如果你想自定义存储路径, 可通过 `Setting/Extensions/Alias Manager` 修改。
 
 ![store-path](https://github.com/user-attachments/assets/2f3e5dfd-b97b-45d1-bb35-46c10fb89e80)
-
 
 ## 国际化
 

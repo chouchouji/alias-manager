@@ -1,13 +1,13 @@
 class StorePath {
-  private _path = '';
+  private _path = ''
 
   get path() {
-    return this._path;
+    return this._path
   }
 
   set path(path: string) {
-    this._path = path;
+    this._path = path
   }
 }
 
-export default new StorePath();
+export default new StorePath()

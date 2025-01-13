@@ -25,20 +25,15 @@
     "name": "chouchouji",
     "email": "1305974212@qq.com"
   },
-  "engines": {
-    "vscode": "^1.74.3"
-  },
   "publisher": "chouchouji",
-  "icon": "resources/logo.png",
-  "l10n": "./l10n",
   "main": "./dist/extension.js",
   "scripts": {
     "build": "tsup",
-    "check": "biome check --write --verbose",
     "clean": "rimraf node_modules dist *.vsix",
     "dev": "tsup --watch",
+    "format": "prettier --write .",
     "postinstall": "simple-git-hooks",
-    "lint": "biome lint --verbose",
+    "lint": "eslint --fix .",
     "package": "rimraf *.vsix && pnpm build && vsce package --no-dependencies",
     "release": "vr release --skip-npm-publish",
     "test": "vitest run",
@@ -303,24 +298,32 @@
   },
   "nano-staged": {
     "*.ts": [
-      "biome check --write"
+      "prettier --write"
     ]
   },
   "dependencies": {
-    "rattail": "^1.0.0"
+    "rattail": "^1.0.18"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@configurajs/eslint": "^0.1.0",
+    "@configurajs/prettier": "^0.1.1",
     "@types/node": "20.x",
     "@types/vscode": "^1.74.3",
     "@varlet/release": "^0.3.2",
     "@vscode/vsce": "^3.2.1",
+    "eslint": "^9.18.0",
     "mock-fs": "^5.4.1",
     "nano-staged": "^0.8.0",
+    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "simple-git-hooks": "^2.11.1",
     "tsup": "8.3.0",
     "typescript": "^5.6.3",
     "vitest": "2.1.5"
-  }
+  },
+  "engines": {
+    "vscode": "^1.74.3"
+  },
+  "icon": "resources/logo.png",
+  "l10n": "./l10n"
 }

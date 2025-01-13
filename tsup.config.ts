@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsup'
 
 export default defineConfig((option) => ({
   entry: ['src/extension.ts'],
@@ -10,4 +10,4 @@ export default defineConfig((option) => ({
   outDir: 'dist',
   sourcemap: true,
   minify: !option.watch,
-}));
+}))

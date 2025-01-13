@@ -1,1 +1,1 @@
-export const SYSTEM_ALIAS = 'System Aliases';
+export const SYSTEM_ALIAS = 'System Aliases'
