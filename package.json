@@ -297,7 +297,7 @@
     "commit-msg": "pnpm exec vr commit-lint -p $1"
   },
   "nano-staged": {
-    "*.ts": [
+    "*.{ts,md}": [
       "prettier --write"
     ]
   },
