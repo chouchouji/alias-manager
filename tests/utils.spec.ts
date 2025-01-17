@@ -132,11 +132,11 @@ describe('test alias name and command are valid', () => {
     expect(isValid('test')).toBe(true)
   })
 
-  it('param without quote', () => {
+  it('param with single quote', () => {
     expect(isValid(`'test'`)).toBe(true)
   })
 
-  it('param without quote', () => {
+  it('param with double quote', () => {
     expect(isValid(`"test"`)).toBe(true)
   })
 })

@@ -39,6 +39,7 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "l10n": "./l10n",
   "contributes": {
     "commands": [
       {
@@ -305,8 +306,8 @@
     "rattail": "^1.0.18"
   },
   "devDependencies": {
-    "@configurajs/eslint": "^0.1.0",
-    "@configurajs/prettier": "^0.1.1",
+    "@configurajs/eslint": "^0.1.1",
+    "@configurajs/prettier": "^0.1.2",
     "@types/node": "20.x",
     "@types/vscode": "^1.74.3",
     "@varlet/release": "^0.3.2",
@@ -324,6 +325,5 @@
   "engines": {
     "vscode": "^1.74.3"
   },
-  "icon": "resources/logo.png",
-  "l10n": "./l10n"
+  "icon": "resources/logo.png"
 }
