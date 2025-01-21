@@ -13,8 +13,8 @@ importers:
         version: 1.0.18
     devDependencies:
       '@configurajs/eslint':
-        specifier: ^0.1.1
-        version: 0.1.1(@typescript-eslint/utils@8.19.1(eslint@9.18.0)(typescript@5.6.3))(eslint@9.18.0)(prettier@3.4.2)(typescript@5.6.3)(vitest@2.1.5(@types/node@20.17.6))
+        specifier: ^0.1.2
+        version: 0.1.2(@typescript-eslint/utils@8.19.1(eslint@9.18.0)(typescript@5.6.3))(eslint@9.18.0)(prettier@3.4.2)(typescript@5.6.3)(vitest@2.1.5(@types/node@20.17.6))
       '@configurajs/prettier':
         specifier: ^0.1.2
         version: 0.1.2(prettier@3.4.2)
@@ -137,8 +137,8 @@ packages:
     resolution: {integrity: sha512-L6mZmwFDK6Cjh1nRCLXpa6no13ZIioJDz7mdkzHv399pThrTa/k0nUlNaenOeh2kWu/iaOQYElEpKPUswUa9Vg==}
     engines: {node: '>=6.9.0'}
 
-  '@configurajs/eslint@0.1.1':
-    resolution: {integrity: sha512-fLF9L99H3DQNeeVxiGqUXXOqTbrIfsPP5XOGuG2En6QIqL1adz3BXikomWrzGFfcLySHJmqwNAfdacRrYpgYZA==}
+  '@configurajs/eslint@0.1.2':
+    resolution: {integrity: sha512-lADR+SzglOFwgo999YQJdEMvocI+bj/ncj0KplkdCeWbpTSsg9ld+jnnlrGBel9ab6/xvM9r2zi7DJcxV3ZARQ==}
     engines: {pnpm: '>=9.0'}
     peerDependencies:
       eslint: ^9.17.0
@@ -2977,7 +2977,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@configurajs/eslint@0.1.1(@typescript-eslint/utils@8.19.1(eslint@9.18.0)(typescript@5.6.3))(eslint@9.18.0)(prettier@3.4.2)(typescript@5.6.3)(vitest@2.1.5(@types/node@20.17.6))':
+  '@configurajs/eslint@0.1.2(@typescript-eslint/utils@8.19.1(eslint@9.18.0)(typescript@5.6.3))(eslint@9.18.0)(prettier@3.4.2)(typescript@5.6.3)(vitest@2.1.5(@types/node@20.17.6))':
     dependencies:
       '@eslint-community/eslint-plugin-eslint-comments': 4.4.1(eslint@9.18.0)
       '@eslint-react/eslint-plugin': 1.23.2(eslint@9.18.0)(typescript@5.6.3)
