@@ -1,3 +1,9 @@
+## [0.4.3](https://github.com/chouchouji/alias-manager/compare/v0.4.2...v0.4.3) (2025-02-09)
+
+### Performance Improvements
+
+- remind user if the store path does not exist when init or changing path ([b6d49d4](https://github.com/chouchouji/alias-manager/commit/b6d49d45d7e1faa6c8742c9a6e14d31f8abfe5b7))
+
 ## [0.4.2](https://github.com/chouchouji/alias-manager/compare/v0.4.1...v0.4.2) (2025-01-08)
 
 ## [0.4.1](https://github.com/chouchouji/alias-manager/compare/v0.4.0...v0.4.1) (2025-01-04)
