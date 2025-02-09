@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { isNonEmptyArray } from 'rattail'
@@ -15,6 +16,9 @@ function setTooltip(frequency = 0) {
 export function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc')
+  if (!fs.existsSync(storePath.path)) {
+    vscode.window.showErrorMessage(vscode.l10n.t('Please check if the .zshrc file exists'))
+  }
 
   const globalState = context.globalState
 
@@ -25,10 +29,15 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration((event) => {
       if (event.affectsConfiguration('alias-manager.defaultStorePath')) {
         const defaultStorePath = vscode.workspace.getConfiguration('alias-manager').get<string>('defaultStorePath')
+
         if (defaultStorePath) {
           storePath.path = defaultStorePath.startsWith('~')
             ? defaultStorePath.replace('~', os.homedir())
             : defaultStorePath
+          if (!fs.existsSync(storePath.path)) {
+            vscode.window.showErrorMessage(vscode.l10n.t('Please check if the file exists'))
+            return
+          }
           aliasView.refresh()
         }
       }
