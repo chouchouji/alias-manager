@@ -16,8 +16,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2(@typescript-eslint/utils@8.19.1(eslint@9.18.0)(typescript@5.6.3))(eslint@9.18.0)(prettier@3.4.2)(typescript@5.6.3)(vitest@2.1.5(@types/node@20.17.6))
       '@configurajs/prettier':
-        specifier: ^0.1.2
-        version: 0.1.2(prettier@3.4.2)
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.4.2)
       '@types/node':
         specifier: 20.x
         version: 20.17.6
@@ -143,8 +143,8 @@ packages:
     peerDependencies:
       eslint: ^9.17.0
 
-  '@configurajs/prettier@0.1.2':
-    resolution: {integrity: sha512-99MdYmvcE6HwRjU10cpT5KuOogNPKaTyJWJJoIGx7k5qVUaXCSxwUnkBGAllmXzTBc77M/v+siQ1UVk6r3aFhw==}
+  '@configurajs/prettier@0.1.4':
+    resolution: {integrity: sha512-kj0W1XsJ4MZHPdO2ZLKrWsfM7o206QVr4iMqzs+AYqXXcBAAxNCMh4ZpmlLvgBHOltQzmfAfFAc/1tiPQuhAwQ==}
     engines: {pnpm: '>=9.0'}
     peerDependencies:
       prettier: ^3.4.2
@@ -3000,7 +3000,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@configurajs/prettier@0.1.2(prettier@3.4.2)':
+  '@configurajs/prettier@0.1.4(prettier@3.4.2)':
     dependencies:
       '@ianvs/prettier-plugin-sort-imports': 4.4.0(prettier@3.4.2)
       prettier: 3.4.2
