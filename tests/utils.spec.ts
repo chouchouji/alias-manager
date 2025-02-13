@@ -5,6 +5,7 @@ import {
   allNotEqualToTarget,
   filterAliases,
   formatUnaliasCommand,
+  isAliasSubset,
   isSameAlias,
   isValid,
   mergeAlias,
@@ -308,5 +309,50 @@ describe('test merge alias', () => {
         },
       ],
     })
+  })
+})
+
+describe('test is alias subset', () => {
+  const source: Alias[] = [
+    { aliasName: 'a', command: 'cmd1' },
+    { aliasName: 'b', command: 'cmd2' },
+    { aliasName: 'c', command: 'cmd3' },
+  ]
+
+  it('is subset', () => {
+    const target: Alias[] = [
+      { aliasName: 'a', command: 'cmd1' },
+      { aliasName: 'b', command: 'cmd2' },
+    ]
+
+    expect(isAliasSubset(source, target)).toBe(true)
+  })
+
+  it('has different aliasName', () => {
+    const target: Alias[] = [
+      { aliasName: 'c', command: 'cmd1' },
+      { aliasName: 'b', command: 'cmd3' },
+    ]
+
+    expect(isAliasSubset(source, target)).toBe(false)
+  })
+
+  it('has different command', () => {
+    const target: Alias[] = [
+      { aliasName: 'a', command: 'cmd1' },
+      { aliasName: 'b', command: 'cmd3' },
+    ]
+
+    expect(isAliasSubset(source, target)).toBe(false)
+  })
+
+  it('has another alias', () => {
+    const target: Alias[] = [
+      { aliasName: 'a', command: 'cmd1' },
+      { aliasName: 'b', command: 'cmd2' },
+      { aliasName: 'd', command: 'cmd4' },
+    ]
+
+    expect(isAliasSubset(source, target)).toBe(false)
   })
 })

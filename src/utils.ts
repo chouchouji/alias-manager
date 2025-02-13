@@ -241,3 +241,19 @@ export function filterAliases(content: string) {
 
   return aliases
 }
+
+/**
+ * Check if the target is a subset of the source alias
+ * @param {Alias[]} source
+ * @param {Alias[]} target
+ * @returns {boolean}
+ */
+export function isAliasSubset(source: Alias[], target: Alias[]) {
+  const set = new Set()
+  source.forEach((alias) => {
+    const { aliasName, command } = alias
+    set.add(`${aliasName}=${command}`)
+  })
+
+  return target.every((alias) => set.has(`${alias.aliasName}=${alias.command}`))
+}

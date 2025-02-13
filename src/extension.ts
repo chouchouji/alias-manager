@@ -10,6 +10,7 @@ import type { Alias } from './types'
 import {
   filterAliases,
   formatUnaliasCommand,
+  isAliasSubset,
   isSameAlias,
   mergeAlias,
   normalizeAliasesToArray,
@@ -205,25 +206,27 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
         {
           const content = await vscode.env.clipboard.readText()
           const aliases = filterAliases(content)
-          if (aliases.length) {
-            const result = mergeAlias(this.convertAliasToObject(), {
-              [SYSTEM_ALIAS]: aliases,
-            })
-            const systemAliases: Alias[] = Reflect.get(result, SYSTEM_ALIAS)
-            await this.globalState.update(SYSTEM_ALIAS, systemAliases)
-            deleteAliases(storePath.path)
-            appendAliasToStoreFile(
-              storePath.path,
-              systemAliases.map((alias) => `\nalias ${alias.aliasName}='${alias.command}'`).join(''),
-            )
-            executeCommandInTerminal(
-              systemAliases.map((alias) => `alias ${alias.aliasName}='${alias.command}'`).join('; '),
-            )
-            this.refresh()
-            vscode.window.showInformationMessage(vscode.l10n.t('Import clipboard text successfully'))
-          } else {
+
+          if (!aliases.length || isAliasSubset(Reflect.get(this.convertAliasToObject(), SYSTEM_ALIAS), aliases)) {
             vscode.window.showInformationMessage(vscode.l10n.t('No any alias need to import'))
+            return
           }
+
+          const result = mergeAlias(this.convertAliasToObject(), {
+            [SYSTEM_ALIAS]: aliases,
+          })
+          const systemAliases: Alias[] = Reflect.get(result, SYSTEM_ALIAS)
+          await this.globalState.update(SYSTEM_ALIAS, systemAliases)
+          deleteAliases(storePath.path)
+          appendAliasToStoreFile(
+            storePath.path,
+            systemAliases.map((alias) => `\nalias ${alias.aliasName}='${alias.command}'`).join(''),
+          )
+          executeCommandInTerminal(
+            systemAliases.map((alias) => `alias ${alias.aliasName}='${alias.command}'`).join('; '),
+          )
+          this.refresh()
+          vscode.window.showInformationMessage(vscode.l10n.t('Import clipboard text successfully'))
         }
         break
       case json:
@@ -255,6 +258,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
                   return acc
                 }, {})
+
                 if (Object.values(targetAlias).length) {
                   const result = mergeAlias(this.convertAliasToObject(), targetAlias)
                   for (const [groupName, aliases] of Object.entries(result)) {
