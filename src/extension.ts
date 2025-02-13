@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { isNonEmptyArray } from 'rattail'
+import { isArray, isNonEmptyArray } from 'rattail'
 import * as vscode from 'vscode'
 import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases'
 import { SYSTEM_ALIAS } from './constants'
@@ -226,8 +226,63 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
           }
         }
         break
-      // TODO: support json file
       case json:
+        {
+          const fileUris = await vscode.window.showOpenDialog({
+            filters: {
+              'JSON Files': ['json'],
+            },
+            canSelectMany: false,
+          })
+
+          if (fileUris && fileUris.length) {
+            const filePath = fileUris[0].fsPath
+            fs.readFile(filePath, 'utf-8', async (err, data) => {
+              if (err) {
+                vscode.window.showErrorMessage(vscode.l10n.t('Fail to read file: {message}', { message: err.message }))
+                return
+              }
+
+              try {
+                const json = JSON.parse(data)
+                const targetAlias = Object.entries(json).reduce((acc: Record<string, Alias[]>, [key, value]) => {
+                  if (isArray(value)) {
+                    const aliases = value.filter((item) => item.aliasName && item.command)
+                    if (aliases.length) {
+                      Reflect.set(acc, key, aliases)
+                    }
+                  }
+
+                  return acc
+                }, {})
+                if (Object.values(targetAlias).length) {
+                  const result = mergeAlias(this.convertAliasToObject(), targetAlias)
+                  for (const [groupName, aliases] of Object.entries(result)) {
+                    await this.globalState.update(groupName, aliases)
+                  }
+
+                  const systemAliases: Alias[] = Reflect.get(result, SYSTEM_ALIAS)
+                  deleteAliases(storePath.path)
+                  appendAliasToStoreFile(
+                    storePath.path,
+                    systemAliases.map((alias) => `\nalias ${alias.aliasName}='${alias.command}'`).join(''),
+                  )
+                  executeCommandInTerminal(
+                    systemAliases.map((alias) => `alias ${alias.aliasName}='${alias.command}'`).join('; '),
+                  )
+                  this.refresh()
+                  vscode.window.showInformationMessage(vscode.l10n.t('Import json file successfully'))
+                } else {
+                  vscode.window.showInformationMessage(vscode.l10n.t('No any alias need to import'))
+                }
+              } catch (parseError: any) {
+                vscode.window.showErrorMessage(
+                  vscode.l10n.t('Fail to resolve json file: {message}', { message: parseError.message }),
+                )
+              }
+            })
+          }
+        }
         break
     }
   }

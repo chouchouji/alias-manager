@@ -24,5 +24,8 @@
   "Save file successfully, the path is {path}": "文件保存成功，路径是 {path}",
   "Please choose the way you want to import data": "请选择如何上传数据",
   "Import clipboard text successfully": "剪切板数据导入成功",
-  "No any alias need to import": "没有数据需要导入"
+  "Import json file successfully": "json文件导入成功",
+  "No any alias need to import": "没有数据需要导入",
+  "Fail to read file: {message}": "文件读取失败: {message}",
+  "Fail to resolve json file: {message}": "json文件解析失败: {message}"
 }
