@@ -53,6 +53,11 @@
         "icon": "$(split-vertical)"
       },
       {
+        "command": "aliasView.export",
+        "title": "%export%",
+        "icon": "$(export)"
+      },
+      {
         "command": "aliasView.deleteGroup",
         "title": "%deleteGroup%"
       },
@@ -192,6 +197,11 @@
         },
         {
           "command": "aliasView.newGroup",
+          "when": "view == aliasView",
+          "group": "navigation"
+        },
+        {
+          "command": "aliasView.export",
           "when": "view == aliasView",
           "group": "navigation"
         }

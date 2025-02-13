@@ -1,6 +1,7 @@
 {
   "refreshAliases": "Refresh Alias",
   "newGroup": "New Group",
+  "export": "Export",
   "deleteGroup": "Delete Group",
   "addAlias": "Add Alias",
   "copyAllAlias": "Copy All Alias",

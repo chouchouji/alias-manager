@@ -52,6 +52,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()))
 
+  context.subscriptions.push(vscode.commands.registerCommand('aliasView.export', () => aliasView.exportAlias()))
+
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.deleteAlias', (alias: AliasItem) => aliasView.deleteAlias(alias)),
   )
@@ -141,6 +143,36 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   refresh(alias?: AliasItem) {
     this._onDidChangeTreeData.fire(alias)
+  }
+
+  async exportAlias() {
+    const filePath = await vscode.window.showSaveDialog({
+      filters: {
+        'JSON Files': ['json'],
+      },
+    })
+    if (!filePath) {
+      return
+    }
+
+    const data = this.globalState.keys().reduce((acc: Record<string, Alias[]>, key: string) => {
+      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(key))
+      Reflect.set(acc, key, aliases)
+
+      return acc
+    }, {})
+
+    fs.writeFile(filePath.fsPath, JSON.stringify(data), (err) => {
+      if (err) {
+        vscode.window.showErrorMessage(
+          vscode.l10n.t('Fail to save json file, the error message is {message}', { message: err.message }),
+        )
+      } else {
+        vscode.window.showInformationMessage(
+          vscode.l10n.t('Save file successfully, the path is {path}', { path: filePath.fsPath }),
+        )
+      }
+    })
   }
 
   async setDescription(alias: AliasItem) {

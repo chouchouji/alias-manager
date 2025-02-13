@@ -19,5 +19,7 @@
   "Are you sure to delete all alias?": "确认删除所有的别名吗？",
   "Confirm": "确认",
   "Please check if the .zshrc file exists": "请检查.zshrc文件是否存在",
-  "Please check if the file exists": "请检查文件是否存在"
+  "Please check if the file exists": "请检查文件是否存在",
+  "Fail to save json file, the error message is {message}": "文件保存失败，错误信息是 {message}",
+  "Save file successfully, the path is {path}": "文件保存成功，路径是 {path}"
 }
