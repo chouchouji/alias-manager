@@ -1,3 +1,11 @@
+# [0.5.0](https://github.com/chouchouji/alias-manager/compare/v0.4.3...v0.5.0) (2025-02-13)
+
+### Features
+
+- support exporting all alias to json file ([ee44980](https://github.com/chouchouji/alias-manager/commit/ee4498063fd4c5799b5f4f60ca6a539a4bb23592))
+- support resolving alias from clipboard ([9d4b80d](https://github.com/chouchouji/alias-manager/commit/9d4b80dad750ad9d3b78312eb09432aaa680298e))
+- support resolving json file ([c010944](https://github.com/chouchouji/alias-manager/commit/c0109443f4c954f3ea4fbef773e7e97d1dd9d3ab))
+
 ## [0.4.3](https://github.com/chouchouji/alias-manager/compare/v0.4.2...v0.4.3) (2025-02-09)
 
 ### Performance Improvements
