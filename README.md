@@ -103,6 +103,28 @@ The default store path is `{homedir}/.zshrc`, like `~/.zshrc` or `/Users/choucho
 
 ![store-path](https://github.com/user-attachments/assets/2f3e5dfd-b97b-45d1-bb35-46c10fb89e80)
 
+## Sync Data
+
+This extension supports data synchronization.
+
+### Export Data
+
+You can choose to copy one or all alias or export all alias data to json file.
+
+![export](https://github.com/user-attachments/assets/864a18cb-ea2a-4ac0-a0bc-86081ecae695)
+
+### Import Data
+
+You can import data by clipboard or json file.
+
+#### clipboard
+
+![clipboard](https://github.com/user-attachments/assets/99249261-288c-4db8-9e88-81eaf17c3497)
+
+#### json
+
+![json](https://github.com/user-attachments/assets/0a51dc7c-f937-4b96-b0ac-2a1ee6a8a18c)
+
 ## Internationalization
 
 The default language is `english`. If you have added [chinese vscode extension](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans) in vscode extensions, the language of `alias manager` extension will be changed to chinese automatically after restarting vscode.

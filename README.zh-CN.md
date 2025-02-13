@@ -103,6 +103,28 @@
 
 ![store-path](https://github.com/user-attachments/assets/2f3e5dfd-b97b-45d1-bb35-46c10fb89e80)
 
+## 同步数据
+
+支持数据同步
+
+### 导出
+
+您可以选择复制一个或所有别名，或将所有别名数据导出到json文件。
+
+![export](https://github.com/user-attachments/assets/864a18cb-ea2a-4ac0-a0bc-86081ecae695)
+
+### 导入
+
+您可以通过剪贴板或json文件导入数据。
+
+#### 剪切板
+
+![clipboard](https://github.com/user-attachments/assets/99249261-288c-4db8-9e88-81eaf17c3497)
+
+#### json
+
+![json](https://github.com/user-attachments/assets/0a51dc7c-f937-4b96-b0ac-2a1ee6a8a18c)
+
 ## 国际化
 
 默认语言是 `英文`。如果你安装了 [chinese vscode extension](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans)，重启vscode，`alias manager`插件会自动切换为中文。
