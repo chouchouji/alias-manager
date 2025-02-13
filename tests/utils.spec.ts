@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
+import { SYSTEM_ALIAS } from '../src/constants'
 import type { Alias } from '../src/types'
 import {
   allNotEqualToTarget,
+  filterAliases,
   formatUnaliasCommand,
   isSameAlias,
   isValid,
+  mergeAlias,
   normalizeAliasesToArray,
   resolveAlias,
 } from '../src/utils'
@@ -148,5 +151,162 @@ describe('test all values are not equal to target', () => {
 
   it('param are not same to target', () => {
     expect(allNotEqualToTarget(['2', '1'], '2')).toBe(false)
+  })
+})
+
+describe('test filter all alias from string', () => {
+  it('no any alias', () => {
+    expect(filterAliases(`al`)).toStrictEqual([])
+  })
+
+  it('all valid aliases', () => {
+    expect(
+      filterAliases(`
+alias c='clear'
+alias gpl='git pull'`),
+    ).toStrictEqual([
+      {
+        aliasName: 'c',
+        command: 'clear',
+        frequency: 0,
+        description: '',
+      },
+      {
+        aliasName: 'gpl',
+        command: 'git pull',
+        frequency: 0,
+        description: '',
+      },
+    ])
+  })
+
+  it('some valid aliases', () => {
+    expect(
+      filterAliases(`
+alias c='clear'
+alpull'`),
+    ).toStrictEqual([
+      {
+        aliasName: 'c',
+        command: 'clear',
+        frequency: 0,
+        description: '',
+      },
+    ])
+  })
+})
+
+describe('test merge alias', () => {
+  it('merge alias', () => {
+    const source = {
+      [SYSTEM_ALIAS]: [
+        {
+          aliasName: 'c',
+          command: 'clear',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      git: [
+        {
+          aliasName: 'gpl',
+          command: 'git pull',
+          frequency: 0,
+          description: '',
+        },
+        {
+          aliasName: 'gps',
+          command: 'git push',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      platano: [
+        {
+          aliasName: 'br',
+          command: 'platano br',
+          frequency: 0,
+          description: '',
+        },
+      ],
+    }
+    const target = {
+      [SYSTEM_ALIAS]: [
+        {
+          aliasName: 'nv',
+          command: 'node -v',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      git: [
+        {
+          aliasName: 'gpl',
+          command: 'git pull origin main',
+          frequency: 0,
+          description: '',
+        },
+        {
+          aliasName: 'gps',
+          command: 'git push',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      shell: [
+        {
+          aliasName: '18',
+          command: 'sudo n 18.0.0',
+          frequency: 0,
+          description: '',
+        },
+      ],
+    }
+    expect(mergeAlias(source, target)).toStrictEqual({
+      [SYSTEM_ALIAS]: [
+        {
+          aliasName: 'c',
+          command: 'clear',
+          frequency: 0,
+          description: '',
+        },
+        {
+          aliasName: 'nv',
+          command: 'node -v',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      git: [
+        {
+          aliasName: 'gpl',
+          command: 'git pull origin main',
+          frequency: 0,
+          description: '',
+        },
+        {
+          aliasName: 'gps',
+          command: 'git push',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      platano: [
+        {
+          aliasName: 'br',
+          command: 'platano br',
+          frequency: 0,
+          description: '',
+        },
+      ],
+      shell: [
+        {
+          aliasName: '18',
+          command: 'sudo n 18.0.0',
+          frequency: 0,
+          description: '',
+        },
+      ],
+    })
   })
 })
