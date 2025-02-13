@@ -1,4 +1,4 @@
-import { isArray } from 'rattail'
+import { isArray, isEmpty } from 'rattail'
 import type { Alias } from './types'
 
 /**
@@ -174,4 +174,70 @@ export function formatUnaliasCommand(aliases: Alias[]) {
   return aliases.reduce((acc, alias) => {
     return `${acc} ${alias.aliasName}`
   }, 'unalias')
+}
+
+/**
+ * Merge alias
+ * @param {Record<string, Alias[]>} source system alias data
+ * @param {Record<string, Alias[]>} target import alias data
+ * @returns {Record<string, Alias[]>}
+ */
+export function mergeAlias(source: Record<string, Alias[]>, target: Record<string, Alias[]>) {
+  const aliasMap = new Map<string, Alias[]>()
+
+  Object.entries(source).forEach(([groupName, aliases]) => {
+    aliasMap.set(groupName, aliases)
+  })
+  Object.entries(target).forEach(([groupName, targetAliases]) => {
+    if (aliasMap.has(groupName)) {
+      // need to merge same alias
+      const sourceAliasMap = new Map<string, Alias>()
+      const allAliases = [...(aliasMap.get(groupName) ?? []), ...targetAliases]
+      allAliases.forEach((alias) => {
+        // use import alias to cover system alias
+        sourceAliasMap.set(alias.aliasName, alias)
+      })
+      aliasMap.set(groupName, [...sourceAliasMap.values()])
+    } else {
+      aliasMap.set(groupName, targetAliases)
+    }
+  })
+
+  const result = {}
+  for (const [groupName, aliases] of aliasMap.entries()) {
+    Reflect.set(result, groupName, aliases)
+  }
+
+  return result
+}
+
+/**
+ * get all aliases from text
+ * @param {string} content
+ * @returns {Alias[]}
+ */
+export function filterAliases(content: string) {
+  if (isEmpty(content)) {
+    return []
+  }
+
+  const aliases = content
+    .split('\n')
+    .filter(Boolean)
+    .map((text) => text.trim())
+    .reduce((acc: Alias[], text) => {
+      const alias = resolveAlias(text)
+      if (alias) {
+        const { aliasName, command } = alias
+        acc.push({
+          aliasName,
+          command,
+          frequency: 0,
+          description: '',
+        })
+      }
+      return acc
+    }, [])
+
+  return aliases
 }

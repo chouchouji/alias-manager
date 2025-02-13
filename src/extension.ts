@@ -7,7 +7,14 @@ import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from
 import { SYSTEM_ALIAS } from './constants'
 import storePath from './path'
 import type { Alias } from './types'
-import { formatUnaliasCommand, isSameAlias, normalizeAliasesToArray, resolveAlias } from './utils'
+import {
+  filterAliases,
+  formatUnaliasCommand,
+  isSameAlias,
+  mergeAlias,
+  normalizeAliasesToArray,
+  resolveAlias,
+} from './utils'
 
 function setTooltip(frequency = 0) {
   return `${vscode.l10n.t('frequency')}: ${frequency}`
@@ -53,6 +60,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.add', () => aliasView.addAlias()))
 
   context.subscriptions.push(vscode.commands.registerCommand('aliasView.export', () => aliasView.exportAlias()))
+
+  context.subscriptions.push(vscode.commands.registerCommand('aliasView.import', () => aliasView.importAlias()))
 
   context.subscriptions.push(
     vscode.commands.registerCommand('aliasView.deleteAlias', (alias: AliasItem) => aliasView.deleteAlias(alias)),
@@ -145,6 +154,17 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
     this._onDidChangeTreeData.fire(alias)
   }
 
+  convertAliasToObject() {
+    const data = this.globalState.keys().reduce((acc: Record<string, Alias[]>, key: string) => {
+      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(key))
+      Reflect.set(acc, key, aliases)
+
+      return acc
+    }, {})
+
+    return data
+  }
+
   async exportAlias() {
     const filePath = await vscode.window.showSaveDialog({
       filters: {
@@ -155,14 +175,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return
     }
 
-    const data = this.globalState.keys().reduce((acc: Record<string, Alias[]>, key: string) => {
-      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(key))
-      Reflect.set(acc, key, aliases)
-
-      return acc
-    }, {})
-
-    fs.writeFile(filePath.fsPath, JSON.stringify(data), (err) => {
+    fs.writeFile(filePath.fsPath, JSON.stringify(this.convertAliasToObject()), (err) => {
       if (err) {
         vscode.window.showErrorMessage(
           vscode.l10n.t('Fail to save json file, the error message is {message}', { message: err.message }),
@@ -173,6 +186,50 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
         )
       }
     })
+  }
+
+  async importAlias() {
+    const clipboard = vscode.l10n.t('clipboard')
+    const json = vscode.l10n.t('json')
+    const selectedWay = await vscode.window.showQuickPick([clipboard, json], {
+      placeHolder: vscode.l10n.t('Please choose the way you want to import data'),
+    })
+
+    // cancel pick group
+    if (selectedWay === undefined) {
+      return
+    }
+
+    switch (selectedWay) {
+      case clipboard:
+        {
+          const content = await vscode.env.clipboard.readText()
+          const aliases = filterAliases(content)
+          if (aliases.length) {
+            const result = mergeAlias(this.convertAliasToObject(), {
+              [SYSTEM_ALIAS]: aliases,
+            })
+            const systemAliases: Alias[] = Reflect.get(result, SYSTEM_ALIAS)
+            await this.globalState.update(SYSTEM_ALIAS, systemAliases)
+            deleteAliases(storePath.path)
+            appendAliasToStoreFile(
+              storePath.path,
+              systemAliases.map((alias) => `\nalias ${alias.aliasName}='${alias.command}'`).join(''),
+            )
+            executeCommandInTerminal(
+              systemAliases.map((alias) => `alias ${alias.aliasName}='${alias.command}'`).join('; '),
+            )
+            this.refresh()
+            vscode.window.showInformationMessage(vscode.l10n.t('Import clipboard text successfully'))
+          } else {
+            vscode.window.showInformationMessage(vscode.l10n.t('No any alias need to import'))
+          }
+        }
+        break
+      // TODO: support json file
+      case json:
+        break
+    }
   }
 
   async setDescription(alias: AliasItem) {
@@ -231,7 +288,11 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return
     }
 
-    appendAliasToStoreFile(storePath.path, alias)
+    appendAliasToStoreFile(
+      storePath.path,
+      `
+alias ${alias}`,
+    )
 
     // add this alias to system group
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(SYSTEM_ALIAS))

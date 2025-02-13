@@ -60,10 +60,10 @@ describe('test get all alias from .zshrc', () => {
 
 describe('test append alias into .zshrc', () => {
   it('append one alias into .zshrc', () => {
-    appendAliasToStoreFile(ZSHRC, `nv='node -v'`)
+    appendAliasToStoreFile(ZSHRC, `\nalias nv='node -v'`)
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe(`\nalias nv='node -v'`)
 
-    appendAliasToStoreFile(ZSHRC, `pv='pnpm -v'`)
+    appendAliasToStoreFile(ZSHRC, `\nalias pv='pnpm -v'`)
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe(`\nalias nv='node -v'\nalias pv='pnpm -v'`)
   })
 })

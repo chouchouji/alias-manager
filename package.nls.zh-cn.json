@@ -2,6 +2,7 @@
   "refreshAliases": "刷新别名",
   "newGroup": "创建组",
   "export": "导出",
+  "import": "导入",
   "deleteGroup": "删除组",
   "addAlias": "新增别名",
   "copyAllAlias": "复制全部别名",

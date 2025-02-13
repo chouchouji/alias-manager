@@ -55,7 +55,12 @@
       {
         "command": "aliasView.export",
         "title": "%export%",
-        "icon": "$(export)"
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "aliasView.import",
+        "title": "%import%",
+        "icon": "$(cloud-upload)"
       },
       {
         "command": "aliasView.deleteGroup",
@@ -202,6 +207,11 @@
         },
         {
           "command": "aliasView.export",
+          "when": "view == aliasView",
+          "group": "navigation"
+        },
+        {
+          "command": "aliasView.import",
           "when": "view == aliasView",
           "group": "navigation"
         }

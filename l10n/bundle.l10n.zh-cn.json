@@ -21,5 +21,8 @@
   "Please check if the .zshrc file exists": "请检查.zshrc文件是否存在",
   "Please check if the file exists": "请检查文件是否存在",
   "Fail to save json file, the error message is {message}": "文件保存失败，错误信息是 {message}",
-  "Save file successfully, the path is {path}": "文件保存成功，路径是 {path}"
+  "Save file successfully, the path is {path}": "文件保存成功，路径是 {path}",
+  "Please choose the way you want to import data": "请选择如何上传数据",
+  "Import clipboard text successfully": "剪切板数据导入成功",
+  "No any alias need to import": "没有数据需要导入"
 }

@@ -2,7 +2,7 @@ import { exec } from 'node:child_process'
 import fs from 'node:fs'
 import { isEmpty } from 'rattail'
 import type { Alias } from './types'
-import { isSameAlias, resolveAlias } from './utils'
+import { filterAliases, isSameAlias, resolveAlias } from './utils'
 
 function reloadStoreFile(path: fs.PathOrFileDescriptor) {
   exec(`source ${path}`, { shell: '/bin/bash' })
@@ -15,35 +15,11 @@ export function getContentFromPath(path: fs.PathOrFileDescriptor) {
 export function getAliases(path: fs.PathOrFileDescriptor) {
   const content = getContentFromPath(path)
 
-  if (isEmpty(content)) {
-    return []
-  }
-
-  const aliases = content
-    .split('\n')
-    .filter(Boolean)
-    .map((text) => text.trim())
-    .reduce((acc: Alias[], text) => {
-      const alias = resolveAlias(text)
-      if (alias) {
-        const { aliasName, command } = alias
-        acc.push({
-          aliasName,
-          command,
-          frequency: 0,
-          description: '',
-        })
-      }
-      return acc
-    }, [])
-
-  return aliases
+  return filterAliases(content)
 }
 
 export function appendAliasToStoreFile(path: fs.PathOrFileDescriptor, content: string) {
-  const data = `
-alias ${content}`
-  fs.appendFileSync(path, data)
+  fs.appendFileSync(path, content)
 
   reloadStoreFile(path)
 }
