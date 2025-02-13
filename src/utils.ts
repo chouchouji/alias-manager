@@ -192,7 +192,7 @@ export function mergeAlias(source: Record<string, Alias[]>, target: Record<strin
     if (aliasMap.has(groupName)) {
       // need to merge same alias
       const sourceAliasMap = new Map<string, Alias>()
-      const allAliases = [...(aliasMap.get(groupName) ?? []), ...targetAliases]
+      const allAliases = [...aliasMap.get(groupName)!, ...targetAliases]
       allAliases.forEach((alias) => {
         // use import alias to cover system alias
         sourceAliasMap.set(alias.aliasName, alias)

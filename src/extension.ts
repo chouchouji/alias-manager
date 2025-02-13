@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
   )
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('aliasView.deleteAllAlias', (alias: AliasItem) => aliasView.deleteAllAlias()),
+    vscode.commands.registerCommand('aliasView.deleteAllAlias', () => aliasView.deleteAllAlias()),
   )
 
   context.subscriptions.push(
