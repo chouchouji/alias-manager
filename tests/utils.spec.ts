@@ -79,6 +79,24 @@ describe('test alias resolve', () => {
       command: 'node',
     })
   })
+
+  it('command contains single equal sign', () => {
+    const alias = {
+      aliasName: 'nr',
+      command: 'npm config set registry=https://registry.npmjs.org/',
+    }
+    const value = `alias nr='npm config set registry=https://registry.npmjs.org/'`
+    expect(resolveAlias(value)).toStrictEqual(alias)
+  })
+
+  it('command contains multiple equal signs', () => {
+    const alias = {
+      aliasName: 'dev',
+      command: 'tsup src/index.ts --format esm,cjs,iife --out-dir=lib --global-name=Rattail --dts --clean',
+    }
+    const value = `alias dev='tsup src/index.ts --format esm,cjs,iife --out-dir=lib --global-name=Rattail --dts --clean'`
+    expect(resolveAlias(value)).toStrictEqual(alias)
+  })
 })
 
 describe('test same alias', () => {
