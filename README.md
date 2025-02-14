@@ -133,6 +133,12 @@ The default language is `english`. If you have added [chinese vscode extension](
 
 If you encounter problems or have good ideas and suggestions, please [report](https://github.com/chouchouji/alias-manager/issues) here.
 
+## Contributors
+
+<a href="https://github.com/chouchouji/alias-manager/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=chouchouji/alias-manager" alt="contributors" />
+</a>
+
 ## ChangeLog
 
 [ChangeLog](CHANGELOG.md)

@@ -133,6 +133,12 @@
 
 如果你遇到了问题或者有好的想法和建议, 欢迎在此 [留言](https://github.com/chouchouji/alias-manager/issues)。
 
+## 贡献者
+
+<a href="https://github.com/chouchouji/alias-manager/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=chouchouji/alias-manager" alt="贡献者" />
+</a>
+
 ## 更新日志
 
 [更新日志](CHANGELOG.md)
