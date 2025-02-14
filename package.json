@@ -39,6 +39,7 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "l10n": "./l10n",
   "contributes": {
     "commands": [
       {
@@ -319,7 +320,8 @@
   "nano-staged": {
     "*.{ts,md}": [
       "prettier --write"
-    ]
+    ],
+    "*.ts": "eslint --fix"
   },
   "dependencies": {
     "rattail": "^1.0.18"
@@ -344,6 +346,5 @@
   "engines": {
     "vscode": "^1.74.3"
   },
-  "icon": "resources/logo.png",
-  "l10n": "./l10n"
+  "icon": "resources/logo.png"
 }
