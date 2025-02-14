@@ -1,7 +1,7 @@
 {
   "name": "alias-manager",
   "displayName": "Alias Manager",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "System alias manager",
   "categories": [
     "Other",
