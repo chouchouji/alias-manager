@@ -103,22 +103,9 @@ export function resolveAlias(value: string): Pick<Alias, 'aliasName' | 'command'
   }
 
   const formatValue = value.slice(5).trim()
-  let aliasName = ''
-  let command = ''
-  let hasEqual = false
-
-  for (const char of formatValue) {
-    if (char === '=') {
-      hasEqual = true
-      continue
-    }
-
-    if (!hasEqual) {
-      aliasName += char
-    } else {
-      command += char
-    }
-  }
+  const equalIndex = formatValue.indexOf('=')
+  const aliasName = formatValue.slice(0, equalIndex)
+  let command = equalIndex !== -1 ? formatValue.slice(equalIndex + 1) : ''
 
   // don't allow the last char of alias name to be a space
   if (aliasName.charAt(aliasName.length - 1) === ' ') {
