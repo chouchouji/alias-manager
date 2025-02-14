@@ -17,10 +17,6 @@ import {
   resolveAlias,
 } from './utils'
 
-function setTooltip(frequency = 0) {
-  return `${vscode.l10n.t('frequency')}: ${frequency}`
-}
-
 export function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc')
@@ -135,6 +131,10 @@ function executeCommandInTerminal(command: string) {
   const activeTerminal = vscode.window.activeTerminal ?? vscode.window.createTerminal()
   activeTerminal.show()
   activeTerminal.sendText(command)
+}
+
+function setTooltip(frequency = 0) {
+  return vscode.l10n.t('frequency: {frequency}', { frequency })
 }
 
 class AliasView implements vscode.TreeDataProvider<AliasItem> {
