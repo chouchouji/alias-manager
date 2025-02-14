@@ -23,6 +23,7 @@
 - 📝 &nbsp;Support setting description for every alias
 - 🔧 &nbsp;Support custom path that used to store aliases
 - 🌍 &nbsp;Support internationalization
+- 📚 &nbsp;Support data export and import
 
 ## TIP
 
