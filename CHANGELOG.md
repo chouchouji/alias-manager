@@ -1,3 +1,13 @@
+## [0.5.1](https://github.com/chouchouji/alias-manager/compare/v0.5.0...v0.5.1) (2025-02-14)
+
+### Bug Fixes
+
+- resolve display exception when command contains equal sign ([#21](https://github.com/chouchouji/alias-manager/issues/21)) ([58fb373](https://github.com/chouchouji/alias-manager/commit/58fb373ee1cd79c0556431b4e84f944cba8600ae))
+
+### Performance Improvements
+
+- skip to resolving clipboard when target alias is subset of source alias ([4a00c8f](https://github.com/chouchouji/alias-manager/commit/4a00c8f209bec514cd9dfd09664d301e27d8c44e))
+
 # [0.5.0](https://github.com/chouchouji/alias-manager/compare/v0.4.3...v0.5.0) (2025-02-13)
 
 ### Features
