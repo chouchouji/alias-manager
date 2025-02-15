@@ -1,4 +1,4 @@
-## [0.5.1](https://github.com/chouchouji/alias-manager/compare/v0.5.0...v0.5.1) (2025-02-14)
+## [0.5.2](https://github.com/chouchouji/alias-manager/compare/v0.5.0...v0.5.2) (2025-02-15)
 
 ### Bug Fixes
 
@@ -6,6 +6,7 @@
 
 ### Performance Improvements
 
+- remind user to create file if there is no .zshrc file available ([e8bc6ff](https://github.com/chouchouji/alias-manager/commit/e8bc6ffa3857a65c78cda6eb2781e65d7a708c1c))
 - skip to resolving clipboard when target alias is subset of source alias ([4a00c8f](https://github.com/chouchouji/alias-manager/commit/4a00c8f209bec514cd9dfd09664d301e27d8c44e))
 
 # [0.5.0](https://github.com/chouchouji/alias-manager/compare/v0.4.3...v0.5.0) (2025-02-13)
