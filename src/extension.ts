@@ -17,11 +17,25 @@ import {
   resolveAlias,
 } from './utils'
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   // set default store path
   storePath.path = path.join(os.homedir(), '.zshrc')
   if (!fs.existsSync(storePath.path)) {
-    vscode.window.showErrorMessage(vscode.l10n.t('Please check if the .zshrc file exists'))
+    const text = await vscode.window.showInformationMessage(
+      vscode.l10n.t("The .zshrc file on {path} doesn't exist. Do you want to create .zshrc file in this path?", {
+        path: os.homedir(),
+      }),
+      { modal: true },
+      vscode.l10n.t('Confirm'),
+    )
+
+    // click confirm button
+    if (text !== undefined) {
+      fs.writeFileSync(storePath.path, '')
+      vscode.window.showInformationMessage(
+        vscode.l10n.t('Create .zshrc file on {path} successfully', { path: os.homedir() }),
+      )
+    }
   }
 
   const globalState = context.globalState
