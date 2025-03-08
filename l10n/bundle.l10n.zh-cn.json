@@ -1,5 +1,5 @@
 {
-  "Please enter new alias": "请输入新的别名，例如：alias nv='node -v'",
+  "Please enter new alias. e.g. nv='node -v'": "请输入新的别名，例如：nv='node -v'",
   "Please enter new alias name": "请输入新的别名名称",
   "Please enter new alias command": "请输入新的指令名称",
   "Please enter new description": "请输入新的备注",
@@ -9,6 +9,7 @@
   "Alias name is mandatory to execute this action": "别名名称不能为空",
   "Alias command is mandatory to execute this action": "指令名称不能为空",
   "No alias": "没有任何别名",
+  "No alias can be deleted": "没有可以删除的别名",
   "Alias has been added to the clipboard Successfully": "别名已成功复制到剪贴板",
   "Please enter new group": "请输入新的组名",
   "Group is mandatory to execute this action": "组不能为空",
@@ -16,7 +17,7 @@
   "Please choose a group to add": "请选择一个组添加别名",
   "frequency: {frequency}": "运行次数: {frequency}",
   "No any group can be added": "没有可以添加的组",
-  "Are you sure to delete all alias?": "确认删除所有的别名吗？",
+  "Are you sure to delete all aliases?": "确认删除所有的别名吗？",
   "Confirm": "确认",
   "The .zshrc file on {path} doesn't exist. Do you want to create .zshrc file in this path?": "{path} 下.zshrc文件不存在，你想创建此文件吗？",
   "Create .zshrc file on {path} successfully": "{path} 下.zshrc文件创建成功",

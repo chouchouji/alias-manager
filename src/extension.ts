@@ -335,7 +335,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
 
   async addAlias() {
     const alias = await vscode.window.showInputBox({
-      placeHolder: vscode.l10n.t(`Please enter new alias. e.g. alias nv='node -v'`),
+      placeHolder: vscode.l10n.t(`Please enter new alias. e.g. nv='node -v'`),
       value: undefined,
     })
 
@@ -382,18 +382,19 @@ alias ${alias}`,
   }
 
   async deleteAllAlias() {
+    const aliases = getAliases(storePath.path)
+    if (!aliases.length) {
+      vscode.window.showWarningMessage(vscode.l10n.t('No alias can be deleted'))
+      return
+    }
+
     const text = await vscode.window.showInformationMessage(
-      vscode.l10n.t('Are you sure to delete all alias?'),
+      vscode.l10n.t('Are you sure to delete all aliases?'),
       { modal: true },
       vscode.l10n.t('Confirm'),
     )
     // click cancel button
     if (text === undefined) {
-      return
-    }
-
-    const aliases = getAliases(storePath.path)
-    if (!aliases.length) {
       return
     }
 
