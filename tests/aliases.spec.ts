@@ -88,8 +88,8 @@ describe('test delete alias in .zshrc', () => {
 
   it('delete multiple alias in .zshrc', () => {
     deleteAliases(ZSHRC, [
-      { aliasName: 'nv', command: 'node --version' },
       { aliasName: 'pv', command: 'pnpm -v' },
+      { aliasName: 'pnpm_version', command: 'pnpm -v' },
     ])
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe('')
   })
