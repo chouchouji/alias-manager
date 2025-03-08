@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process'
 import fs from 'node:fs'
-import { isEmpty } from 'rattail'
+import { isArray, isEmpty } from 'rattail'
 import type { Alias } from './types'
 import { filterAliases, isSameAlias, resolveAlias } from './utils'
 
@@ -24,25 +24,26 @@ export function appendAliasToStoreFile(path: fs.PathOrFileDescriptor, content: s
   reloadStoreFile(path)
 }
 
-export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias?: Alias) {
+export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias: Alias | Alias[] = []) {
   const content = getContentFromPath(path)
 
   if (isEmpty(content)) {
     return
   }
 
+  const specificAliases = isArray(specificAlias) ? specificAlias : [specificAlias]
   const data = content
     .split('\n')
     .map((text) => text.trim())
     .filter((text) => {
       const alias = resolveAlias(text)
 
-      if (!specificAlias) {
+      if (!specificAliases.length) {
         return !alias
       }
 
       if (alias) {
-        return !isSameAlias(alias, specificAlias)
+        return !specificAliases.some((specificAlias) => isSameAlias(alias, specificAlias))
       }
 
       return true
