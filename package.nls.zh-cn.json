@@ -7,7 +7,7 @@
   "addAlias": "新增别名",
   "copyAllAlias": "复制全部别名",
   "deleteAlias": "删除别名",
-  "deleteAllAlias": "删除所有别名",
+  "deleteAllAlias": "删除多个别名",
   "run": "运行",
   "setDescription": "更新备注",
   "renameAliasName": "重命名别名名称",

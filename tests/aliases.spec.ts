@@ -86,7 +86,15 @@ describe('test delete alias in .zshrc', () => {
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe(`\nalias pnpm_version='pnpm -v'`)
   })
 
-  it('delete all alias in .zshrc', () => {
+  it('delete multiple aliases in .zshrc', () => {
+    deleteAliases(ZSHRC, [
+      { aliasName: 'pv', command: 'pnpm -v' },
+      { aliasName: 'pnpm_version', command: 'pnpm -v' },
+    ])
+    expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe('')
+  })
+
+  it('delete all aliases in .zshrc', () => {
     deleteAliases(ZSHRC)
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe('')
   })
