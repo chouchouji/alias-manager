@@ -388,27 +388,41 @@ alias ${alias}`,
       return
     }
 
-    const groups = aliases.map((alias) => alias.aliasName)
-    const selectedGroup = await vscode.window.showQuickPick(groups, {
-      placeHolder: vscode.l10n.t('Please choose the alias you want to delete'),
-      canPickMany: true,
-    })
+    const selectedAliases = await vscode.window.showQuickPick(
+      aliases.map((alias) => alias.aliasName),
+      {
+        placeHolder: vscode.l10n.t('Please choose the aliases you want to delete'),
+        canPickMany: true,
+      },
+    )
 
     // cancel pick group
-    if (selectedGroup === undefined) {
+    if (selectedAliases === undefined || !selectedAliases.length) {
       return
     }
 
-    const selectedAliases = aliases.filter((alias) => selectedGroup.includes(alias.aliasName))
+    if (selectedAliases.length === aliases.length) {
+      const text = await vscode.window.showInformationMessage(
+        vscode.l10n.t('Are you sure to delete all aliases?'),
+        { modal: true },
+        vscode.l10n.t('Confirm'),
+      )
+      // click cancel button
+      if (text === undefined) {
+        return
+      }
+    }
 
-    executeCommandInTerminal(formatUnaliasCommand(selectedAliases))
+    const needDeleteAliases = aliases.filter((alias) => selectedAliases.includes(alias.aliasName))
 
-    deleteAliases(storePath.path, selectedAliases)
+    executeCommandInTerminal(formatUnaliasCommand(needDeleteAliases))
 
-    // remove all aliases under every groups
+    deleteAliases(storePath.path, needDeleteAliases)
+
+    // remove aliases under every groups
     for (const groupName of this.globalState.keys()) {
       const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(groupName)).filter((aliasItem) => {
-        return !selectedAliases.some((alias) => isSameAlias(alias, aliasItem))
+        return !needDeleteAliases.some((alias) => isSameAlias(alias, aliasItem))
       })
       this.globalState.update(groupName, aliases)
     }
