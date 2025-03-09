@@ -1,3 +1,13 @@
+## [0.5.3](https://github.com/chouchouji/alias-manager/compare/v0.5.2...v0.5.3) (2025-03-09)
+
+### Bug Fixes
+
+- update localization strings for alias prompts and warnings ([bbdcdc7](https://github.com/chouchouji/alias-manager/commit/bbdcdc73768a2ccfbe1add3f8b705fbd64118d64))
+
+### Features
+
+- support selective deletion instead of deleting all items ([#22](https://github.com/chouchouji/alias-manager/issues/22)) ([1e67743](https://github.com/chouchouji/alias-manager/commit/1e677434f9bac53b81519ebf71c46e658bb293cb))
+
 ## [0.5.2](https://github.com/chouchouji/alias-manager/compare/v0.5.0...v0.5.2) (2025-02-15)
 
 ### Bug Fixes
