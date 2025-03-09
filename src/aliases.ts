@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process'
 import fs from 'node:fs'
-import { isArray, isEmpty } from 'rattail'
+import { isEmpty, normalizeToArray } from 'rattail'
 import type { Alias } from './types'
 import { filterAliases, isSameAlias, resolveAlias } from './utils'
 
@@ -31,7 +31,7 @@ export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias: Alia
     return
   }
 
-  const specificAliases = isArray(specificAlias) ? specificAlias : [specificAlias]
+  const specificAliases = normalizeToArray(specificAlias)
   const data = content
     .split('\n')
     .map((text) => text.trim())
