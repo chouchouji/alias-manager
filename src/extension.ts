@@ -221,7 +221,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
           const content = await vscode.env.clipboard.readText()
           const aliases = filterAliases(content)
 
-          if (!aliases.length || isAliasSubset(Reflect.get(this.convertAliasToObject(), SYSTEM_ALIAS), aliases)) {
+          if (aliases.length === 0 || isAliasSubset(Reflect.get(this.convertAliasToObject(), SYSTEM_ALIAS), aliases)) {
             vscode.window.showInformationMessage(vscode.l10n.t('No any alias need to import'))
             return
           }
@@ -252,7 +252,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
             canSelectMany: false,
           })
 
-          if (fileUris && fileUris.length) {
+          if (isNonEmptyArray(fileUris)) {
             const filePath = fileUris[0].fsPath
             fs.readFile(filePath, 'utf-8', async (err, data) => {
               if (err) {
@@ -265,7 +265,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
                 const targetAlias = Object.entries(json).reduce((acc: Record<string, Alias[]>, [key, value]) => {
                   if (isArray(value)) {
                     const aliases = value.filter((item) => item.aliasName && item.command)
-                    if (aliases.length) {
+                    if (aliases.length > 0) {
                       Reflect.set(acc, key, aliases)
                     }
                   }
@@ -273,7 +273,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
                   return acc
                 }, {})
 
-                if (Object.values(targetAlias).length) {
+                if (Object.values(targetAlias).length > 0) {
                   const result = mergeAlias(this.convertAliasToObject(), targetAlias)
                   for (const [groupName, aliases] of Object.entries(result)) {
                     await this.globalState.update(groupName, aliases)
@@ -344,7 +344,7 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
       return
     }
 
-    if (!alias.length) {
+    if (alias.length === 0) {
       vscode.window.showErrorMessage(vscode.l10n.t('Alias is mandatory to execute this action'))
       return
     }
@@ -383,7 +383,7 @@ alias ${alias}`,
 
   async deleteAllAlias() {
     const aliases = getAliases(storePath.path)
-    if (!aliases.length) {
+    if (aliases.length === 0) {
       vscode.window.showWarningMessage(vscode.l10n.t('No alias can be deleted'))
       return
     }
@@ -397,7 +397,7 @@ alias ${alias}`,
     )
 
     // cancel pick group
-    if (selectedAliases === undefined || !selectedAliases.length) {
+    if (selectedAliases === undefined || selectedAliases.length === 0) {
       return
     }
 
@@ -467,7 +467,7 @@ alias ${alias}`,
       return
     }
 
-    if (!aliasName.length) {
+    if (aliasName.length === 0) {
       vscode.window.showErrorMessage(vscode.l10n.t('Alias name is mandatory to execute this action'))
       return
     }
@@ -507,7 +507,7 @@ alias ${alias}`,
       return
     }
 
-    if (!command.length) {
+    if (command.length === 0) {
       vscode.window.showErrorMessage(vscode.l10n.t('Alias command is mandatory to execute this action'))
       return
     }
@@ -564,7 +564,7 @@ alias ${alias}`,
 
   copyAllAlias(alias: AliasItem) {
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.groupName))
-    if (!aliases.length) {
+    if (aliases.length === 0) {
       vscode.window.showWarningMessage(vscode.l10n.t('No alias'))
       return
     }
@@ -595,7 +595,7 @@ alias ${alias}`,
     }
 
     const groups = this.globalState.keys().filter((key) => ![SYSTEM_ALIAS, alias.group].includes(key))
-    if (!groups.length) {
+    if (groups.length === 0) {
       vscode.window.showWarningMessage('No any group can be added')
       return
     }
@@ -632,7 +632,7 @@ alias ${alias}`,
       return
     }
 
-    if (!group.length) {
+    if (group.length === 0) {
       vscode.window.showErrorMessage(vscode.l10n.t('Group is mandatory to execute this action'))
       return
     }
@@ -661,7 +661,7 @@ alias ${alias}`,
       return
     }
 
-    if (!group.length) {
+    if (group.length === 0) {
       vscode.window.showErrorMessage(vscode.l10n.t('Group is mandatory to execute this action'))
       return
     }
@@ -680,7 +680,7 @@ alias ${alias}`,
   sortByAlphabet(alias: AliasItem) {
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group))
 
-    if (!aliases.length) {
+    if (aliases.length === 0) {
       return
     }
 
@@ -693,7 +693,7 @@ alias ${alias}`,
   sortByFrequency(alias: AliasItem) {
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(alias.group))
 
-    if (!aliases.length) {
+    if (aliases.length === 0) {
       return
     }
 

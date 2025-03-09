@@ -38,7 +38,7 @@ export function deleteAliases(path: fs.PathOrFileDescriptor, specificAlias: Alia
     .filter((text) => {
       const alias = resolveAlias(text)
 
-      if (!specificAliases.length) {
+      if (specificAliases.length === 0) {
         return !alias
       }
 
