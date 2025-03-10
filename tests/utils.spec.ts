@@ -203,7 +203,7 @@ alias gpl='git pull'`),
     expect(
       filterAliases(`
 alias c='clear'
-alpull'`),
+test'`),
     ).toStrictEqual([
       {
         aliasName: 'c',

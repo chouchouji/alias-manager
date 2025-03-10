@@ -1,0 +1,5 @@
+{
+  "dictionaries": ["typescript"],
+  "ignorePaths": [".github", ".vscode", "CHANGELOG.md", "dist", "node_modules", "pnpm-lock.yaml"],
+  "words": ["chouchouji", "configurajs", "Unalias", "platano"]
+}
