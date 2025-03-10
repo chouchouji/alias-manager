@@ -1,3 +1,9 @@
+## [0.5.4](https://github.com/chouchouji/alias-manager/compare/v0.5.3...v0.5.4) (2025-03-10)
+
+### Bug Fixes
+
+- don't allow to add duplicate alias to the group ([339eefe](https://github.com/chouchouji/alias-manager/commit/339eefe3c54c4aaf7a7f1b5b0aea013e1ec4ba8f))
+
 ## [0.5.3](https://github.com/chouchouji/alias-manager/compare/v0.5.2...v0.5.3) (2025-03-09)
 
 ### Bug Fixes
