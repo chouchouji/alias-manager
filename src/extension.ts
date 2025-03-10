@@ -594,7 +594,15 @@ alias ${alias}`,
       return
     }
 
-    const groups = this.globalState.keys().filter((group) => ![SYSTEM_ALIAS, alias.group].includes(group))
+    const groups = this.globalState
+      .keys()
+      .filter(
+        (group) =>
+          ![SYSTEM_ALIAS, alias.group].includes(group) &&
+          normalizeAliasesToArray<Alias>(this.globalState.get(group)).every(
+            (aliasItem) => !isSameAlias(alias.data!, aliasItem),
+          ),
+      )
     if (groups.length === 0) {
       vscode.window.showWarningMessage('No any group can be added')
       return
@@ -610,11 +618,6 @@ alias ${alias}`,
     }
 
     const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(selectedGroup))
-    const hasSameAlias = aliases.some((aliasItem) => isSameAlias(alias.data!, aliasItem))
-    if (hasSameAlias) {
-      vscode.window.showInformationMessage(vscode.l10n.t('This alias already exists'))
-      return
-    }
 
     aliases.push(alias.data)
     this.globalState.update(selectedGroup, aliases)
