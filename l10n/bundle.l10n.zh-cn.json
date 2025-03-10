@@ -30,5 +30,6 @@
   "Import json file successfully": "json文件导入成功",
   "No any alias need to import": "没有数据需要导入",
   "Fail to read file: {message}": "文件读取失败: {message}",
-  "Fail to resolve json file: {message}": "json文件解析失败: {message}"
+  "Fail to resolve json file: {message}": "json文件解析失败: {message}",
+  "This alias already exists": "此别名已存在"
 }
