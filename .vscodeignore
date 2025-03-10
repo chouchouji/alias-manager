@@ -4,7 +4,6 @@ out/**
 node_modules/**
 src/**
 .gitignore
-.yarnrc
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/*.map
@@ -16,3 +15,4 @@ README.zh-CN.md
 .prettierignore
 prettier.config.mjs
 eslint.config.mjs
+cSpell.json
