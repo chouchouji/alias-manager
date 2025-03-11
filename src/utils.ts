@@ -172,23 +172,23 @@ export function formatUnaliasCommand(aliases: Alias[]) {
 export function mergeAlias(source: Record<string, Alias[]>, target: Record<string, Alias[]>) {
   const aliasMap = new Map<string, Alias[]>()
 
-  Object.entries(source).forEach(([groupName, aliases]) => {
+  for (const [groupName, aliases] of Object.entries(source)) {
     aliasMap.set(groupName, aliases)
-  })
-  Object.entries(target).forEach(([groupName, targetAliases]) => {
+  }
+  for (const [groupName, targetAliases] of Object.entries(target)) {
     if (aliasMap.has(groupName)) {
       // need to merge same alias
       const sourceAliasMap = new Map<string, Alias>()
       const allAliases = [...aliasMap.get(groupName)!, ...targetAliases]
-      allAliases.forEach((alias) => {
+      for (const alias of allAliases) {
         // use import alias to cover system alias
         sourceAliasMap.set(alias.aliasName, alias)
-      })
+      }
       aliasMap.set(groupName, [...sourceAliasMap.values()])
     } else {
       aliasMap.set(groupName, targetAliases)
     }
-  })
+  }
 
   const result = {}
   for (const [groupName, aliases] of aliasMap.entries()) {
@@ -237,10 +237,10 @@ export function filterAliases(content: string) {
  */
 export function isAliasSubset(source: Alias[], target: Alias[]) {
   const set = new Set()
-  source.forEach((alias) => {
+  for (const alias of source) {
     const { aliasName, command } = alias
     set.add(`${aliasName}=${command}`)
-  })
+  }
 
   return target.every((alias) => set.has(`${alias.aliasName}=${alias.command}`))
 }

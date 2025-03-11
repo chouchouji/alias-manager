@@ -12,6 +12,7 @@ configs.push({
   },
   rules: {
     'unicorn/explicit-length-check': 'error',
+    'unicorn/no-array-for-each': 'error',
   },
 })
 
