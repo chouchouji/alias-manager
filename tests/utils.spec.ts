@@ -174,8 +174,24 @@ describe('test all values are not equal to target', () => {
 })
 
 describe('test filter all alias from string', () => {
-  it('no any alias', () => {
-    expect(filterAliases(`al`)).toStrictEqual([])
+  it('empty string', () => {
+    expect(
+      filterAliases(`
+
+
+        `),
+    ).toStrictEqual([])
+  })
+
+  it('no any valid alias', () => {
+    expect(
+      filterAliases(`
+
+        test
+test
+        # test   
+alias c='clear' test`),
+    ).toStrictEqual([])
   })
 
   it('all valid aliases', () => {

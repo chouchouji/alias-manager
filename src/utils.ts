@@ -1,4 +1,4 @@
-import { isArray, isEmpty } from 'rattail'
+import { isArray } from 'rattail'
 import type { Alias } from './types'
 
 /**
@@ -158,9 +158,7 @@ export function normalizeAliasesToArray<T>(value: T[] | undefined) {
  * @returns {string}
  */
 export function formatUnaliasCommand(aliases: Alias[]) {
-  return aliases.reduce((acc, alias) => {
-    return `${acc} ${alias.aliasName}`
-  }, 'unalias')
+  return aliases.reduce((acc, alias) => `${acc} ${alias.aliasName}`, 'unalias')
 }
 
 /**
@@ -200,31 +198,25 @@ export function mergeAlias(source: Record<string, Alias[]>, target: Record<strin
 
 /**
  * get all aliases from text
- * @param {string} content
+ * @param {string} text
  * @returns {Alias[]}
  */
-export function filterAliases(content: string) {
-  if (isEmpty(content)) {
+export function filterAliases(text: string) {
+  const trimText = text.trim()
+  if (trimText.length === 0) {
     return []
   }
 
-  const aliases = content
+  const aliases = trimText
     .split('\n')
+    .map((text) => resolveAlias(text.trim()))
     .filter(Boolean)
-    .map((text) => text.trim())
-    .reduce((acc: Alias[], text) => {
-      const alias = resolveAlias(text)
-      if (alias) {
-        const { aliasName, command } = alias
-        acc.push({
-          aliasName,
-          command,
-          frequency: 0,
-          description: '',
-        })
-      }
-      return acc
-    }, [])
+    .map((alias) => ({
+      aliasName: alias!.aliasName,
+      command: alias!.command,
+      frequency: 0,
+      description: '',
+    }))
 
   return aliases
 }

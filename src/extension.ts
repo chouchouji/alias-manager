@@ -170,14 +170,11 @@ class AliasView implements vscode.TreeDataProvider<AliasItem> {
   }
 
   convertAliasToObject() {
-    const data = this.globalState.keys().reduce((acc: Record<string, Alias[]>, key: string) => {
-      const aliases = normalizeAliasesToArray<Alias>(this.globalState.get(key))
-      Reflect.set(acc, key, aliases)
+    const aliases = this.globalState
+      .keys()
+      .map((key) => [key, normalizeAliasesToArray<Alias>(this.globalState.get(key))])
 
-      return acc
-    }, {})
-
-    return data
+    return Object.fromEntries(aliases)
   }
 
   async exportAlias() {
