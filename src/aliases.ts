@@ -86,3 +86,30 @@ export function renameAliases(
 
   reloadStoreFile(path)
 }
+
+/**
+ * Replace aliases with new aliases
+ */
+export function replaceAllAliases(path: fs.PathOrFileDescriptor, aliases: Alias[]) {
+  const content = getContentFromPath(path)
+
+  if (isEmpty(content)) {
+    return
+  }
+
+  let aliasIndex = 0
+  const data = []
+  for (const line of content.split('\n')) {
+    if (resolveAlias(line.trim()) && aliases[aliasIndex]) {
+      const { aliasName, command } = aliases[aliasIndex]
+      data.push(`alias ${aliasName}='${command}'`)
+      aliasIndex += 1
+    } else {
+      data.push(line)
+    }
+  }
+
+  fs.writeFileSync(path, data.join('\n'))
+
+  reloadStoreFile(path)
+}
