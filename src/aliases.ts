@@ -100,8 +100,8 @@ export function replaceAllAliases(path: fs.PathOrFileDescriptor, aliases: Alias[
   let aliasIndex = 0
   const data = []
   for (const line of content.split('\n')) {
-    if (resolveAlias(line.trim())) {
-      const { aliasName, command } = aliases[aliasIndex] ?? {}
+    if (resolveAlias(line.trim()) && aliases[aliasIndex]) {
+      const { aliasName, command } = aliases[aliasIndex]
       data.push(`alias ${aliasName}='${command}'`)
       aliasIndex += 1
     } else {

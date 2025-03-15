@@ -135,4 +135,28 @@ alias nv2='node -v'
 alias pv2='pnpm -v'
 # test`)
   })
+
+  it('replace some aliases in .zshrc', () => {
+    fs.writeFileSync(
+      ZSHRC,
+      `# test
+test
+alias nv='node -v'
+alias pv='pnpm -v'
+# test`,
+    )
+
+    replaceAllAliases(ZSHRC, [
+      {
+        aliasName: 'nv2',
+        command: 'node -v',
+      },
+    ])
+
+    expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe(`# test
+test
+alias nv2='node -v'
+alias pv='pnpm -v'
+# test`)
+  })
 })
