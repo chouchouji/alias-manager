@@ -109,17 +109,14 @@ describe('test delete alias in .zshrc', () => {
 
 describe('test replace all aliases with new aliases', () => {
   it('replace all aliases in .zshrc', () => {
-    deleteAliases(ZSHRC)
     fs.writeFileSync(
       ZSHRC,
       `# test
 test
-`,
+alias nv='node -v'
+alias pv='pnpm -v'
+# test`,
     )
-    appendAliasToStoreFile(ZSHRC, `alias nv='node -v'\n`)
-    appendAliasToStoreFile(ZSHRC, `alias pv='pnpm -v'\n`)
-
-    fs.appendFileSync(ZSHRC, '# test', 'utf-8')
 
     replaceAllAliases(ZSHRC, [
       {
