@@ -1,3 +1,9 @@
+## [0.5.5](https://github.com/chouchouji/alias-manager/compare/v0.5.4...v0.5.5) (2025-03-15)
+
+### Bug Fixes
+
+- update file content after sorting system alias ([#24](https://github.com/chouchouji/alias-manager/issues/24)) ([a0c3a36](https://github.com/chouchouji/alias-manager/commit/a0c3a36915a5502ec7c2525736a5c64ee35461e8))
+
 ## [0.5.4](https://github.com/chouchouji/alias-manager/compare/v0.5.3...v0.5.4) (2025-03-10)
 
 ### Bug Fixes
