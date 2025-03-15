@@ -3,7 +3,14 @@ import os from 'node:os'
 import path from 'node:path'
 import mockFs from 'mock-fs'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { appendAliasToStoreFile, deleteAliases, getAliases, getContentFromPath, renameAliases } from '../src/aliases'
+import {
+  appendAliasToStoreFile,
+  deleteAliases,
+  getAliases,
+  getContentFromPath,
+  renameAliases,
+  replaceAllAliases,
+} from '../src/aliases'
 
 const ZSHRC = path.join(os.homedir(), '.zshrc')
 
@@ -97,5 +104,38 @@ describe('test delete alias in .zshrc', () => {
   it('delete all aliases in .zshrc', () => {
     deleteAliases(ZSHRC)
     expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe('')
+  })
+})
+
+describe('test replace all aliases with new aliases', () => {
+  it('replace all aliases in .zshrc', () => {
+    deleteAliases(ZSHRC)
+    fs.writeFileSync(
+      ZSHRC,
+      `# test
+test
+`,
+    )
+    appendAliasToStoreFile(ZSHRC, `alias nv='node -v'\n`)
+    appendAliasToStoreFile(ZSHRC, `alias pv='pnpm -v'\n`)
+
+    fs.appendFileSync(ZSHRC, '# test', 'utf-8')
+
+    replaceAllAliases(ZSHRC, [
+      {
+        aliasName: 'nv2',
+        command: 'node -v',
+      },
+      {
+        aliasName: 'pv2',
+        command: 'pnpm -v',
+      },
+    ])
+
+    expect(fs.readFileSync(ZSHRC, 'utf-8')).toBe(`# test
+test
+alias nv2='node -v'
+alias pv2='pnpm -v'
+# test`)
   })
 })

@@ -3,7 +3,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { isArray, isNonEmptyArray } from 'rattail'
 import * as vscode from 'vscode'
-import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases } from './aliases'
+import { appendAliasToStoreFile, deleteAliases, getAliases, renameAliases, replaceAllAliases } from './aliases'
 import { SYSTEM_ALIAS } from './constants'
 import storePath from './path'
 import type { Alias } from './types'
@@ -691,7 +691,11 @@ alias ${alias}`,
     }
 
     aliases.sort((a, b) => a.aliasName.toLowerCase().localeCompare(b.aliasName.toLowerCase()))
-    this.globalState.update(alias.group, aliases)
+    if (alias.group === SYSTEM_ALIAS) {
+      replaceAllAliases(storePath.path, aliases)
+    } else {
+      this.globalState.update(alias.group, aliases)
+    }
 
     this.refresh()
   }
@@ -704,7 +708,11 @@ alias ${alias}`,
     }
 
     aliases.sort((a, b) => (a.frequency ?? 0) - (b.frequency ?? 0))
-    this.globalState.update(alias.group, aliases)
+    if (alias.group === SYSTEM_ALIAS) {
+      replaceAllAliases(storePath.path, aliases)
+    } else {
+      this.globalState.update(alias.group, aliases)
+    }
 
     this.refresh()
   }
